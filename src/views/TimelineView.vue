@@ -3,12 +3,16 @@ import { ref } from 'vue'
 
 const newTweetContent = ref('')
 const searchString = ref('')
-const myProfile = ref({
+const myProfile = {
   icon: '/src/assets/icons/myicon.svg',
   userName: 'skajihara',
   userId: '@sk123456789',
   userBio: 'qwertyuiop@[ \n asdfghjkl;:] \n zxcvbnm,./'
-})
+}
+console.log(myProfile)
+console.log(myProfile.userId)
+console.log(myProfile.userName)
+
 import { tweets } from '../consts/tweets.js'
 import { menuList } from '../consts/menuList.js'
 
@@ -48,9 +52,9 @@ function searchTweets() {}
           :to="{
             name: 'profile',
             params: {
-              userId: myProfile.userId.value,
-              userName: myProfile.userName.value,
-              userBio: myProfile.userBio.value
+              userId: myProfile.userId,
+              userName: myProfile.userName,
+              userBio: myProfile.userBio
             }
           }"
         >
