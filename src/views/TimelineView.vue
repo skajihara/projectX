@@ -7,97 +7,10 @@ const myProfile = ref({
   icon: '/src/assets/icons/myicon.svg',
   userName: 'skajihara',
   userId: '@sk123456789',
-  bio: 'qwertyuiop@[ \n asdfghjkl;:] \n zxcvbnm,./'
+  userBio: 'qwertyuiop@[ \n asdfghjkl;:] \n zxcvbnm,./'
 })
-
-const tweets = ref([
-  {
-    content: '富山のホタルイカ、最高🍻',
-    userId: '@user_A'
-  },
-  {
-    content: '夜間はライトアップも実施「令和6年度 八女黒木大藤まつり」開催！',
-    userId: '@user_B'
-  },
-  {
-    content: 'プレゼントキャンペーン🎁',
-    userId: '@user_C'
-  },
-  {
-    content: 'ガチャ爆死したなう',
-    userId: '@user_D'
-  },
-  {
-    content: 'コカ・コーラ 500ml×24本がクーポンと定期お得便で1691円に #広告',
-    userId: '@user_E'
-  },
-  {
-    content: '急速に溶けていくギルバトのモチベ',
-    userId: '@user_F'
-  }
-])
-const menu = [
-  {
-    name: 'ホーム',
-    link: '#',
-    path1: '/src/assets/icons/icon011.svg',
-    path2: '/src/assets/icons/icon012.svg'
-  },
-  {
-    name: '話題を検索',
-    link: '#',
-    path1: '/src/assets/icons/icon021.svg',
-    path2: '/src/assets/icons/icon022.svg'
-  },
-  {
-    name: '通知',
-    link: '#',
-    path1: '/src/assets/icons/icon031.svg',
-    path2: '/src/assets/icons/icon032.svg'
-  },
-  {
-    name: 'メッセージ',
-    link: '#',
-    path1: '/src/assets/icons/icon041.svg',
-    path2: '/src/assets/icons/icon042.svg'
-  },
-  {
-    name: 'リスト',
-    link: '#',
-    path1: '/src/assets/icons/icon051.svg',
-    path2: '/src/assets/icons/icon052.svg'
-  },
-  {
-    name: 'ブックマーク',
-    link: '#',
-    path1: '/src/assets/icons/icon061.svg',
-    path2: '/src/assets/icons/icon062.svg'
-  },
-  {
-    name: 'コミュニティ',
-    link: '#',
-    path1: '/src/assets/icons/icon071.svg',
-    path2: '/src/assets/icons/icon072.svg'
-  },
-  {
-    name: 'プレミアム',
-    link: '#',
-    path1: '/src/assets/icons/icon081.svg',
-    path2: '/src/assets/icons/icon082.svg'
-  },
-  {
-    name: 'プロフィール',
-    link: '#',
-    path1: '/src/assets/icons/icon091.svg',
-    path2: '/src/assets/icons/icon092.svg'
-  },
-  {
-    name: 'もっと見る',
-    link: '#',
-    path1: '/src/assets/icons/icon101.svg',
-    path2: '/src/assets/icons/icon102.svg'
-  }
-]
+import { tweets } from '../consts/tweets.js'
+import { menuList } from '../consts/menuList.js'
 
 function addTweet() {
   if (newTweetContent.value.trim() !== '') {
@@ -125,13 +38,22 @@ function searchTweets() {}
     <div class="left">
       <!-- side menu -->
       <div class="menu">
-        <div v-for="(menuItem, index) in menu" :key="index" class="menu-item">
+        <div v-for="(menuItem, index) in menuList" :key="index" class="menu-item">
           <img class="logo" :src="menuItem.path1" width="32" height="32" />
           <a href="menuItem.link">{{ menuItem.name }}</a>
         </div>
       </div>
       <div class="my-profile">
-        <router-link :to="{ name: 'profile', params: myProfile }">
+        <router-link
+          :to="{
+            name: 'profile',
+            params: {
+              userId: myProfile.userId.value,
+              userName: myProfile.userName.value,
+              userBio: myProfile.userBio.value
+            }
+          }"
+        >
           <img
             alt="myicon"
             class="my-icon"
