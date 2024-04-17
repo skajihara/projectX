@@ -1,4 +1,5 @@
-export const tweets = [
+import { ref } from 'vue'
+export const tweets = ref([
   {
     content: '富山のホタルイカ、最高🍻',
     userId: '@user_A'
@@ -23,4 +24,4 @@ export const tweets = [
     content: '急速に溶けていくギルバトのモチベ',
     userId: '@user_F'
   }
-]
+])

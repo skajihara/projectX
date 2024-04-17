@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+import { tweets } from '../consts/tweets.js'
+import { menuList } from '../consts/menuList.js'
 
 const newTweetContent = ref('')
 const searchString = ref('')
@@ -9,8 +11,6 @@ const myProfile = ref({
   userId: '@sk123456789',
   userBio: 'qwertyuiop@[ \n asdfghjkl;:] \n zxcvbnm,./'
 })
-import { tweets } from '../consts/tweets.js'
-import { menuList } from '../consts/menuList.js'
 
 function addTweet() {
   if (newTweetContent.value.trim() !== '') {
@@ -31,29 +31,21 @@ function searchTweets() {}
 
 <template>
   <h1>タイムライン</h1>
-  <!-- <div class="x-logo"> -->
   <img alt="xlogo" class="x-logo" src="@/assets/icons/x1.svg" width="70" height="70" />
-  <!-- </div> -->
   <div class="whole">
     <div class="left">
       <!-- side menu -->
       <div class="menu">
         <div v-for="(menuItem, index) in menuList" :key="index" class="menu-item">
-          <img class="logo" :src="menuItem.path1" width="32" height="32" />
-          <a href="menuItem.link">{{ menuItem.name }}</a>
+          <router-link :to="menuItem.link">
+            <img class="logo" :src="menuItem.path1" width="32" height="32" />
+            {{ menuItem.name }}
+          </router-link>
         </div>
       </div>
+      <!-- My profile -->
       <div class="my-profile">
-        <router-link
-          :to="{
-            name: 'profile',
-            params: {
-              userId: myProfile.userId.value,
-              userName: myProfile.userName.value,
-              userBio: myProfile.userBio.value
-            }
-          }"
-        >
+        <router-link :to="{ name: 'profile', params: myProfile }">
           <img
             alt="myicon"
             class="my-icon"
@@ -81,7 +73,7 @@ function searchTweets() {}
         <div v-for="(tweet, index) in tweets" :key="index" class="tweet">
           <div class="content">
             {{ tweet.content }}
-            tweet by {{ tweet.userId }}
+            <span class="tweet-by">tweet by {{ tweet.userId }}</span>
           </div>
           <!-- tweet delete -->
           <button @click="deleteTweet(index)">Delete</button>
@@ -94,9 +86,11 @@ function searchTweets() {}
         <textarea v-model="searchString" placeholder="Please enter search string."></textarea>
         <button @click="searchTweets">Search</button>
       </div>
+      <!-- Trend -->
       <div class="trend">
         <h3>いまどうしてる？</h3>
       </div>
+      <!-- Recommended users -->
       <div class="recommended-user">
         <h3>おすすめユーザー</h3>
       </div>
