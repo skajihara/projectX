@@ -38,14 +38,14 @@ function searchTweets() {}
       <div class="menu">
         <div v-for="(menuItem, index) in menuList" :key="index" class="menu-item">
           <router-link :to="menuItem.link">
-            <img class="logo" :src="menuItem.path1" width="32" height="32" />
+            <img class="menu-icon" :src="menuItem.path1" width="32" height="32" />
             {{ menuItem.name }}
           </router-link>
         </div>
       </div>
       <!-- My profile -->
-      <div class="my-profile">
-        <router-link :to="{ name: 'profile', params: myProfile }">
+      <div>
+        <router-link :to="{ name: 'profile', params: myProfile }" class="my-profile">
           <img
             alt="myicon"
             class="my-icon"
@@ -53,12 +53,11 @@ function searchTweets() {}
             width="70"
             height="70"
           />
+          <div class="my-info">
+            <p>{{ myProfile.userName }}</p>
+            <p>{{ myProfile.userId }}</p>
+          </div>
         </router-link>
-        <div class="my-info">
-          {{ myProfile.userName }}
-          <br />
-          {{ myProfile.userId }}
-        </div>
       </div>
     </div>
 
@@ -129,13 +128,14 @@ function searchTweets() {}
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.menu-icon {
+  margin-top: 5px;
+  position: relative;
+  top: 10px;
+}
 .my-profile {
   display: flex;
-  flex-wrap: wrap;
-}
-.my-info {
-  margin-top: 10px;
-  margin-left: 5px;
+  align-items: center;
 }
 .tweet-form {
 }
