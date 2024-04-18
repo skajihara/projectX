@@ -8,9 +8,14 @@ const searchString = ref('')
 const myProfile = ref({
   icon: '/src/assets/icons/myicon.svg',
   userName: 'skajihara',
-  userId: '@sk123456789',
+  userId: 'sk123456789',
   userBio: 'qwertyuiop@[ \n asdfghjkl;:] \n zxcvbnm,./'
 })
+
+// console.log(myProfile.value.icon)
+// console.log(myProfile.value.userName)
+// console.log(myProfile.value.userId)
+// console.log(myProfile.value.userBio)
 
 function addTweet() {
   if (newTweetContent.value.trim() !== '') {
@@ -30,34 +35,34 @@ function searchTweets() {}
 </script>
 
 <template>
-  <h1>タイムライン</h1>
-  <img alt="xlogo" class="x-logo" src="@/assets/icons/x1.svg" width="70" height="70" />
+  <h1>ホーム</h1>
+  <img alt="tlogo" class="t-logo" src="@/assets/icons/t-logo.svg" width="100" height="100" />
   <div class="whole">
     <div class="left">
       <!-- side menu -->
       <div class="menu">
         <div v-for="(menuItem, index) in menuList" :key="index" class="menu-item">
-          <router-link :to="menuItem.link">
-            <img class="menu-icon" :src="menuItem.path1" width="32" height="32" />
-            {{ menuItem.name }}
-          </router-link>
+          <template v-if="menuItem.link === 'lists' || menuItem.link === 'profile'">
+            <router-link :to="{ name: menuItem.link, params: { userId: myProfile.userId } }">
+              <img class="menu-icon" :src="menuItem.path1" width="32" height="32" />
+              {{ menuItem.name }}
+            </router-link>
+          </template>
+          <template v-else>
+            <router-link :to="{ name: menuItem.link }">
+              <img class="menu-icon" :src="menuItem.path1" width="32" height="32" />
+              {{ menuItem.name }}
+            </router-link>
+          </template>
         </div>
       </div>
       <!-- My profile -->
-      <div>
-        <router-link :to="{ name: 'profile', params: myProfile }" class="my-profile">
-          <img
-            alt="myicon"
-            class="my-icon"
-            src="@/assets/icons/myicon.svg"
-            width="70"
-            height="70"
-          />
-          <div class="my-info">
-            <p>{{ myProfile.userName }}</p>
-            <p>{{ myProfile.userId }}</p>
-          </div>
-        </router-link>
+      <div class="my-profile">
+        <img alt="myicon" class="my-icon" src="@/assets/icons/myicon.svg" width="70" height="70" />
+        <div class="my-info">
+          <p>{{ myProfile.userName }}</p>
+          <p>@{{ myProfile.userId }}</p>
+        </div>
       </div>
     </div>
 
@@ -72,7 +77,7 @@ function searchTweets() {}
         <div v-for="(tweet, index) in tweets" :key="index" class="tweet">
           <div class="content">
             {{ tweet.content }}
-            <span class="tweet-by">tweet by {{ tweet.userId }}</span>
+            <span class="tweet-by">tweet by @{{ tweet.userId }}</span>
           </div>
           <!-- tweet delete -->
           <button @click="deleteTweet(index)">Delete</button>
@@ -98,8 +103,9 @@ function searchTweets() {}
 </template>
 
 <style scoped>
-.x-logo {
+.t-logo {
   position: relative;
+  top: 10px;
   left: 100px;
 }
 .whole {
@@ -121,12 +127,12 @@ function searchTweets() {}
   padding-top: 10px;
 }
 .menu {
-  margin-top: 10px;
+  margin-top: 0px;
   margin-left: 10px;
 }
 .menu-item {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0px;
+  margin-bottom: 20px;
 }
 .menu-icon {
   margin-top: 5px;

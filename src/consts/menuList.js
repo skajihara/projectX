@@ -1,55 +1,55 @@
 export const menuList = [
   {
     name: 'ホーム',
-    link: '#',
+    link: 'home',
     path1: '/src/assets/icons/icon011.svg',
     path2: '/src/assets/icons/icon012.svg'
   },
   {
     name: '話題を検索',
-    link: '#',
+    link: 'explore',
     path1: '/src/assets/icons/icon021.svg',
     path2: '/src/assets/icons/icon022.svg'
   },
   {
     name: '通知',
-    link: '#',
+    link: 'notifications',
     path1: '/src/assets/icons/icon031.svg',
     path2: '/src/assets/icons/icon032.svg'
   },
   {
     name: 'メッセージ',
-    link: '#',
+    link: 'messages',
     path1: '/src/assets/icons/icon041.svg',
     path2: '/src/assets/icons/icon042.svg'
   },
   {
     name: 'リスト',
-    link: '#',
+    link: 'lists',
     path1: '/src/assets/icons/icon051.svg',
     path2: '/src/assets/icons/icon052.svg'
   },
   {
     name: 'ブックマーク',
-    link: '#',
+    link: 'bookmarks',
     path1: '/src/assets/icons/icon061.svg',
     path2: '/src/assets/icons/icon062.svg'
   },
   {
     name: 'コミュニティ',
-    link: '#',
+    link: 'communities',
     path1: '/src/assets/icons/icon071.svg',
     path2: '/src/assets/icons/icon072.svg'
   },
   {
     name: 'プレミアム',
-    link: '#',
+    link: 'premium',
     path1: '/src/assets/icons/icon081.svg',
     path2: '/src/assets/icons/icon082.svg'
   },
   {
     name: 'プロフィール',
-    link: '#',
+    link: 'profile',
     path1: '/src/assets/icons/icon091.svg',
     path2: '/src/assets/icons/icon092.svg'
   },

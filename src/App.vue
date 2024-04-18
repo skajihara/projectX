@@ -4,3 +4,11 @@
     <router-view />
   </div>
 </template>
+<style scoped>
+#app {
+  overflow-y: scroll;
+}
+#app::-webkit-scrollbar {
+  display: none;
+}
+</style>
