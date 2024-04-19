@@ -12,11 +12,6 @@ const myProfile = ref({
   userBio: 'qwertyuiop@[ \n asdfghjkl;:] \n zxcvbnm,./'
 })
 
-// console.log(myProfile.value.icon)
-// console.log(myProfile.value.userName)
-// console.log(myProfile.value.userId)
-// console.log(myProfile.value.userBio)
-
 function addTweet() {
   if (newTweetContent.value.trim() !== '') {
     tweets.value.push({
