@@ -1,5 +1,5 @@
 <script setup>
-import SubContents from './SubContents.vue'
+import SubContents from './RightArea/SubContents.vue'
 </script>
 <template>
   <div>

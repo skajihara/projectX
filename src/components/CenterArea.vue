@@ -1,5 +1,5 @@
 <script setup>
-import MainContents from './MainContents.vue'
+import MainContents from './CenterArea/MainContents.vue'
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-import { menuList } from '../consts/menuList.js'
+import { menuList } from '@/consts/menuList.js'
 const currentUserId = 'q30387'
 </script>
 <template>
