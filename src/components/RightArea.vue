@@ -2,7 +2,13 @@
 import SubContents from './SubContents.vue'
 </script>
 <template>
-  <div class="right-area">
-    <SubContents />
+  <div>
+    <div class="sub-contents">
+      <SubContents />
+    </div>
   </div>
 </template>
+<style scoped>
+.sub-contents {
+}
+</style>

@@ -1,6 +1,7 @@
 <script setup></script>
 <template>
-  <div class="trend-topics">
+  <div>
     <h3>おすすめユーザー</h3>
+    <!-- 適当なデータをconstsに用意して表示する -->
   </div>
 </template>

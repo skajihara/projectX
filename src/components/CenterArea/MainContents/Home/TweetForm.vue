@@ -1,3 +1,23 @@
+<script setup>
+import { ref } from 'vue'
+import { tweets } from '@/consts/tweets.js'
+const newTweetContent = ref('')
+
+function addTweet() {
+  if (newTweetContent.value.trim() !== '') {
+    tweets.value.push({
+      content: newTweetContent.value,
+      userId: 'CurrentUser'
+    })
+    newTweetContent.value = ''
+  }
+}
+</script>
 <template>
-  <h1>ツイートフォーム</h1>
+  <div>
+    <h1>ツイートフォーム</h1>
+    <textarea v-model="newTweetContent" placeholder="Please enter something."></textarea>
+    <button @click="addTweet">Tweet</button>
+  </div>
 </template>
+<style scoped></style>

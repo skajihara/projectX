@@ -4,6 +4,10 @@ import MainContents from './MainContents.vue'
 
 <template>
   <div class="center-area">
-    <MainContents />
+    <MainContents class="main-contents"></MainContents>
   </div>
 </template>
+<style scoped>
+.main-contents {
+}
+</style>

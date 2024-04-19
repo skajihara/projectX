@@ -1,25 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // ホーム
-import Home from '../views/Home.vue'
+import Home from '@/components/CenterArea/MainContents/Home.vue'
 // 話題を検索
-import Explore from '../views/Explore.vue'
+import Explore from '@/components/CenterArea/MainContents/Explore.vue'
 // 通知
-import Notifications from '../views/Notifications.vue'
+import Notifications from '@/components/CenterArea/MainContents/Notifications.vue'
 // メッセージ
-import Messages from '../views/Messages.vue'
+import Messages from '@/components/CenterArea/MainContents/Messages.vue'
 // リスト
-import Lists from '../views/Lists.vue'
+import Lists from '@/components/CenterArea/MainContents/Lists.vue'
 // ブックマーク
-import Bookmarks from '../views/Bookmarks.vue'
+import Bookmarks from '@/components/CenterArea/MainContents/Bookmarks.vue'
 // コミュニティ
-import Communities from '../views/Communities.vue'
+import Communities from '@/components/CenterArea/MainContents/Communities.vue'
 // プレミアム
-import Premium from '../views/Premium.vue'
+import Premium from '@/components/CenterArea/MainContents/Premium.vue'
 // プロフィール
-import Profile from '../views/Profile.vue'
+import Profile from '@/components/CenterArea/MainContents/Profile.vue'
 // エラー
-import NotFound from '../views/NotFound.vue'
+import NotFound from '@/components/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(),
