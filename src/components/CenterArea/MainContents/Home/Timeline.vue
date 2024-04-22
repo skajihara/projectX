@@ -14,7 +14,7 @@ function deleteTweet(index) {
         :tweet-content="tweet.content"
         :index="index"
         :user-id="tweet.userId"
-        @child-emit="deleteTweet"
+        @click-delete-button="deleteTweet"
       ></Tweet>
     </div>
   </div>

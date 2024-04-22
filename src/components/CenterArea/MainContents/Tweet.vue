@@ -14,9 +14,9 @@ defineProps({
     required: true
   }
 })
-const emit = defineEmits(['childEmit'])
-const childEmit = (index) => {
-  emit('childEmit', index)
+const emit = defineEmits(['clickDeleteButton'])
+const clickDeleteButton = (index) => {
+  emit('clickDeleteButton', index)
 }
 </script>
 <template>
@@ -24,6 +24,6 @@ const childEmit = (index) => {
     {{ tweetContent }}
     <span class="tweet-by">tweet by @{{ userId }}</span>
   </div>
-  <button @click="childEmit(index)">Delete</button>
+  <button @click="clickDeleteButton(index)">Delete</button>
 </template>
 <style scoped></style>
