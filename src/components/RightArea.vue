@@ -8,7 +8,4 @@ import SubContents from './RightArea/SubContents.vue'
     </div>
   </div>
 </template>
-<style scoped>
-.sub-contents {
-}
-</style>
+<style scoped></style>

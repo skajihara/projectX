@@ -7,7 +7,4 @@ import MainContents from './CenterArea/MainContents.vue'
     <MainContents class="main-contents"></MainContents>
   </div>
 </template>
-<style scoped>
-.main-contents {
-}
-</style>
+<style scoped></style>

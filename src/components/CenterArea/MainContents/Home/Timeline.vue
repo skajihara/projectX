@@ -9,14 +9,13 @@ function deleteTweet(index) {
 <template>
   <div>
     <h1>タイムライン</h1>
-    <Tweet class="tweet"></Tweet>
-
     <div v-for="(tweet, index) in tweets" :key="index" class="tweet">
-      <div class="content">
-        {{ tweet.content }}
-        <span class="tweet-by">tweet by @{{ tweet.userId }}</span>
-      </div>
-      <button @click="deleteTweet(index)">Delete</button>
+      <Tweet
+        :tweet-content="tweet.content"
+        :index="index"
+        :user-id="tweet.userId"
+        @child-emit="deleteTweet"
+      ></Tweet>
     </div>
   </div>
 </template>
