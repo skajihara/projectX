@@ -14,11 +14,6 @@ import Timeline from './Home/Timeline.vue'
 }
 .tweet-form {
 }
-.tweet-form button {
-  margin-left: 10px;
-  position: relative;
-  top: -7px;
-}
 .timeline {
   margin-top: 20px;
 }

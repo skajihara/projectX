@@ -9,18 +9,12 @@ import RecommendedUsers from './SubContents/RecommendedUsers.vue'
   </div>
 </template>
 <style scoped>
-.trend {
+.trend-topics {
   background-color: rgb(230, 230, 230);
   border-radius: 5px;
 }
-.trend h3 {
-  margin: 10px 10px;
-}
-.recommended-user {
+.recommended-users {
   background-color: rgb(230, 230, 230);
   border-radius: 5px;
-}
-.recommended-user h3 {
-  margin: 10px 10px;
 }
 </style>

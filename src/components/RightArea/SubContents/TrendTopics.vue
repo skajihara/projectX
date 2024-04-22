@@ -5,6 +5,9 @@
   </div>
 </template>
 <style scoped>
+.trend-topics h3 {
+  margin: 10px 10px;
+}
 .search-form {
 }
 .search-form button {

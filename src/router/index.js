@@ -76,7 +76,8 @@ const router = createRouter({
     {
       path: '/:userId/profile',
       name: 'profile',
-      component: Profile
+      component: Profile,
+      props: true
     },
     {
       path: '/:catchError(.*)*',

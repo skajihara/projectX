@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import { onMounted } from 'vue'
-import { accounts } from '@/consts/accounts.js'
 import { defineProps } from 'vue'
+import { onBeforeMount, onMounted } from 'vue'
+import { accounts } from '@/consts/accounts.js'
 
 //外部ファイルにアカウント情報を用意する
 //definePropsでユーザIDを受け取り
@@ -17,12 +17,24 @@ const props = defineProps({
 
 const AccountInfo = ref(null)
 
-onMounted(() => {
+onBeforeMount(() => {
   getAccountInfo()
+  console.log('beforeMount')
+})
+
+onMounted(() => {
+  console.log('onMounted')
 })
 
 function getAccountInfo() {
-  AccountInfo.value = accounts.value.find((account) => account.userId === props.userId)
+  const foundAccount = accounts.value.find((account) => account.userId === props.userId)
+  if (foundAccount) {
+    AccountInfo.value = foundAccount
+    console.log(AccountInfo.value)
+  } else {
+    AccountInfo.value = { userName: 'noName', userId: 'noId', useBio: '' }
+    console.error('Account not found')
+  }
 }
 </script>
 

@@ -20,4 +20,10 @@ function addTweet() {
     <button @click="addTweet">Tweet</button>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.tweet-form button {
+  margin-left: 10px;
+  position: relative;
+  top: -7px;
+}
+</style>

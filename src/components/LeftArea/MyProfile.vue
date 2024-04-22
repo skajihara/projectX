@@ -1,18 +1,30 @@
 <script setup>
 import { ref } from 'vue'
-import { onMounted } from 'vue'
+import { onBeforeMount, onMounted } from 'vue'
 
 import { accounts } from '@/consts/accounts.js'
 
 const currentUserId = 'q30387'
 const myAccount = ref(null)
 
-onMounted(() => {
+onBeforeMount(() => {
   searchMyAccount()
+  console.log('beforeMount')
+})
+
+onMounted(() => {
+  console.log('onMounted')
 })
 
 function searchMyAccount() {
-  myAccount.value = accounts.value.find((account) => account.userId === currentUserId)
+  const foundAccount = accounts.value.find((account) => account.userId === currentUserId)
+  if (foundAccount) {
+    myAccount.value = foundAccount
+    console.log(myAccount.value)
+  } else {
+    myAccount.value = { userName: 'noName', userId: 'noId', useBio: '' }
+    console.error('Account not found')
+  }
 }
 </script>
 <template>

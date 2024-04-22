@@ -5,11 +5,11 @@ import RightArea from './components/RightArea.vue'
 </script>
 <template>
   <div id="app">
+    <img alt="tlogo" class="t-logo" src="@/assets/icons/t-logo.svg" width="100" height="100" />
     <div class="whole">
-      <img alt="tlogo" class="t-logo" src="@/assets/icons/t-logo.svg" width="100" height="100" />
-      <LeftArea class="left"></LeftArea>
-      <CenterArea class="center"></CenterArea>
-      <RightArea class="right"></RightArea>
+      <LeftArea class="left-area"></LeftArea>
+      <CenterArea class="center-area"></CenterArea>
+      <RightArea class="right-area"></RightArea>
     </div>
   </div>
 </template>
@@ -32,14 +32,14 @@ import RightArea from './components/RightArea.vue'
   width: auto;
   padding: 0px 100px;
 }
-.left {
+.left-area {
   width: 20%;
 }
-.center {
+.center-area {
   width: 40%;
   padding-top: 10px;
 }
-.right {
+.right-area {
   width: 40%;
   padding-top: 10px;
 }
