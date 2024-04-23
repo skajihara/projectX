@@ -9,12 +9,12 @@ const myAccount = ref(null)
 
 onBeforeMount(() => {
   searchMyAccount()
-  console.log('beforeMount')
+  // console.log('beforeMount')
 })
 
-onMounted(() => {
-  console.log('onMounted')
-})
+// onMounted(() => {
+//   console.log('onMounted')
+// })
 
 function searchMyAccount() {
   const foundAccount = accounts.value.find((account) => account.userId === currentUserId)
