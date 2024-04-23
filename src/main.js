@@ -10,5 +10,5 @@ import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
 const app = createApp(App)
 app.use(router)
-app.use(createBootstrap()) // Important
+app.use(createBootstrap({components: true, directives: true})) // Important
 app.mount('#app')
