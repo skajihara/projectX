@@ -6,11 +6,19 @@ import RightArea from './components/RightArea.vue'
 <template>
   <div id="app">
     <img alt="tlogo" class="t-logo" src="@/assets/icons/t-logo.svg" width="100" height="100" />
-    <div class="whole">
-      <LeftArea class="left-area"></LeftArea>
-      <CenterArea class="center-area"></CenterArea>
-      <RightArea class="right-area"></RightArea>
-    </div>
+    <b-container fluid>
+      <b-row>
+        <b-col>
+          <LeftArea class="left-area"></LeftArea>
+        </b-col>
+        <b-col>
+          <CenterArea class="center-area"></CenterArea>
+        </b-col>
+        <b-col>
+          <RightArea class="right-area"></RightArea>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 <style scoped>
@@ -20,12 +28,12 @@ import RightArea from './components/RightArea.vue'
 #app::-webkit-scrollbar {
   display: none;
 }
-.t-logo {
+/* .t-logo {
   position: relative;
   top: 10px;
   left: 100px;
-}
-.whole {
+} */
+/* .whole {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -42,5 +50,5 @@ import RightArea from './components/RightArea.vue'
 .right-area {
   width: 40%;
   padding-top: 10px;
-}
+} */
 </style>

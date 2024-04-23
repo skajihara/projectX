@@ -22,12 +22,12 @@ const currentUserId = 'q30387'
 </template>
 <style scoped>
 .menu-item {
-  margin-top: 0px;
-  margin-bottom: 20px;
+  margin: 20px 0px;
+  font-size: 25px;
 }
 .menu-icon {
-  margin-top: 5px;
+  /* margin-top: 5px;
   position: relative;
-  top: 10px;
+  top: 10px; */
 }
 </style>

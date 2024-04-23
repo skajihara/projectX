@@ -36,3 +36,11 @@ function searchMyAccount() {
     </div>
   </div>
 </template>
+<style scoped>
+.my-info {
+  line-height: 10px;
+  position: relative;
+  top: 5px;
+  left: 10px;
+}
+</style>
