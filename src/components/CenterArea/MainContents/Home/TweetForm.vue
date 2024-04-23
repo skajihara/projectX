@@ -17,7 +17,7 @@ function addTweet() {
   <div>
     <h1>ツイートフォーム</h1>
     <textarea v-model="newTweetContent" placeholder="Please enter something."></textarea>
-    <button @click="addTweet">Tweet</button>
+    <BButton @click="addTweet">Tweet</BButton>
   </div>
 </template>
 <style scoped>
