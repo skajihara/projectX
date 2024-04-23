@@ -17,13 +17,13 @@ function addTweet() {
   <div>
     <h1>ツイートフォーム</h1>
     <textarea v-model="newTweetContent" placeholder="Please enter something."></textarea>
-    <BButton @click="addTweet">Tweet</BButton>
+    <BButton variant="outline-primary" @click="addTweet">Tweet</BButton>
   </div>
 </template>
 <style scoped>
 .tweet-form button {
   margin-left: 10px;
   position: relative;
-  top: -7px;
+  top: -15px;
 }
 </style>

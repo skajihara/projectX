@@ -24,6 +24,6 @@ const clickDeleteButton = (index) => {
     {{ tweetContent }}
     <span class="tweet-by">tweet by @{{ userId }}</span>
   </div>
-  <BButton @click="clickDeleteButton(index)">Delete</BButton>
+  <BButton variant="outline-secondary" @click="clickDeleteButton(index)">Delete</BButton>
 </template>
 <style scoped></style>
