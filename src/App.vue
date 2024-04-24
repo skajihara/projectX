@@ -16,13 +16,13 @@ import RightArea from './components/RightArea.vue'
     </a>
     <b-container fluid>
       <b-row>
-        <b-col>
+        <b-col md="3">
           <LeftArea class="left-area"></LeftArea>
         </b-col>
-        <b-col>
+        <b-col md="6">
           <CenterArea class="center-area"></CenterArea>
         </b-col>
-        <b-col>
+        <b-col md="3">
           <RightArea class="right-area"></RightArea>
         </b-col>
       </b-row>
