@@ -5,7 +5,7 @@ import RightArea from './components/RightArea.vue'
 </script>
 <template>
   <div id="app">
-    <img alt="tlogo" class="t-logo" src="@/assets/icons/t-logo.svg" width="100" height="100" />
+    <img alt="tlogo" class="t-logo" src="@/assets/icons/logo/t-logo.svg" width="100" height="100" />
     <b-container fluid>
       <b-row>
         <b-col>

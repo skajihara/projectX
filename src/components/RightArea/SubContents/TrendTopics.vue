@@ -29,12 +29,9 @@ onMounted(() => {
   <div>
     <h3 style="padding-top: 10px">トレンドトピックス</h3>
     <div v-for="(topic, index) in randomTopics" :key="index" class="topics">
-      <span>{{ topic.genre }}のトレンド</span>
-      <p>
-        <strong>{{ topic.word }}</strong>
-        <br />
-        {{ topic.num }} tweets
-      </p>
+      <span style="font-size: small; color: gray">{{ topic.genre }}のトレンド</span>
+      <br /><span style="font-weight: bold">{{ topic.word }}</span> <br />
+      <span style="font-size: small; color: gray">{{ topic.num }} tweets</span>
     </div>
   </div>
 </template>
@@ -51,6 +48,6 @@ onMounted(() => {
 }
 .topics {
   margin-left: 10px;
-  padding-bottom: 1px;
+  padding-bottom: 10px;
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { onBeforeMount, onMounted } from 'vue'
+import { onBeforeMount } from 'vue'
 
 import { accounts } from '@/consts/accounts.js'
 
@@ -11,10 +11,6 @@ onBeforeMount(() => {
   searchMyAccount()
   // console.log('beforeMount')
 })
-
-// onMounted(() => {
-//   console.log('onMounted')
-// })
 
 function searchMyAccount() {
   const foundAccount = accounts.value.find((account) => account.userId === currentUserId)
@@ -29,7 +25,7 @@ function searchMyAccount() {
 </script>
 <template>
   <div>
-    <img alt="myicon" class="my-icon" src="@/assets/icons/myicon.svg" width="70" height="70" />
+    <img alt="myicon" class="my-icon" src="@/assets/icons/user/myicon.svg" width="70" height="70" />
     <div class="my-info">
       <p>{{ myAccount.userName }}</p>
       <p>@{{ myAccount.userId }}</p>

@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <div class="error">
-    <img alt="tlogo" class="t-logo" src="@/assets/icons/t-logo.svg" width="300" height="300" />
+    <img alt="tlogo" class="t-logo" src="@/assets/icons/logo/t-logo.svg" width="300" height="300" />
     <h1>404 Not Found</h1>
   </div>
   <div>
