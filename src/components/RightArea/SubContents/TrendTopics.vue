@@ -6,12 +6,15 @@ const randomTopics = ref([])
 
 // ランダムに10件のトピックを選択する
 function selectRandomTopics() {
-  const topics = trendTopics.value.slice() // コピーを作成することで元の配列を変更しない
+  const topics = trendTopics.value.slice()
   const selectedTopics = []
   while (selectedTopics.length < 10 && topics.length > 0) {
-    const randomIndex = Math.floor(Math.random() * topics.length)
+    const randomIndex = Math.floor(Math.random() * (topics.length - 1))
     selectedTopics.push(topics.splice(randomIndex, 1)[0])
-    // console.log('a')
+    if (!selectedTopics) {
+      // undefinedの場合も除外する
+      continue
+    }
   }
   randomTopics.value = selectedTopics
 }
@@ -39,15 +42,15 @@ onMounted(() => {
 .trend-topics h3 {
   margin: 10px 10px;
 }
+.topics {
+  margin-left: 10px;
+  padding-bottom: 10px;
+}
 .search-form {
 }
 .search-form button {
   margin-left: 10px;
   position: relative;
   top: -7px;
-}
-.topics {
-  margin-left: 10px;
-  padding-bottom: 10px;
 }
 </style>
