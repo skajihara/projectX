@@ -25,9 +25,4 @@ const currentUserId = 'q30387'
   margin: 20px 0px;
   font-size: 25px;
 }
-.menu-icon {
-  /* margin-top: 5px;
-  position: relative;
-  top: 10px; */
-}
 </style>

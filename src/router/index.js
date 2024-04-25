@@ -1,24 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-// ホーム
 import Home from '@/components/CenterArea/MainContents/Home.vue'
-// 話題を検索
 import Explore from '@/components/CenterArea/MainContents/Explore.vue'
-// 通知
 import Notifications from '@/components/CenterArea/MainContents/Notifications.vue'
-// メッセージ
 import Messages from '@/components/CenterArea/MainContents/Messages.vue'
-// リスト
 import Lists from '@/components/CenterArea/MainContents/Lists.vue'
-// ブックマーク
 import Bookmarks from '@/components/CenterArea/MainContents/Bookmarks.vue'
-// コミュニティ
 import Communities from '@/components/CenterArea/MainContents/Communities.vue'
-// プレミアム
 import Premium from '@/components/CenterArea/MainContents/Premium.vue'
-// プロフィール
 import Profile from '@/components/CenterArea/MainContents/Profile.vue'
-// エラー
 import NotFound from '@/components/NotFound.vue'
 
 const router = createRouter({

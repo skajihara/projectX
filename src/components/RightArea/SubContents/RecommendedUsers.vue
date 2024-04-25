@@ -5,28 +5,13 @@ import { accounts } from '@/consts/accounts.js'
 const randomUsers = ref([])
 
 // ランダムに10件のユーザを選択する
-function selectRandomUsers() {
-  const users = accounts.value.slice()
-  const selectedUsers = []
-  while (selectedUsers.length < 10 && users.length > 0) {
-    const randomIndex = Math.floor(Math.random() * (users.length - 1))
-    const selectedUser = users.splice(randomIndex, 1)[0]
-    if (selectedUser.userId === 'q30387') {
-      // 自分の情報は除外する
-      continue
-    }
-    if (!selectedUser) {
-      // undefinedの場合も除外する
-      continue
-    }
-    selectedUsers.push(users.splice(randomIndex, 1)[0])
-  }
-  randomUsers.value = selectedUsers
+function pickRandom10Users() {
+  const users = accounts.value.slice(1)
+  const shuffledUserList = users.sort(() => Math.random() - 0.5)
+  randomUsers.value = shuffledUserList.slice(0, 10)
 }
-// 画面の更新時に再度ユーザを選択する
 onMounted(() => {
-  selectRandomUsers()
-  console.log(randomUsers.value)
+  pickRandom10Users()
 })
 </script>
 <template>

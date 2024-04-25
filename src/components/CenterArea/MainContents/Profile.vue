@@ -4,10 +4,6 @@ import { defineProps } from 'vue'
 import { onBeforeMount, onMounted } from 'vue'
 import { accounts } from '@/consts/accounts.js'
 
-//外部ファイルにアカウント情報を用意する
-//definePropsでユーザIDを受け取り
-//ユーザ情報を検索取得する（該当無しの場合はデフォルト値）
-//取得した情報を画面に表示する
 const props = defineProps({
   userId: {
     type: String,
