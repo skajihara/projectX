@@ -30,7 +30,7 @@ function deleteTweet(index) {
         :likes="tweet.likes"
         :retweet="tweet.retweet"
         :reply="tweet.reply"
-        :views="tweet.display"
+        :views="tweet.views"
         @delete-tweet="deleteTweet"
       ></Tweet>
     </div>
