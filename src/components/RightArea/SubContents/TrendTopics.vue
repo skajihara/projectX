@@ -4,7 +4,6 @@ import { trendTopics } from '@/consts/trendTopics.js'
 
 const randomTopics = ref([])
 
-// ランダムに10件のトピックを選択する
 function pickRandom10Topics() {
   const topics = trendTopics.value.slice()
   const shuffledTopics = topics.sort(() => Math.random() - 0.5)
