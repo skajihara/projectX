@@ -14,9 +14,9 @@ defineProps({
     required: true
   }
 })
-const emit = defineEmits(['clickDeleteButton'])
-const clickDeleteButton = (index) => {
-  emit('clickDeleteButton', index)
+const emit = defineEmits(['deleteTweet'])
+const deleteTweet = (index) => {
+  emit('deleteTweet', index)
 }
 </script>
 <template>
@@ -24,6 +24,6 @@ const clickDeleteButton = (index) => {
     {{ tweetContent }}
     <span class="tweet-by">tweet by @{{ userId }}</span>
   </div>
-  <BButton variant="outline-secondary" @click="clickDeleteButton(index)">Delete</BButton>
+  <BButton variant="outline-secondary" @click="deleteTweet(index)">Delete</BButton>
 </template>
 <style scoped></style>

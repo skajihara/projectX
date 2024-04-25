@@ -1,5 +1,4 @@
 <script setup>
-// import { ref } from 'vue'
 import Tweet from '../Tweet.vue'
 import { tweets } from '@/consts/tweets.js'
 function deleteTweet(index) {
@@ -14,7 +13,7 @@ function deleteTweet(index) {
         :tweet-content="tweet.content"
         :index="index"
         :user-id="tweet.userId"
-        @click-delete-button="deleteTweet"
+        @delete-tweet="deleteTweet"
       ></Tweet>
     </div>
   </div>

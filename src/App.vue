@@ -28,27 +28,4 @@ import RightArea from './components/RightArea.vue'
 #app::-webkit-scrollbar {
   display: none;
 }
-/* .t-logo {
-  position: relative;
-  top: 10px;
-  left: 100px;
-} */
-/* .whole {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  width: auto;
-  padding: 0px 100px;
-}
-.left-area {
-  width: 20%;
-}
-.center-area {
-  width: 40%;
-  padding-top: 10px;
-}
-.right-area {
-  width: 40%;
-  padding-top: 10px;
-} */
 </style>

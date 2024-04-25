@@ -5,28 +5,14 @@ import { trendTopics } from '@/consts/trendTopics.js'
 const randomTopics = ref([])
 
 // ランダムに10件のトピックを選択する
-function selectRandomTopics() {
+function pickRandom10Topics() {
   const topics = trendTopics.value.slice()
-  const selectedTopics = []
-  while (selectedTopics.length < 10 && topics.length > 0) {
-    const randomIndex = Math.floor(Math.random() * (topics.length - 1))
-    selectedTopics.push(topics.splice(randomIndex, 1)[0])
-    if (!selectedTopics) {
-      // undefinedの場合も除外する
-      continue
-    }
-  }
-  randomTopics.value = selectedTopics
+  const shuffledTopics = topics.sort(() => Math.random() - 0.5)
+  randomTopics.value = shuffledTopics.slice(0, 10)
 }
-// 画面の更新時に再度トピックを選択する
 onMounted(() => {
-  selectRandomTopics()
-  console.log(randomTopics.value)
+  pickRandom10Topics()
 })
-// onUpdatedに設定すると再帰呼び出しループが発生してエラーとなる
-// onUpdated(() => {
-//   selectRandomTopics()
-// })
 </script>
 <template>
   <div>

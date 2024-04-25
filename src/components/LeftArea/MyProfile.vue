@@ -9,14 +9,12 @@ const myAccount = ref(null)
 
 onBeforeMount(() => {
   searchMyAccount()
-  // console.log('beforeMount')
 })
 
 function searchMyAccount() {
   const foundAccount = accounts.value.find((account) => account.userId === currentUserId)
   if (foundAccount) {
     myAccount.value = foundAccount
-    // console.log(myAccount.value)
   } else {
     myAccount.value = { userName: 'noName', userId: 'noId', useBio: '' }
     console.error('Account not found')
