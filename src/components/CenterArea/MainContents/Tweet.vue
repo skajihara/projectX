@@ -21,9 +21,15 @@ const deleteTweet = (index) => {
 </script>
 <template>
   <div class="content">
-    {{ tweetContent }}
+    <pre class="tweet-text">{{ tweetContent }}</pre>
     <span class="tweet-by">tweet by @{{ userId }}</span>
   </div>
   <BButton variant="outline-secondary" @click="deleteTweet(index)">Delete</BButton>
 </template>
-<style scoped></style>
+<style scoped>
+.tweet-text {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  width: 80ch;
+}
+</style>
