@@ -51,11 +51,27 @@ const deleteTweet = (index) => {
 <template>
   <div class="content">
     <pre class="tweet-text">{{ tweetContent }}</pre>
-    <span class="tweet-info">
+    <div class="tweet-info">
       {{ datetime }} tweet by @{{ userId }} <span style="font-weight: bold">{{ views }}</span> Views
-    </span>
+      <div class="tweet-activity">
+        <div>
+          <img src="@/assets/icons/tweet/reply.svg" width="15" height="15" />
+          {{ reply }}
+        </div>
+        <div>
+          <img src="@/assets/icons/tweet/retweet.svg" width="15" height="15" />
+          {{ retweet }}
+        </div>
+        <div>
+          <img src="@/assets/icons/tweet/likes.svg" width="15" height="15" />
+          {{ likes }}
+        </div>
+        <div>
+          <BButton variant="outline-secondary" @click="deleteTweet(index)">Delete</BButton>
+        </div>
+      </div>
+    </div>
   </div>
-  <BButton variant="outline-secondary" @click="deleteTweet(index)">Delete</BButton>
 </template>
 <style scoped>
 .tweet-text {
@@ -68,5 +84,12 @@ const deleteTweet = (index) => {
   color: gray;
   position: relative;
   top: -20px;
+}
+.tweet-activity {
+  width: 200px;
+  display: grid;
+  grid-template-columns: repeat(4, 50px);
+  grid-column-gap: 50px;
+  align-items: center;
 }
 </style>
