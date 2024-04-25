@@ -32,4 +32,8 @@ const deleteTweet = (index) => {
   white-space: pre-wrap;
   width: 80ch;
 }
+.tweet-by {
+  position: relative;
+  top: -20px;
+}
 </style>
