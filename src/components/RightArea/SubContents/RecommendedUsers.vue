@@ -4,7 +4,6 @@ import { accounts } from '@/consts/accounts.js'
 
 const randomUsers = ref([])
 
-// ランダムに10件のユーザを選択する
 function pickRandom10Users() {
   const users = accounts.value.slice(1)
   const shuffledUserList = users.sort(() => Math.random() - 0.5)
