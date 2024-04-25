@@ -3,7 +3,6 @@ import TweetForm from './Home/TweetForm.vue'
 import Timeline from './Home/Timeline.vue'
 </script>
 <template>
-  <h1>ホーム</h1>
   <div class="home">
     <TweetForm class="tweet-form"></TweetForm>
     <Timeline class="timeline"></Timeline>

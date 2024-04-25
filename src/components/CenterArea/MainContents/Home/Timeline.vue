@@ -20,7 +20,6 @@ function deleteTweet(index) {
 </script>
 <template>
   <div>
-    <h1>タイムライン</h1>
     <div v-for="(tweet, index) in randomTweets" :key="index" class="tweet">
       <Tweet
         :tweet-content="tweet.content"
