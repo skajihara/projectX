@@ -102,10 +102,6 @@ const deleteTweet = (index) => {
   align-items: center;
   justify-content: space-between;
 }
-/* .tweet-header {
-  display: flex;
-  align-items: center;
-} */
 .tweet-text {
   word-wrap: break-word;
   white-space: pre-wrap;
