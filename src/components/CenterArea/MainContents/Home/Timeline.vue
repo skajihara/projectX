@@ -25,6 +25,12 @@ function deleteTweet(index) {
         :tweet-content="tweet.content"
         :index="index"
         :user-id="tweet.userId"
+        :datetime="tweet.datetime"
+        :location="tweet.location"
+        :likes="tweet.likes"
+        :retweet="tweet.retweet"
+        :reply="tweet.reply"
+        :views="tweet.display"
         @delete-tweet="deleteTweet"
       ></Tweet>
     </div>
