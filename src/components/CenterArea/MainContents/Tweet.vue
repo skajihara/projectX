@@ -52,23 +52,33 @@ const deleteTweet = (index) => {
   <div class="content">
     <pre class="tweet-text">{{ tweetContent }}</pre>
     <div class="tweet-info">
-      {{ datetime }} tweet by @{{ userId }} <span style="font-weight: bold">{{ views }}</span> Views
+      <pre>{{ datetime }} tweet by @{{ userId }}  <b>{{ views }}</b> Views</pre>
       <div class="tweet-activity">
         <div>
-          <img src="@/assets/icons/tweet/reply.svg" width="15" height="15" />
-          {{ reply }}
+          <BButton variant="link">
+            <img src="@/assets/icons/tweet/reply.svg" width="15" height="15" />
+          </BButton>
+          <span class="disabled-text">{{ reply }}</span>
         </div>
         <div>
-          <img src="@/assets/icons/tweet/retweet.svg" width="15" height="15" />
-          {{ retweet }}
+          <BButton variant="link">
+            <img src="@/assets/icons/tweet/retweet.svg" width="15" height="15" />
+          </BButton>
+          <span class="disabled-text">{{ retweet }}</span>
         </div>
         <div>
-          <img src="@/assets/icons/tweet/likes.svg" width="15" height="15" />
-          {{ likes }}
+          <BButton variant="link">
+            <img src="@/assets/icons/tweet/likes.svg" width="15" height="15" />
+          </BButton>
+          <span class="disabled-text">{{ likes }}</span>
         </div>
         <div>
-          <BButton variant="outline-secondary" @click="deleteTweet(index)">Delete</BButton>
+          <BButton variant="link">
+            <img src="@/assets/icons/tweet/views.svg" width="15" height="15" />
+          </BButton>
+          <span class="disabled-text">{{ views }}</span>
         </div>
+        <BButton variant="outline-secondary" @click="deleteTweet(index)">Delete</BButton>
       </div>
     </div>
   </div>
@@ -77,19 +87,25 @@ const deleteTweet = (index) => {
 .tweet-text {
   word-wrap: break-word;
   white-space: pre-wrap;
-  width: 80ch;
+  width: 50ch;
+  font-size: 15pt;
 }
 .tweet-info {
-  font-size: small;
   color: gray;
   position: relative;
-  top: -20px;
+  top: -15px;
 }
 .tweet-activity {
-  width: 200px;
+  width: 400px;
   display: grid;
-  grid-template-columns: repeat(4, 50px);
+  grid-template-columns: repeat(4, 80px);
   grid-column-gap: 50px;
   align-items: center;
+}
+.disabled-text {
+  color: gray;
+  position: relative;
+  left: -5px;
+  top: 3px;
 }
 </style>

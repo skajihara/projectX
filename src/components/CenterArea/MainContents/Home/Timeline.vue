@@ -15,7 +15,7 @@ onMounted(() => {
 })
 
 function deleteTweet(index) {
-  tweets.value.splice(index, 1)
+  randomTweets.value.splice(index, 1)
 }
 </script>
 <template>
