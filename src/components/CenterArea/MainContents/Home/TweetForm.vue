@@ -1,9 +1,13 @@
 <script setup>
 import { ref } from 'vue'
+import { accounts } from '@/consts/accounts.js'
 
 const newTweetContent = ref('')
 const addedTweets = ref([])
 
+function searchIcon(userId) {
+  return accounts.value.find((account) => account.userId === userId).icon
+}
 function addTweet() {
   if (newTweetContent.value.trim() !== '') {
     const currentDate = new Date()
@@ -17,7 +21,7 @@ function addTweet() {
       year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
     addedTweets.value.unshift({
       content: newTweetContent.value,
-      userId: 'CurrentUser',
+      userId: 'user_current',
       datetime: formattedCurrentDate,
       location: 'somewhere',
       likes: 0,
@@ -28,11 +32,14 @@ function addTweet() {
     newTweetContent.value = ''
   }
 }
+function deleteTweet(index) {
+  addedTweets.value.splice(index, 1)
+}
 </script>
 <template>
   <div>
-    <textarea v-model="newTweetContent" placeholder="Please enter something."></textarea>
-    <BButton variant="outline-primary" @click="addTweet">Tweet</BButton>
+    <textarea v-model="newTweetContent" placeholder="いまどうしてる？"></textarea>
+    <BButton variant="outline-primary" @click="addTweet">ツイート</BButton>
     <div v-for="(tweet, index) in addedTweets" :key="index" class="tweet">
       <Tweet
         :tweet-content="tweet.content"
@@ -44,6 +51,7 @@ function addTweet() {
         :retweet="tweet.retweet"
         :reply="tweet.reply"
         :views="tweet.views"
+        :icon="searchIcon(tweet.userId)"
         @delete-tweet="deleteTweet"
       ></Tweet>
     </div>

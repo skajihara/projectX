@@ -2,9 +2,15 @@
 import { ref, onMounted } from 'vue'
 import Tweet from '../Tweet.vue'
 import { tweets } from '@/consts/tweets.js'
+import { accounts } from '@/consts/accounts.js'
 
 const randomTweets = ref([])
-
+function searchIcon(userId) {
+  return accounts.value.find((account) => account.userId === userId).icon
+}
+function deleteTweet(index) {
+  randomTweets.value.splice(index, 1)
+}
 function pickRandom20Tweets() {
   const copyTweets = tweets.value.slice()
   const shuffledTweets = copyTweets.sort(() => Math.random() - 0.5)
@@ -13,10 +19,6 @@ function pickRandom20Tweets() {
 onMounted(() => {
   pickRandom20Tweets()
 })
-
-function deleteTweet(index) {
-  randomTweets.value.splice(index, 1)
-}
 </script>
 <template>
   <div>
@@ -31,14 +33,10 @@ function deleteTweet(index) {
         :retweet="tweet.retweet"
         :reply="tweet.reply"
         :views="tweet.views"
+        :icon="searchIcon(tweet.userId)"
         @delete-tweet="deleteTweet"
       ></Tweet>
     </div>
   </div>
 </template>
-<style scoped>
-.tweet {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-</style>
+<style scoped></style>

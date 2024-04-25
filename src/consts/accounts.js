@@ -7,6 +7,12 @@ export const accounts = ref([
     userBio: '最近はVue.jsを学習中です。'
   },
   {
+    icon: '/src/assets/icons/user/myicon.svg',
+    userName: 'CurrentUser',
+    userId: 'user_current',
+    userBio: 'コーディング中………'
+  },
+  {
     icon: '/src/assets/icons/user/kkrn_icon_user_12.svg',
     userName: 'Test User A',
     userId: 'user_A',

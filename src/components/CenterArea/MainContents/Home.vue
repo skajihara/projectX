@@ -8,12 +8,4 @@ import Timeline from './Home/Timeline.vue'
     <Timeline class="timeline"></Timeline>
   </div>
 </template>
-<style scoped>
-.home {
-}
-.tweet-form {
-}
-.timeline {
-  margin-top: 20px;
-}
-</style>
+<style scoped></style>

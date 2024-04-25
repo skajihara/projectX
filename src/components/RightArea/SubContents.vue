@@ -24,7 +24,7 @@ const paginatedItems = computed(() => {
   <div>
     <div class="search-form">
       <b-input-group>
-        <b-form-input v-model="searchQuery" placeholder="search" class="no-outline"></b-form-input>
+        <b-form-input v-model="searchQuery" placeholder="検索" class="no-outline"></b-form-input>
         <b-input-group-append>
           <b-button variant="primary" @click="search">検索</b-button>
         </b-input-group-append>

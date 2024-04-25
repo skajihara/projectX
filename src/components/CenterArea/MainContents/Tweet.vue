@@ -38,6 +38,10 @@ defineProps({
     required: false,
     default: 0
   },
+  icon: {
+    type: String,
+    required: true
+  },
   index: {
     type: Number,
     required: true
@@ -50,6 +54,10 @@ const deleteTweet = (index) => {
 </script>
 <template>
   <div class="content">
+    <div class="tweet-header">
+      <img class="user-icon" :src="icon" width="50" height="50" />
+      <BButton pill size="sm" @click="deleteTweet(index)">削除</BButton>
+    </div>
     <pre class="tweet-text">{{ tweetContent }}</pre>
     <div class="tweet-info">
       <pre>{{ datetime }} tweet by @{{ userId }}  <b>{{ views }}</b> Views</pre>
@@ -78,12 +86,26 @@ const deleteTweet = (index) => {
           </BButton>
           <span class="disabled-text">{{ views }}</span>
         </div>
-        <BButton variant="outline-secondary" @click="deleteTweet(index)">Delete</BButton>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
+.content {
+  width: 600px;
+  border: 1px solid gray;
+  padding: 10px 10px;
+}
+.tweet-header {
+  width: 540px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* .tweet-header {
+  display: flex;
+  align-items: center;
+} */
 .tweet-text {
   word-wrap: break-word;
   white-space: pre-wrap;
