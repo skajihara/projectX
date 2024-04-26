@@ -32,14 +32,13 @@ import RightArea from './components/RightArea.vue'
   </div>
 </template>
 <style scoped>
-#app {
-  overflow-y: scroll;
-}
-#app::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
 }
 .whole {
+  height: 800px;
   display: flex;
+  flex-direction: row;
   align-content: center;
 }
 .left {
@@ -47,8 +46,10 @@ import RightArea from './components/RightArea.vue'
 }
 .center {
   min-width: 700px;
+  overflow-y: scroll;
 }
 .right {
   min-width: 300px;
+  overflow-y: scroll;
 }
 </style>
