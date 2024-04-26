@@ -21,7 +21,7 @@ function addTweet() {
       year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
     addedTweets.value.unshift({
       content: newTweetContent.value,
-      userId: 'user_current',
+      userId: 'q30387',
       datetime: formattedCurrentDate,
       location: 'somewhere',
       likes: 0,

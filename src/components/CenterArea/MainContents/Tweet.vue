@@ -56,7 +56,9 @@ const deleteTweet = (index) => {
   <div class="content">
     <div class="tweet-header">
       <img class="user-icon" :src="icon" width="50" height="50" />
-      <BButton pill size="sm" @click="deleteTweet(index)">削除</BButton>
+      <div v-show="userId === 'q30387'">
+        <BButton pill size="sm" @click="deleteTweet(index)">削除</BButton>
+      </div>
     </div>
     <pre class="tweet-text">{{ tweetContent }}</pre>
     <div class="tweet-info">
