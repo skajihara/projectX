@@ -38,7 +38,7 @@ function deleteTweet(index) {
 </script>
 <template>
   <div>
-    <textarea v-model="newTweetContent" placeholder="いまどうしてる？"></textarea>
+    <textarea id="new-tweet" v-model="newTweetContent" placeholder="いまどうしてる？"></textarea>
     <BButton variant="outline-primary" @click="addTweet">ツイート</BButton>
     <div v-for="(tweet, index) in addedTweets" :key="index" class="tweet">
       <Tweet
