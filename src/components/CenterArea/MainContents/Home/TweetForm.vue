@@ -38,8 +38,21 @@ function deleteTweet(index) {
 </script>
 <template>
   <div>
-    <textarea id="new-tweet" v-model="newTweetContent" placeholder="いまどうしてる？"></textarea>
-    <BButton variant="outline-primary" @click="addTweet">ツイート</BButton>
+    <div class="tweet-form">
+      <img class="user-icon" src="@/assets/icons/user/myicon.svg" width="50" height="50" />
+      <BButton pill variant="primary" :disabled="newTweetContent === ''" @click="addTweet">
+        ツイート
+      </BButton>
+      <b-form-textarea
+        id="new-tweet"
+        v-model="newTweetContent"
+        placeholder="いまどうしてる？"
+        rows="3"
+        max-rows="6"
+        :maxlength="280"
+        style="width: 600px"
+      />
+    </div>
     <div v-for="(tweet, index) in addedTweets" :key="index" class="tweet">
       <Tweet
         :tweet-content="tweet.content"
@@ -58,9 +71,7 @@ function deleteTweet(index) {
   </div>
 </template>
 <style scoped>
-.tweet-form button {
-  margin-left: 10px;
-  position: relative;
-  top: -15px;
+.tweet-form {
+  margin-bottom: 10px;
 }
 </style>
