@@ -95,7 +95,8 @@ const deleteTweet = (index) => {
 <style scoped>
 .content {
   width: 600px;
-  border: 1px solid gray;
+  border: 1px solid rgba(200, 200, 200, 0.6);
+  border-radius: 5px;
   padding: 10px 10px;
 }
 .tweet-header {
