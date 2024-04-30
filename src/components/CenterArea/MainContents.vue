@@ -4,7 +4,7 @@
   <div>
     <transition name="fade" mode="out-in">
       <!-- サイドメニューで選択したコンテンツの表示 -->
-      <RouterView></RouterView>
+      <RouterView />
     </transition>
   </div>
 </template>
