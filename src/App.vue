@@ -10,9 +10,16 @@ import RightArea from './components/RightArea.vue'
         <div class="whole d-flex justify-content-center">
           <div class="left">
             <b-col>
-              <a href="/home">
-                <img class="t-logo" src="@/assets/icons/logo/t-logo.svg" width="100" height="100" />
-              </a>
+              <transition name="fade">
+                <RouterLink to="/home" class="link-with-image">
+                  <img
+                    class="t-logo"
+                    src="@/assets/icons/logo/t-logo.svg"
+                    width="100"
+                    height="100"
+                  />
+                </RouterLink>
+              </transition>
               <LeftArea class="left-area"></LeftArea>
             </b-col>
           </div>
@@ -35,6 +42,9 @@ import RightArea from './components/RightArea.vue'
 ::-webkit-scrollbar {
   display: none;
 }
+.link-with-image {
+  display: inline-block;
+}
 .whole {
   height: 800px;
   display: flex;
@@ -46,10 +56,20 @@ import RightArea from './components/RightArea.vue'
 }
 .center {
   min-width: 700px;
+  max-width: 700px;
   overflow-y: scroll;
 }
 .right {
   min-width: 300px;
   overflow-y: scroll;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

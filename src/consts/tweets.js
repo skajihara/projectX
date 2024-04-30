@@ -8,7 +8,8 @@ export const tweets = ref([
     likes: 9,
     retweet: 23,
     reply: 7,
-    views: 14
+    views: 14,
+    image: '/src/assets/images/img02.jpg'
   },
   {
     content: '夜間はライトアップも実施「令和6年度 八女黒木大藤まつり」開催！',
@@ -18,7 +19,8 @@ export const tweets = ref([
     likes: 301,
     retweet: 2,
     reply: 0,
-    views: 124
+    views: 124,
+    image: '/src/assets/images/img03.jpg'
   },
   {
     content: 'プレゼントキャンペーン🎁',
@@ -28,7 +30,8 @@ export const tweets = ref([
     likes: 30133,
     retweet: 2322,
     reply: 792,
-    views: 140230
+    views: 140230,
+    image: '/src/assets/images/img04.jpg'
   },
   {
     content: 'ガチャ爆死したなう',
@@ -38,7 +41,8 @@ export const tweets = ref([
     likes: 13,
     retweet: 3,
     reply: 2,
-    views: 140
+    views: 140,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: 'コカ・コーラ 500ml×24本がクーポンと定期お得便で1691円に #広告',
@@ -48,7 +52,8 @@ export const tweets = ref([
     likes: 23301,
     retweet: 232,
     reply: 7333,
-    views: 149934
+    views: 149934,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '急速に溶けていくギルバトのモチベ',
@@ -58,7 +63,8 @@ export const tweets = ref([
     likes: 1,
     retweet: 0,
     reply: 0,
-    views: 23
+    views: 23,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content:
@@ -69,7 +75,8 @@ export const tweets = ref([
     likes: 11,
     retweet: 3,
     reply: 0,
-    views: 63
+    views: 63,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content:
@@ -80,7 +87,8 @@ export const tweets = ref([
     likes: 27,
     retweet: 1,
     reply: 1,
-    views: 29
+    views: 29,
+    image: '/src/assets/images/img05.jpg'
   },
   {
     content:
@@ -91,7 +99,8 @@ export const tweets = ref([
     likes: 1,
     retweet: 2,
     reply: 1,
-    views: 1
+    views: 1,
+    image: '/src/assets/images/img06.jpg'
   },
   {
     content: '【夜の八戸市】夜景が綺麗な八戸市、今日も癒されました♪ #夜景 #八戸',
@@ -101,7 +110,8 @@ export const tweets = ref([
     likes: 31,
     retweet: 3,
     reply: 1,
-    views: 148
+    views: 148,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【湖畔の朝】彦根市の湖畔で朝ランニング、気持ちいいですね！ #朝ラン #彦根',
@@ -111,7 +121,8 @@ export const tweets = ref([
     likes: 9,
     retweet: 0,
     reply: 0,
-    views: 40
+    views: 40,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【福井市の風景】福井市の公園でのんびり過ごしています。 #公園 #福井',
@@ -121,7 +132,8 @@ export const tweets = ref([
     likes: 10,
     retweet: 3,
     reply: 0,
-    views: 92
+    views: 92,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【神戸市でランチ】神戸市で美味しいお店を見つけました！ #ランチ #神戸',
@@ -131,7 +143,8 @@ export const tweets = ref([
     likes: 30,
     retweet: 2,
     reply: 1,
-    views: 234
+    views: 234,
+    image: '/src/assets/images/img07.jpg'
   },
   {
     content: '【お昼休みの小松市】小松市の公園でお昼休み中です。 #お昼休み #小松',
@@ -141,7 +154,8 @@ export const tweets = ref([
     likes: 1,
     retweet: 0,
     reply: 0,
-    views: 9
+    views: 9,
+    image: '/src/assets/images/img08.jpg'
   },
   {
     content: '【熊本市の街角】熊本市の街角にあるカフェでコーヒーを飲んでいます。 #カフェ #熊本',
@@ -151,7 +165,8 @@ export const tweets = ref([
     likes: 2,
     retweet: 1,
     reply: 0,
-    views: 2
+    views: 2,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【米沢市の観光】米沢市の観光地を散策中です！ #観光 #米沢',
@@ -161,7 +176,8 @@ export const tweets = ref([
     likes: 13,
     retweet: 1,
     reply: 70,
-    views: 404
+    views: 404,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【秋田県横手市で遊ぶ】秋田県横手市の遊園地に来ました！楽しいです♪ #遊園地 #秋田',
@@ -171,7 +187,8 @@ export const tweets = ref([
     likes: 24,
     retweet: 3,
     reply: 1,
-    views: 604
+    views: 604,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【郡山市の雪景色】郡山市でのんびり雪景色を楽しんでいます。 #雪 #郡山',
@@ -181,7 +198,8 @@ export const tweets = ref([
     likes: 30,
     retweet: 2,
     reply: 5,
-    views: 1411
+    views: 1411,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【高崎市の夜景】高崎市の夜景が綺麗ですね！ #夜景 #高崎',
@@ -191,7 +209,8 @@ export const tweets = ref([
     likes: 91,
     retweet: 3,
     reply: 7,
-    views: 1914
+    views: 1914,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【沼津市の海】沼津市の海岸で波の音を聞きながら散歩しています。 #海 #沼津',
@@ -201,7 +220,8 @@ export const tweets = ref([
     likes: 1,
     retweet: 0,
     reply: 0,
-    views: 4
+    views: 4,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【旭川市でカフェ】旭川市のカフェで友達とおしゃべり中♪ #カフェ #旭川',
@@ -211,7 +231,8 @@ export const tweets = ref([
     likes: 1,
     retweet: 2,
     reply: 6,
-    views: 124
+    views: 124,
+    image: '/src/assets/images/img09.jpg'
   },
   {
     content: '【堺市の夜】堺市の夜景がとても幻想的です！ #夜景 #堺',
@@ -221,7 +242,8 @@ export const tweets = ref([
     likes: 366,
     retweet: 23,
     reply: 17,
-    views: 3800
+    views: 3800,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【彦根市のお祭り】彦根市のお祭りに参加しています！ #お祭り #彦根',
@@ -231,7 +253,8 @@ export const tweets = ref([
     likes: 30,
     retweet: 3,
     reply: 2,
-    views: 1095
+    views: 1095,
+    image: '/src/assets/images/img10.jpg'
   },
   {
     content: '【島原市の温泉】島原市の温泉で癒されてきました♪ #温泉 #島原',
@@ -241,7 +264,8 @@ export const tweets = ref([
     likes: 54,
     retweet: 13,
     reply: 5,
-    views: 3214
+    views: 3214,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【大分市の夕日】大分市の海岸で夕日を見ています！ #夕日 #大分',
@@ -251,7 +275,8 @@ export const tweets = ref([
     likes: 11,
     retweet: 1,
     reply: 0,
-    views: 3114
+    views: 3114,
+    image: '/src/assets/images/img11.jpg'
   },
   {
     content:
@@ -262,7 +287,8 @@ export const tweets = ref([
     likes: 50,
     retweet: 5,
     reply: 3,
-    views: 8114
+    views: 8114,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【大和高田市の公園】大和高田市の公園でピクニックしています♪ #ピクニック #大和高田',
@@ -272,7 +298,8 @@ export const tweets = ref([
     likes: 1,
     retweet: 0,
     reply: 0,
-    views: 10
+    views: 10,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【丸亀市の名物】丸亀市の讃岐うどんを食べています！ #うどん #丸亀',
@@ -282,7 +309,8 @@ export const tweets = ref([
     likes: 1,
     retweet: 2,
     reply: 0,
-    views: 13
+    views: 13,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【島原市の海岸】島原市の海岸でサーフィンを楽しんでいます！ #サーフィン #島原',
@@ -292,7 +320,8 @@ export const tweets = ref([
     likes: 11,
     retweet: 3,
     reply: 0,
-    views: 114
+    views: 114,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【川口市のイベント】川口市で開催されているイベントに参加しています！ #イベント #川口',
@@ -302,7 +331,8 @@ export const tweets = ref([
     likes: 1,
     retweet: 0,
     reply: 0,
-    views: 111
+    views: 111,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【姫路市の観光】姫路市の城を見学中です！ #観光 #姫路',
@@ -312,7 +342,8 @@ export const tweets = ref([
     likes: 301,
     retweet: 23,
     reply: 7,
-    views: 14
+    views: 14,
+    image: '/src/assets/images/img02.jpg'
   },
   {
     content:
@@ -323,7 +354,8 @@ export const tweets = ref([
     likes: 845,
     retweet: 2,
     reply: 6,
-    views: 4634
+    views: 4634,
+    image: '/src/assets/images/img03.jpg'
   },
   {
     content: '【鹿児島市のグルメ】鹿児島市の居酒屋で美味しい料理を楽しんでいます！ #居酒屋 #鹿児島',
@@ -333,7 +365,8 @@ export const tweets = ref([
     likes: 366,
     retweet: 19,
     reply: 7,
-    views: 2244
+    views: 2244,
+    image: '/src/assets/images/img01.GIF'
   },
   {
     content: '【長野市の雪】長野市で雪だるまを作っています！ #雪だるま #長野',
@@ -343,7 +376,8 @@ export const tweets = ref([
     likes: 751,
     retweet: 3,
     reply: 8,
-    views: 3128
+    views: 3128,
+    image: '/src/assets/images/img04.jpg'
   },
   {
     content: '【水戸市の公園】水戸市の公園で散歩中です。 #散歩 #水戸',
@@ -353,7 +387,8 @@ export const tweets = ref([
     likes: 255,
     retweet: 13,
     reply: 0,
-    views: 4385
+    views: 4385,
+    image: ''
   },
   {
     content: '【姫路市の観光】姫路市の城を見学中です！ #観光 #姫路',
@@ -363,7 +398,8 @@ export const tweets = ref([
     likes: 493,
     retweet: 19,
     reply: 4,
-    views: 448
+    views: 448,
+    image: ''
   },
   {
     content:
@@ -374,7 +410,8 @@ export const tweets = ref([
     likes: 21,
     retweet: 9,
     reply: 3,
-    views: 3103
+    views: 3103,
+    image: ''
   },
   {
     content: '【鹿児島市のグルメ】鹿児島市の居酒屋で美味しい料理を楽しんでいます！ #居酒屋 #鹿児島',
@@ -384,7 +421,8 @@ export const tweets = ref([
     likes: 844,
     retweet: 1,
     reply: 4,
-    views: 3390
+    views: 3390,
+    image: '/src/assets/images/img05.jpg'
   },
   {
     content: '【長野市の雪】長野市で雪だるまを作っています！ #雪だるま #長野',
@@ -394,7 +432,8 @@ export const tweets = ref([
     likes: 614,
     retweet: 11,
     reply: 7,
-    views: 2371
+    views: 2371,
+    image: ''
   },
   {
     content: '【水戸市の公園】水戸市の公園で散歩中です。 #散歩 #水戸',
@@ -403,7 +442,8 @@ export const tweets = ref([
     likes: 802,
     retweet: 1,
     reply: 6,
-    views: 350
+    views: 350,
+    image: '/src/assets/images/img06.jpg'
   },
   {
     content: '【秋田市の祭り】秋田市の祭りに来ました！たくさんの人が楽しんでいます♪ #秋田 #祭り',
@@ -413,7 +453,8 @@ export const tweets = ref([
     likes: 48,
     retweet: 8,
     reply: 4,
-    views: 4252
+    views: 4252,
+    image: '/src/assets/images/img07.jpg'
   },
   {
     content: '【静岡市の花火大会】静岡市の花火大会に友達と来ました！素敵な夜です♪ #花火大会 #静岡',
@@ -423,7 +464,8 @@ export const tweets = ref([
     likes: 542,
     retweet: 10,
     reply: 0,
-    views: 4214
+    views: 4214,
+    image: '/src/assets/images/img08.jpg'
   },
   {
     content: '【富山市のグルメ】富山市の海鮮丼を食べています！美味しいです♪ #海鮮丼 #富山',
@@ -433,7 +475,8 @@ export const tweets = ref([
     likes: 958,
     retweet: 8,
     reply: 9,
-    views: 2920
+    views: 2920,
+    image: '/src/assets/images/img09.jpg'
   },
   {
     content: '【福岡市のカフェ】福岡市のカフェで友達とお茶しています♪ #カフェ #福岡',
@@ -443,7 +486,8 @@ export const tweets = ref([
     likes: 975,
     retweet: 10,
     reply: 10,
-    views: 3211
+    views: 3211,
+    image: '/src/assets/images/img10.jpg'
   },
   {
     content: '【広島市の夜景】広島市の夜景を見に来ました！ロマンチックですね♪ #夜景 #広島',
@@ -453,7 +497,8 @@ export const tweets = ref([
     likes: 942,
     retweet: 17,
     reply: 8,
-    views: 3842
+    views: 3842,
+    image: '/src/assets/images/img11.jpg'
   },
   {
     content: '【岡山市の博物館】岡山市の博物館で歴史を学んでいます！ #博物館 #岡山',
@@ -463,7 +508,8 @@ export const tweets = ref([
     likes: 179,
     retweet: 6,
     reply: 5,
-    views: 3510
+    views: 3510,
+    image: ''
   },
   {
     content: '【神戸市の公園】神戸市の公園でお弁当を食べています♪ #お弁当 #神戸',
@@ -473,7 +519,8 @@ export const tweets = ref([
     likes: 509,
     retweet: 5,
     reply: 2,
-    views: 4691
+    views: 4691,
+    image: ''
   },
   {
     content: '【神戸市の夜景】神戸市の夜景が綺麗ですね！ #夜景 #神戸',
@@ -483,7 +530,8 @@ export const tweets = ref([
     likes: 801,
     retweet: 18,
     reply: 0,
-    views: 1763
+    views: 1763,
+    image: ''
   },
   {
     content: '【千葉市の公園】千葉市の公園でお花見中です♪ #お花見 #千葉',
@@ -493,7 +541,8 @@ export const tweets = ref([
     likes: 350,
     retweet: 5,
     reply: 2,
-    views: 3875
+    views: 3875,
+    image: ''
   },
   {
     content: '【盛岡市の観光】盛岡市の観光地を巡っています！ #観光 #盛岡',
@@ -503,7 +552,8 @@ export const tweets = ref([
     likes: 464,
     retweet: 17,
     reply: 10,
-    views: 3009
+    views: 3009,
+    image: ''
   },
   {
     content: '【大阪市のグルメ】大阪市のたこ焼き屋さんでたこ焼きを食べています！ #たこ焼き #大阪',
@@ -513,7 +563,8 @@ export const tweets = ref([
     likes: 301,
     retweet: 23,
     reply: 7,
-    views: 14
+    views: 14,
+    image: ''
   },
   {
     content: '【福岡市の温泉】福岡市の温泉でリフレッシュしています♪ #温泉 #福岡',
@@ -523,7 +574,8 @@ export const tweets = ref([
     likes: 790,
     retweet: 3,
     reply: 5,
-    views: 270
+    views: 270,
+    image: ''
   },
   {
     content: '【広島市の公園】広島市の公園で遊んでいます♪ #公園 #広島',
@@ -533,7 +585,8 @@ export const tweets = ref([
     likes: 207,
     retweet: 0,
     reply: 4,
-    views: 2329
+    views: 2329,
+    image: ''
   },
   {
     content: '【岡山市のグルメ】岡山市の牛丼を食べています！ #牛丼 #岡山',
@@ -543,7 +596,8 @@ export const tweets = ref([
     likes: 4,
     retweet: 16,
     reply: 7,
-    views: 1628
+    views: 1628,
+    image: ''
   },
   {
     content:
@@ -554,7 +608,8 @@ export const tweets = ref([
     likes: 94,
     retweet: 8,
     reply: 10,
-    views: 3260
+    views: 3260,
+    image: ''
   },
   {
     content: '【盛岡市の雪景色】盛岡市の雪景色が綺麗ですね♪ #雪景色 #盛岡',
@@ -564,7 +619,8 @@ export const tweets = ref([
     likes: 961,
     retweet: 16,
     reply: 1,
-    views: 2553
+    views: 2553,
+    image: ''
   },
   {
     content: '【大阪市のグルメ】大阪市のたこ焼き屋さんでたこ焼きを食べています！ #たこ焼き #大阪',
@@ -574,7 +630,8 @@ export const tweets = ref([
     likes: 920,
     retweet: 7,
     reply: 1,
-    views: 4871
+    views: 4871,
+    image: ''
   },
   {
     content: '【福岡市の温泉】福岡市の温泉でリフレッシュしています♪ #温泉 #福岡',
@@ -584,7 +641,8 @@ export const tweets = ref([
     likes: 65,
     retweet: 9,
     reply: 0,
-    views: 4675
+    views: 4675,
+    image: ''
   },
   {
     content: '【広島市の公園】広島市の公園で遊んでいます♪ #公園 #広島',
@@ -594,7 +652,8 @@ export const tweets = ref([
     likes: 670,
     retweet: 16,
     reply: 10,
-    views: 1913
+    views: 1913,
+    image: ''
   },
   {
     content: '【岡山市のグルメ】岡山市の牛丼を食べています！ #牛丼 #岡山',
@@ -604,7 +663,8 @@ export const tweets = ref([
     likes: 833,
     retweet: 19,
     reply: 1,
-    views: 2070
+    views: 2070,
+    image: ''
   },
   {
     content:
@@ -625,6 +685,7 @@ export const tweets = ref([
     likes: 402,
     retweet: 0,
     reply: 5,
-    views: 4579
+    views: 4579,
+    image: ''
   }
 ])

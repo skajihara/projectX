@@ -42,6 +42,11 @@ defineProps({
     type: String,
     required: true
   },
+  image: {
+    type: String,
+    required: false,
+    default: ''
+  },
   index: {
     type: Number,
     required: true
@@ -61,6 +66,9 @@ const deleteTweet = (index) => {
       </div>
     </div>
     <pre class="tweet-text">{{ tweetContent }}</pre>
+    <div v-if="image" class="tweet-image">
+      <img :src="image" style="max-width: 500px; max-height: 200px" />
+    </div>
     <div class="tweet-info">
       <pre>{{ datetime }} tweet by @{{ userId }}  <b>{{ views }}</b> Views</pre>
       <div class="tweet-activity">
@@ -110,6 +118,9 @@ const deleteTweet = (index) => {
   white-space: pre-wrap;
   width: 50ch;
   font-size: 15pt;
+}
+.tweet-image {
+  padding-bottom: 20px;
 }
 .tweet-info {
   color: gray;
