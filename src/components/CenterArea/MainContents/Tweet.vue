@@ -66,7 +66,7 @@ const deleteTweet = (index) => {
       </div>
     </div>
     <pre class="tweet-text">{{ tweetContent }}</pre>
-    <div v-if="image !== ''" class="tweet-image">
+    <div v-if="image" class="tweet-image">
       <img :src="image" style="max-width: 500px; max-height: 200px" />
     </div>
     <div class="tweet-info">
