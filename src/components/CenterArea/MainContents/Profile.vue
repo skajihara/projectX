@@ -35,12 +35,14 @@ function getAccountInfo() {
 </script>
 
 <template>
-  <h1>プロフィール</h1>
   <div>
-    <router-link :to="{ name: 'home' }">🔙戻る</router-link>
-    <p>ユーザーID: {{ AccountInfo.userId }}</p>
-    <p>ユーザー名: {{ AccountInfo.userName }}</p>
-    <p>自己紹介: {{ AccountInfo.userBio }}</p>
-    <p>{{ $route }}</p>
+    <h1>プロフィール</h1>
+    <div>
+      <router-link :to="{ name: 'home' }">🔙戻る</router-link>
+      <p>ユーザーID: {{ AccountInfo.userId }}</p>
+      <p>ユーザー名: {{ AccountInfo.userName }}</p>
+      <p>自己紹介: {{ AccountInfo.userBio }}</p>
+      <p>{{ $route }}</p>
+    </div>
   </div>
 </template>
