@@ -34,6 +34,7 @@ onMounted(() => {
         :reply="tweet.reply"
         :views="tweet.views"
         :icon="searchIcon(tweet.userId)"
+        :image="tweet.image"
         @delete-tweet="deleteTweet"
       ></Tweet>
     </div>
