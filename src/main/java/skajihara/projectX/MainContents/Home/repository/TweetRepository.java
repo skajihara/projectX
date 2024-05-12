@@ -17,16 +17,3 @@ public interface TweetRepository extends JpaRepository<Tweet,Integer> {
     @Query("SELECT t FROM Tweet t WHERE t.deleteFlag = false ORDER BY t.datetime DESC LIMIT :num")
     List<Tweet> selectRecentN(@Param("num") int num);
 }
-//
-//@Mapper
-//public interface IssueRepository {
-//
-//    @Select("select * from issues")
-//    List<IssueEntity> findAll();
-//
-//    @Insert("insert into issues (summary, description) values (#{summary}, #{description})")
-//    void insert(String summary, String description);
-//
-//    @Select("select * from issues where id = #{issueId}")
-//    IssueEntity findById(long issueId);
-//}
