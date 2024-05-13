@@ -675,7 +675,8 @@ export const tweets = ref([
     likes: 58,
     retweet: 1,
     reply: 8,
-    views: 4192
+    views: 4192,
+    image: ''
   },
   {
     content: '【盛岡市の雪景色】盛岡市の雪景色が綺麗ですね♪ #雪景色 #盛岡',
