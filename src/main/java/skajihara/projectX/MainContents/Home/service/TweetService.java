@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TimelineService {
+public class TweetService {
 
     @Autowired
     private final TweetRepository tweetRepository;
 
-    public TimelineService(TweetRepository tweetRepository) {
+    public TweetService(TweetRepository tweetRepository) {
         this.tweetRepository = tweetRepository;
     }
 
