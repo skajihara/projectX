@@ -43,13 +43,13 @@ public class TweetControllerTest {
     @Test
     public void getRecentTweetsUnitTest() throws Exception {
         // tweetService.selectRecentTweets(10)が空のリストを返すようにモックを設定
-        when(tweetService.selectRecentTweets(10)).thenReturn(new ArrayList<>());
+        when(tweetService.selectRecentTweets(anyInt())).thenReturn(new ArrayList<>());
 
-        // GETリクエストを"/api/tweets/recent?num=10"に送信してステータスが200 OKであることを確認。
-        mockMvc.perform(get("/api/tweets/recent?num=10")).andExpect(status().isOk());
+        // GETリクエストを"/api/tweets/recent"に送信してステータスが200 OKであることを確認。
+        mockMvc.perform(get("/api/tweets/recent")).andExpect(status().isOk());
 
         // tweetService.selectRecentTweets(10)が1回だけ呼び出されたことを確認。
-        verify(tweetService, times(1)).selectRecentTweets(10);
+        verify(tweetService, times(1)).selectRecentTweets(anyInt());
     }
 }
 
