@@ -24,6 +24,9 @@ class TweetServiceTest {
     @MockBean
     TweetRepository tweetRepository;
 
+    @MockBean
+    Tweet tweet;
+
     @Test
     void selectAllTweetsUnitTest() {
 
@@ -58,6 +61,19 @@ class TweetServiceTest {
         // tweetService.selectRecentTweetsメソッドがTweet型リストを返すことを確認
         assertNotNull(result);
         assertEquals(expected, result);
+    }
+
+    @Test
+    void createTweetUnitTest() {
+
+        // tweetRepository.saveがTweetオブジェクトを返すようにモックを設定
+        doReturn(tweet).when(tweetRepository).save(any(Tweet.class));
+
+        // tweetService.createTweetsメソッドの呼び出し
+        tweetService.createTweet(tweet);
+
+        //　tweetRepository.saveメソッドが1回だけ呼び出されたことを確認
+        verify(tweetRepository, times(1)).save(any(Tweet.class));
     }
 }
 
