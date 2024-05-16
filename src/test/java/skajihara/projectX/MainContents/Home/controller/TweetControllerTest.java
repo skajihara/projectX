@@ -32,7 +32,7 @@ public class TweetControllerTest {
     @Test
     public void getAllTweetsUnitTest() throws Exception {
         // tweetService.selectAllTweets()が空のリストを返すようにモックを設定
-        when(tweetService.selectAllTweets()).thenReturn(new ArrayList<>());
+        doReturn(new ArrayList<>()).when(tweetService).selectAllTweets();
 
         // GETリクエストを"/api/tweets"に送信してステータスが200 OKであることを確認
         mockMvc.perform(get("/api/tweets")).andExpect(status().isOk());
@@ -44,7 +44,7 @@ public class TweetControllerTest {
     @Test
     public void getRecentTweetsUnitTest() throws Exception {
         // tweetService.selectRecentTweets()が空のリストを返すようにモックを設定
-        when(tweetService.selectRecentTweets(anyInt())).thenReturn(new ArrayList<>());
+        doReturn(new ArrayList<>()).when(tweetService).selectRecentTweets(anyInt());
 
         // GETリクエストを"/api/tweets/recent"に送信してステータスが200 OKであることを確認。
         mockMvc.perform(get("/api/tweets/recent")).andExpect(status().isOk());
