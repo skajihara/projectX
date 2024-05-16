@@ -10,6 +10,7 @@ import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -75,7 +76,27 @@ class TweetServiceTest {
         //　tweetRepository.saveメソッドが1回だけ呼び出されたことを確認
         verify(tweetRepository, times(1)).save(any(Tweet.class));
     }
+
+    @Test
+    void updateTweetUnitTest() {
+
+        int id = 1;
+        Tweet tweet = new Tweet();
+        Tweet existingTweet = new Tweet();
+
+        // tweetRepository.findById(id)がOptional<Tweet>オブジェクトを返すようにモックを設定
+        existingTweet.setId(id);
+        doReturn(Optional.of(existingTweet)).when(tweetRepository).findById(id);
+        // tweetRepository.saveがTweetオブジェクトを返すようにモックを設定
+        doReturn(tweet).when(tweetRepository).save(any(Tweet.class));
+
+        // tweetService.updateTweet()の呼び出し
+        tweetService.updateTweet(id, tweet);
+
+        // tweetRepository.findByIdメソッドが1回だけ呼び出されたことを確認
+        verify(tweetRepository, times(1)).findById(id);
+        // tweetRepository.saveメソッドが1回だけ呼び出されたことを確認
+        verify(tweetRepository, times(1)).save(any(Tweet.class));
+    }
 }
-
-
 
