@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
+import skajihara.projectX.MainContents.Home.exception.TweetException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +98,24 @@ class TweetServiceTest {
         verify(tweetRepository, times(1)).findById(id);
         // tweetRepository.saveメソッドが1回だけ呼び出されたことを確認
         verify(tweetRepository, times(1)).save(any(Tweet.class));
+    }
+
+    @Test
+    void updateTweetNotFoundUnitTest() {
+
+        int id = 1;
+        Tweet tweet = new Tweet();
+
+        // tweetRepository.findById(id)がOptional.empty()を返すようにモックを設定
+        doReturn(Optional.empty()).when(tweetRepository).findById(id);
+
+        // tweetService.updateTweet()がTweetExceptionをスローすることを確認
+        assertThrows(TweetException.class, () -> tweetService.updateTweet(id, tweet));
+
+        // tweetRepository.findByIdメソッドが1回だけ呼び出されたことを確認
+        verify(tweetRepository, times(1)).findById(id);
+        // tweetRepository.saveメソッドは呼び出されないことを確認
+        verify(tweetRepository, times(0)).save(any(Tweet.class));
     }
 }
 
