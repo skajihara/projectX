@@ -41,6 +41,24 @@ class TweetServiceTest {
         assertNotNull(result);
         assertEquals(expected, result);
     }
+
+    @Test
+    void selectRecentTweetsUnitTest() {
+
+        List<Tweet> expected = new ArrayList<>();
+
+        // tweetRepository.selectRecentNメソッドが空のTweet型リストを返すようにモックを設定
+        doReturn(new ArrayList<Tweet>()).when(tweetRepository).selectRecentN(anyInt());
+
+        // tweetService.selectRecentTweetsメソッドの呼び出し
+        List<Tweet> result = tweetService.selectRecentTweets(anyInt());
+
+        //　tweetRepository.selectRecentNメソッドが1回だけ呼び出されたことを確認
+        verify(tweetRepository, times(1)).selectRecentN(anyInt());
+        // tweetService.selectRecentTweetsメソッドがTweet型リストを返すことを確認
+        assertNotNull(result);
+        assertEquals(expected, result);
+    }
 }
 
 
