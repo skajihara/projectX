@@ -101,7 +101,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void updateTweetNotFoundUnitTest() {
+    void updateTweetExceptionUnitTest() {
 
         int id = 1;
         Tweet tweet = new Tweet();
@@ -116,6 +116,26 @@ class TweetServiceTest {
         verify(tweetRepository, times(1)).findById(id);
         // tweetRepository.saveメソッドは呼び出されないことを確認
         verify(tweetRepository, times(0)).save(any(Tweet.class));
+    }
+
+    @Test
+    void deleteTweetUnitTest() {
+
+        int id = 1;
+        Tweet tweet = new Tweet();
+
+        // tweetRepository.findById(id)がOptional<Tweet>オブジェクトを返すようにモックを設定
+        doReturn(Optional.of(tweet)).when(tweetRepository).findById(id);
+        // tweetRepository.deleteが何も返さないようにモックを設定
+        doNothing().when(tweetRepository).delete(any(Tweet.class));
+
+        // tweetService.deleteTweet()の呼び出し
+        tweetService.deleteTweet(id);
+
+        // tweetRepository.findByIdメソッドが1回だけ呼び出されたことを確認
+        verify(tweetRepository, times(1)).findById(id);
+        // tweetRepository.deleteメソッドが1回だけ呼び出されたことを確認
+        verify(tweetRepository, times(1)).delete(any(Tweet.class));
     }
 }
 
