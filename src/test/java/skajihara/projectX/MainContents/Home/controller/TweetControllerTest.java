@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -42,19 +44,29 @@ public class TweetControllerTest {
 
     @Test
     public void getRecentTweetsUnitTest() throws Exception {
-        // tweetService.selectRecentTweets(10)が空のリストを返すようにモックを設定
+        // tweetService.selectRecentTweets()が空のリストを返すようにモックを設定
         when(tweetService.selectRecentTweets(anyInt())).thenReturn(new ArrayList<>());
 
         // GETリクエストを"/api/tweets/recent"に送信してステータスが200 OKであることを確認。
         mockMvc.perform(get("/api/tweets/recent")).andExpect(status().isOk());
 
-        // tweetService.selectRecentTweets(10)が1回だけ呼び出されたことを確認。
+        // tweetService.selectRecentTweets()が1回だけ呼び出されたことを確認。
         verify(tweetService, times(1)).selectRecentTweets(anyInt());
     }
+
+    @Test
+    public void createTweetUnitTest() throws Exception {
+
+        // tweetService.createTweet()が何も返さないようにモックを設定
+        doNothing().when(tweetService).createTweet(any());
+
+        // POSTリクエストを"/api/tweets"に送信してステータスが200 OKであることを確認
+        mockMvc.perform(post("/api/tweets")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isOk());
+
+        // tweetService.createTweet()が1回だけ呼び出されたことを確認
+        verify(tweetService, times(1)).createTweet(any());
+    }
 }
-
-
-
-
-
-
