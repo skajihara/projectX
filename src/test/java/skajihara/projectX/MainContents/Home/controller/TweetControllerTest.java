@@ -16,10 +16,7 @@ import skajihara.projectX.MainContents.Home.service.TweetService;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
-//import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -86,5 +83,18 @@ public class TweetControllerTest {
 
         // tweetService.updateTweet()が1回だけ呼び出されたことを確認
         verify(tweetService, times(1)).updateTweet(anyInt(),any());
+    }
+
+    @Test
+    public void deleteTweetUnitTest() throws Exception {
+
+        // tweetService.deleteTweet()が何も返さないようにモックを設定
+        doNothing().when(tweetService).deleteTweet(anyInt());
+
+        // DELETEリクエストを"/api/tweets/{id}"に送信してステータスが200 OKであることを確認
+        mockMvc.perform(delete("/api/tweets/{id}",123)).andExpect(status().isOk());
+
+        // tweetService.deleteTweet()が1回だけ呼び出されたことを確認
+        verify(tweetService, times(1)).deleteTweet(anyInt());
     }
 }
