@@ -16,6 +16,8 @@ import skajihara.projectX.MainContents.Home.service.TweetService;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
+//import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -68,5 +70,21 @@ public class TweetControllerTest {
 
         // tweetService.createTweet()が1回だけ呼び出されたことを確認
         verify(tweetService, times(1)).createTweet(any());
+    }
+
+    @Test
+    public void updateTweetUnitTest() throws Exception {
+
+        // tweetService.updateTweet()が何も返さないようにモックを設定
+        doNothing().when(tweetService).updateTweet(anyInt(),any());
+
+        // PUTリクエストを"/api/tweets/{id}"に送信してステータスが200 OKであることを確認
+        mockMvc.perform(put("/api/tweets/{id}",123)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isOk());
+
+        // tweetService.updateTweet()が1回だけ呼び出されたことを確認
+        verify(tweetService, times(1)).updateTweet(anyInt(),any());
     }
 }
