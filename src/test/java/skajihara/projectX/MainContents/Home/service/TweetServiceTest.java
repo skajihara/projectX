@@ -137,5 +137,22 @@ class TweetServiceTest {
         // tweetRepository.deleteメソッドが1回だけ呼び出されたことを確認
         verify(tweetRepository, times(1)).delete(any(Tweet.class));
     }
+
+    @Test
+    void deleteTweetExceptionUnitTest() {
+
+        int id = 1;
+
+        // tweetRepository.findById(id)がOptional.empty()を返すようにモックを設定
+        doReturn(Optional.empty()).when(tweetRepository).findById(id);
+
+        // tweetService.deleteTweet()がTweetExceptionをスローすることを確認
+        assertThrows(TweetException.class, () -> tweetService.deleteTweet(id));
+
+        // tweetRepository.findByIdメソッドが1回だけ呼び出されたことを確認
+        verify(tweetRepository, times(1)).findById(id);
+        // tweetRepository.saveメソッドは呼び出されないことを確認
+        verify(tweetRepository, times(0)).delete(any(Tweet.class));
+    }
 }
 
