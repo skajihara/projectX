@@ -5,7 +5,6 @@ import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
@@ -13,7 +12,6 @@ import skajihara.projectX.MainContents.Home.entity.Tweet;
 import java.util.List;
 import java.util.Date;
 
-//import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -29,7 +27,6 @@ class TweetRepositoryTest {
     @BeforeEach
     void setUp() {
 
-        // データベースをクリーンアップ
         tweetRepository.deleteAll();
 
         // ACCOUNTSテーブルにエントリを追加
@@ -63,18 +60,14 @@ class TweetRepositoryTest {
     @Test
     void selectAllUnitTest() {
 
-        // selectAllを呼び出して結果を検証
         List<Tweet> tweets = tweetRepository.selectAll();
-        //  全てのTweetエンティティが取得できることを確認
         assertThat(tweets).hasSize(3);
     }
 
     @Test
     void selectRecentNUnitTest() {
 
-        // selectRecentNを呼び出して結果を検証
         List<Tweet> recentTweets = tweetRepository.selectRecentN(2);
-        // 2件のTweetエンティティが取得できることを確認
         assertThat(recentTweets).hasSize(2);
         // Tweetエンティティが日付の降順に取得できていることを確認
         assertThat(recentTweets.get(0).getText()).isEqualTo("Third test tweet");
