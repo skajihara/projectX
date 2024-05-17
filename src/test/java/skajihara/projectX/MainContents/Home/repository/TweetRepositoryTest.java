@@ -68,5 +68,17 @@ class TweetRepositoryTest {
         //  全てのTweetエンティティが取得できることを確認
         assertThat(tweets).hasSize(3);
     }
+
+    @Test
+    void selectRecentNUnitTest() {
+
+        // selectRecentNを呼び出して結果を検証
+        List<Tweet> recentTweets = tweetRepository.selectRecentN(2);
+        // 2件のTweetエンティティが取得できることを確認
+        assertThat(recentTweets).hasSize(2);
+        // Tweetエンティティが日付の降順に取得できていることを確認
+        assertThat(recentTweets.get(0).getText()).isEqualTo("Third test tweet");
+        assertThat(recentTweets.get(1).getText()).isEqualTo("Second test tweet");
+    }
 }
 
