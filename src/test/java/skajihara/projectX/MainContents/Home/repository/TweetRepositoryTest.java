@@ -29,7 +29,6 @@ class TweetRepositoryTest {
 
         tweetRepository.deleteAll();
 
-        // ACCOUNTSテーブルにエントリを追加
         entityManager.createNativeQuery("INSERT INTO ACCOUNTS (id, name, bio) VALUES ('user1', 'User One', 'Bio One')")
                 .executeUpdate();
         entityManager.createNativeQuery("INSERT INTO ACCOUNTS (id, name, bio) VALUES ('user2', 'User Two', 'Bio Two')")
@@ -37,7 +36,6 @@ class TweetRepositoryTest {
         entityManager.createNativeQuery("INSERT INTO ACCOUNTS (id, name, bio) VALUES ('user3', 'User Three', 'Bio Three')")
                 .executeUpdate();
 
-        // テストデータを作成
         Tweet tweet1 = new Tweet();
         tweet1.setAccountId("user1");
         tweet1.setText("First test tweet");
@@ -69,7 +67,6 @@ class TweetRepositoryTest {
 
         List<Tweet> recentTweets = tweetRepository.selectRecentN(2);
         assertThat(recentTweets).hasSize(2);
-        // Tweetエンティティが日付の降順に取得できていることを確認
         assertThat(recentTweets.get(0).getText()).isEqualTo("Third test tweet");
         assertThat(recentTweets.get(1).getText()).isEqualTo("Second test tweet");
     }
