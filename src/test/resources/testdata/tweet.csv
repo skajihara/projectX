@@ -1,0 +1,7 @@
+id, name, icon, bio, valid_flag, delete_flag
+1, test, /src/assets/icons/user/default_icon.svg, dummy_bio, 1, 1
+2, test2, /src/assets/icons/user/default_icon.svg, dummy_bio, 1, 1
+3, test3, /src/assets/icons/user/default_icon.svg, dummy_bio, 1, 1
+4, test4, /src/assets/icons/user/default_icon.svg, dummy_bio, 1, 1
+5, test5, /src/assets/icons/user/default_icon.svg, dummy_bio, 1, 1
+
