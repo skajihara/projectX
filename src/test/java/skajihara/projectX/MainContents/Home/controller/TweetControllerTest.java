@@ -105,4 +105,25 @@ public class TweetControllerTest {
         List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
         assertThat(tweets).hasSize(10);
     }
+
+    @Test
+    public void getRecentTweetsIntegrationTest() throws Exception {
+
+        String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$[0].datetime").value("2024-03-30T01:04:43.000+00:00"))
+                .andExpect(jsonPath("$[1].datetime").value("2024-03-29T15:30:11.000+00:00"))
+                .andExpect(jsonPath("$[2].datetime").value("2024-03-18T20:10:01.000+00:00"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
+        assertThat(tweets).hasSize(3);
+        assertThat(tweets.get(0).getDatetime()).isEqualTo("2024-03-30T01:04:43.000+00:00");
+        assertThat(tweets.get(1).getDatetime()).isEqualTo("2024-03-29T15:30:11.000+00:00");
+        assertThat(tweets.get(2).getDatetime()).isEqualTo("2024-03-18T20:10:01.000+00:00");
+    }
 }
