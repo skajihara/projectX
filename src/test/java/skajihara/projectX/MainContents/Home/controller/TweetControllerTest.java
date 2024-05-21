@@ -1,19 +1,26 @@
 package skajihara.projectX.MainContents.Home.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.service.TweetService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -22,7 +29,10 @@ public class TweetControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @SpyBean
     TweetService tweetService;
 
     @Test
@@ -79,5 +89,20 @@ public class TweetControllerTest {
         mockMvc.perform(delete("/api/tweets/{id}",123)).andExpect(status().isOk());
 
         verify(tweetService, times(1)).deleteTweet(anyInt());
+    }
+
+    @Test
+    public void getAllTweetsIntegrationTest() throws Exception {
+
+        String response = mockMvc.perform(get("/api/tweets"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(10))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
+        assertThat(tweets).hasSize(10);
     }
 }
