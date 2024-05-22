@@ -197,4 +197,35 @@ public class TweetControllerTest {
         assertThat(afterTweets).hasSize(3);
         assertThat(afterTweets.get(0).getText()).isEqualTo("updated!");
     }
+
+    @Test
+    public void deleteTweetIntegrationTest() throws Exception {
+
+        String beforeDelete =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> beforeTweets = Arrays.asList(objectMapper.readValue(beforeDelete, Tweet[].class));
+        Tweet targetTweet = beforeTweets.get(0);
+
+        mockMvc.perform(delete("/api/tweets/"+targetTweet.getId()))
+                .andExpect(status().isOk());
+
+        String afterDelete =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$[0].id").value(String.valueOf(beforeTweets.get(1).getId())))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> afterTweets = Arrays.asList(objectMapper.readValue(afterDelete, Tweet[].class));
+        assertThat(afterTweets).hasSize(3);
+        assertThat(afterTweets.get(0).getId()).isEqualTo(beforeTweets.get(1).getId());
+    }
 }
