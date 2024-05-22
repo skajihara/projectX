@@ -284,4 +284,11 @@ public class TweetControllerTest {
                         .content(objectMapper.writeValueAsString(updateTweet)))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    public void deleteNonExistentTweetIntegrationTest() throws Exception {
+
+        mockMvc.perform(delete("/api/tweets/99999"))
+                .andExpect(status().isNotFound());
+    }
 }
