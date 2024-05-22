@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
@@ -228,4 +229,41 @@ public class TweetControllerTest {
         assertThat(afterTweets).hasSize(3);
         assertThat(afterTweets.get(0).getId()).isEqualTo(beforeTweets.get(1).getId());
     }
+
+    @Test
+    @Sql(scripts = {"classpath:delete.sql"})
+    public void getAllTweetsWithNoDataIntegrationTest() throws Exception {
+
+        String response = mockMvc.perform(get("/api/tweets"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(0))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
+        assertThat(tweets).hasSize(0);
+    }
+
+    @Test
+    @Sql(scripts = {"classpath:delete.sql"})
+    public void getRecentTweetsWithNoDataIntegrationTest() throws Exception {
+
+        String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$[0].datetime").value("2024-03-30T01:04:43.000+00:00"))
+                .andExpect(jsonPath("$[1].datetime").value("2024-03-29T15:30:11.000+00:00"))
+                .andExpect(jsonPath("$[2].datetime").value("2024-03-18T20:10:01.000+00:00"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
+        assertThat(tweets).hasSize(0);
+    }
+
+
 }
