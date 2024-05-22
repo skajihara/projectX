@@ -163,4 +163,38 @@ public class TweetControllerTest {
         assertThat(tweets).hasSize(3);
         assertThat(tweets.get(0).getDatetime()).isEqualTo(date);
     }
+
+    @Test
+    void updateTweetIntegrationTest() throws Exception {
+
+        String beforeUpdate =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> beforeTweets = Arrays.asList(objectMapper.readValue(beforeUpdate, Tweet[].class));
+        Tweet targetTweet = beforeTweets.get(0);
+        targetTweet.setText("updated!");
+
+        mockMvc.perform(put("/api/tweets/" + targetTweet.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(targetTweet)))
+                .andExpect(status().isOk());
+
+        String afterResponse =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$[0].text").value("updated!"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> afterTweets = Arrays.asList(objectMapper.readValue(afterResponse, Tweet[].class));
+        assertThat(afterTweets).hasSize(3);
+        assertThat(afterTweets.get(0).getText()).isEqualTo("updated!");
+    }
 }
