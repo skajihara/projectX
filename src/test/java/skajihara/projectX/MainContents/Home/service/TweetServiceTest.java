@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 import skajihara.projectX.MainContents.Home.exception.TweetException;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -23,10 +24,10 @@ class TweetServiceTest {
     @Autowired
     TweetService tweetService;
 
-    @MockBean
+    @SpyBean
     TweetRepository tweetRepository;
 
-    @MockBean
+    @SpyBean
     Tweet tweet;
 
     @Test
@@ -124,6 +125,12 @@ class TweetServiceTest {
 
         verify(tweetRepository, times(1)).findById(id);
         verify(tweetRepository, times(0)).delete(any(Tweet.class));
+    }
+
+    @Test
+    public void selectAllTweetsTestIntegrationTest() {
+        List<Tweet> tweetList = tweetService.selectAllTweets();
+        assertThat(tweetList).hasSize(10);
     }
 }
 
