@@ -134,14 +134,14 @@ public class TweetControllerTest {
 
         Tweet newTweet = new Tweet();
         newTweet.setAccountId("user_A");
-        newTweet.setText("これはテストツイートです。");
+        newTweet.setText("This is a test tweet.");
         newTweet.setImage("/src/assets/images/img01.GIF");
         newTweet.setLikes(999);
         newTweet.setRetweets(999);
         newTweet.setReplies(999);
         newTweet.setViews(999);
         newTweet.setDatetime(date);
-        newTweet.setLocation("テストロケーション");
+        newTweet.setLocation("Test Location.");
         newTweet.setDeleteFlag(false);
 
         mockMvc.perform(post("/api/tweets")
@@ -159,7 +159,16 @@ public class TweetControllerTest {
 
         List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
         assertThat(tweets).hasSize(3);
-        assertThat(tweets.get(0).getDatetime()).isEqualTo(date);
+        assertThat(tweets.get(0).getAccountId()).isEqualTo(newTweet.getAccountId());
+        assertThat(tweets.get(0).getText()).isEqualTo(newTweet.getText());
+        assertThat(tweets.get(0).getImage()).isEqualTo(newTweet.getImage());
+        assertThat(tweets.get(0).getLikes()).isEqualTo(newTweet.getLikes());
+        assertThat(tweets.get(0).getRetweets()).isEqualTo(newTweet.getRetweets());
+        assertThat(tweets.get(0).getReplies()).isEqualTo(newTweet.getReplies());
+        assertThat(tweets.get(0).getViews()).isEqualTo(newTweet.getViews());
+        assertThat(tweets.get(0).getDatetime()).isEqualTo(newTweet.getDatetime());
+        assertThat(tweets.get(0).getLocation()).isEqualTo(newTweet.getLocation());
+        assertThat(tweets.get(0).isDeleteFlag()).isEqualTo(newTweet.isDeleteFlag());
     }
 
     @Test
@@ -174,15 +183,14 @@ public class TweetControllerTest {
                 .getContentAsString();
 
         List<Tweet> beforeTweets = Arrays.asList(objectMapper.readValue(beforeUpdate, Tweet[].class));
-        Tweet targetTweet = beforeTweets.get(0);
-        targetTweet.setText("updated!");
+        beforeTweets.get(0).setText("updated!");
 
-        mockMvc.perform(put("/api/tweets/" + targetTweet.getId())
+        mockMvc.perform(put("/api/tweets/" + beforeTweets.get(0).getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(targetTweet)))
+                        .content(objectMapper.writeValueAsString(beforeTweets.get(0))))
                 .andExpect(status().isOk());
 
-        String afterResponse =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
+        String afterUpdate =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andExpect(jsonPath("$.length()").value(3))
@@ -191,9 +199,23 @@ public class TweetControllerTest {
                 .getResponse()
                 .getContentAsString();
 
-        List<Tweet> afterTweets = Arrays.asList(objectMapper.readValue(afterResponse, Tweet[].class));
+        List<Tweet> afterTweets = Arrays.asList(objectMapper.readValue(afterUpdate, Tweet[].class));
+
+        // debug 文字化け確認用
+        // System.out.println(beforeTweets.get(0));
+        // System.out.println(afterTweets.get(0));
+
         assertThat(afterTweets).hasSize(3);
-        assertThat(afterTweets.get(0).getText()).isEqualTo("updated!");
+        assertThat(beforeTweets.get(0).getAccountId()).isEqualTo(afterTweets.get(0).getAccountId());
+        assertThat(beforeTweets.get(0).getText()).isEqualTo(afterTweets.get(0).getText());
+        assertThat(beforeTweets.get(0).getImage()).isEqualTo(afterTweets.get(0).getImage());
+        assertThat(beforeTweets.get(0).getLikes()).isEqualTo(afterTweets.get(0).getLikes());
+        assertThat(beforeTweets.get(0).getRetweets()).isEqualTo(afterTweets.get(0).getRetweets());
+        assertThat(beforeTweets.get(0).getReplies()).isEqualTo(afterTweets.get(0).getReplies());
+        assertThat(beforeTweets.get(0).getViews()).isEqualTo(afterTweets.get(0).getViews());
+        assertThat(beforeTweets.get(0).getDatetime()).isEqualTo(afterTweets.get(0).getDatetime());
+        assertThat(beforeTweets.get(0).getLocation()).isEqualTo(afterTweets.get(0).getLocation());
+        assertThat(beforeTweets.get(0).isDeleteFlag()).isEqualTo(afterTweets.get(0).isDeleteFlag());
     }
 
     @Test
@@ -269,14 +291,14 @@ public class TweetControllerTest {
 
         Tweet updateTweet = new Tweet();
         updateTweet.setAccountId("user_A");
-        updateTweet.setText("これはテストツイートです。");
+        updateTweet.setText("This is a test tweet.");
         updateTweet.setImage("/src/assets/images/img01.GIF");
         updateTweet.setLikes(999);
         updateTweet.setRetweets(999);
         updateTweet.setReplies(999);
         updateTweet.setViews(999);
         updateTweet.setDatetime(date);
-        updateTweet.setLocation("テストロケーション");
+        updateTweet.setLocation("Test Location.");
         updateTweet.setDeleteFlag(false);
 
         mockMvc.perform(put("/api/tweets/99999")
