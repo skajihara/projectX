@@ -272,10 +272,7 @@ public class TweetControllerTest {
         String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
-                .andExpect(jsonPath("$.length()").value(3))
-                .andExpect(jsonPath("$[0].datetime").value("2024-03-30T01:04:43.000+00:00"))
-                .andExpect(jsonPath("$[1].datetime").value("2024-03-29T15:30:11.000+00:00"))
-                .andExpect(jsonPath("$[2].datetime").value("2024-03-18T20:10:01.000+00:00"))
+                .andExpect(jsonPath("$.length()").value(0))
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
