@@ -5,16 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.service.TweetService;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -265,5 +262,26 @@ public class TweetControllerTest {
         assertThat(tweets).hasSize(0);
     }
 
+    @Test
+    public void updateNonExistentTweetIntegrationTest() throws Exception {
 
+        Date date = new Date(System.currentTimeMillis());
+
+        Tweet updateTweet = new Tweet();
+        updateTweet.setAccountId("user_A");
+        updateTweet.setText("これはテストツイートです。");
+        updateTweet.setImage("/src/assets/images/img01.GIF");
+        updateTweet.setLikes(999);
+        updateTweet.setRetweets(999);
+        updateTweet.setReplies(999);
+        updateTweet.setViews(999);
+        updateTweet.setDatetime(date);
+        updateTweet.setLocation("テストロケーション");
+        updateTweet.setDeleteFlag(false);
+
+        mockMvc.perform(put("/api/tweets/99999")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateTweet)))
+                .andExpect(status().isNotFound());
+    }
 }
