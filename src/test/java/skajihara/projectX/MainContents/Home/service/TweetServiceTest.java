@@ -9,7 +9,9 @@ import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 import skajihara.projectX.MainContents.Home.exception.TweetException;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -129,8 +131,17 @@ class TweetServiceTest {
 
     @Test
     public void selectAllTweetsTestIntegrationTest() {
-        List<Tweet> tweetList = tweetService.selectAllTweets();
-        assertThat(tweetList).hasSize(10);
+        List<Tweet> tweets = tweetService.selectAllTweets();
+        assertThat(tweets).hasSize(10);
+    }
+
+    @Test
+    void selectRecentTweetsIntegrationTest() {
+        List<Tweet> tweets = tweetService.selectRecentTweets(3);
+        assertThat(tweets).hasSize(3);
+        assertThat(tweets.get(0).getDatetime().toInstant().toString()).isEqualTo("2024-03-30T01:04:43Z");
+        assertThat(tweets.get(1).getDatetime().toInstant().toString()).isEqualTo("2024-03-29T15:30:11Z");
+        assertThat(tweets.get(2).getDatetime().toInstant().toString()).isEqualTo("2024-03-18T20:10:01Z");
     }
 }
 
