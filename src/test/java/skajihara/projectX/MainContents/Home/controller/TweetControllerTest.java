@@ -13,8 +13,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.service.TweetService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -125,5 +127,40 @@ public class TweetControllerTest {
         assertThat(tweets.get(0).getDatetime()).isEqualTo("2024-03-30T01:04:43.000+00:00");
         assertThat(tweets.get(1).getDatetime()).isEqualTo("2024-03-29T15:30:11.000+00:00");
         assertThat(tweets.get(2).getDatetime()).isEqualTo("2024-03-18T20:10:01.000+00:00");
+    }
+
+    @Test
+    public void createTweetIntegrationTest() throws Exception {
+
+        Date date = new Date(System.currentTimeMillis());
+
+        Tweet newTweet = new Tweet();
+        newTweet.setAccountId("user_A");
+        newTweet.setText("これはテストツイートです。");
+        newTweet.setImage("/src/assets/images/img01.GIF");
+        newTweet.setLikes(999);
+        newTweet.setRetweets(999);
+        newTweet.setReplies(999);
+        newTweet.setViews(999);
+        newTweet.setDatetime(date);
+        newTweet.setLocation("テストロケーション");
+        newTweet.setDeleteFlag(false);
+
+        mockMvc.perform(post("/api/tweets")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newTweet)))
+                .andExpect(status().isOk());
+
+        String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
+        assertThat(tweets).hasSize(3);
+        assertThat(tweets.get(0).getDatetime()).isEqualTo(date);
     }
 }
