@@ -206,16 +206,16 @@ public class TweetControllerTest {
         // System.out.println(afterTweets.get(0));
 
         assertThat(afterTweets).hasSize(3);
-        assertThat(beforeTweets.get(0).getAccountId()).isEqualTo(afterTweets.get(0).getAccountId());
-        assertThat(beforeTweets.get(0).getText()).isEqualTo(afterTweets.get(0).getText());
-        assertThat(beforeTweets.get(0).getImage()).isEqualTo(afterTweets.get(0).getImage());
-        assertThat(beforeTweets.get(0).getLikes()).isEqualTo(afterTweets.get(0).getLikes());
-        assertThat(beforeTweets.get(0).getRetweets()).isEqualTo(afterTweets.get(0).getRetweets());
-        assertThat(beforeTweets.get(0).getReplies()).isEqualTo(afterTweets.get(0).getReplies());
-        assertThat(beforeTweets.get(0).getViews()).isEqualTo(afterTweets.get(0).getViews());
-        assertThat(beforeTweets.get(0).getDatetime()).isEqualTo(afterTweets.get(0).getDatetime());
-        assertThat(beforeTweets.get(0).getLocation()).isEqualTo(afterTweets.get(0).getLocation());
-        assertThat(beforeTweets.get(0).isDeleteFlag()).isEqualTo(afterTweets.get(0).isDeleteFlag());
+        assertThat(afterTweets.get(0).getAccountId()).isEqualTo(beforeTweets.get(0).getAccountId());
+        assertThat(afterTweets.get(0).getText()).isEqualTo(beforeTweets.get(0).getText());
+        assertThat(afterTweets.get(0).getImage()).isEqualTo(beforeTweets.get(0).getImage());
+        assertThat(afterTweets.get(0).getLikes()).isEqualTo(beforeTweets.get(0).getLikes());
+        assertThat(afterTweets.get(0).getRetweets()).isEqualTo(beforeTweets.get(0).getRetweets());
+        assertThat(afterTweets.get(0).getReplies()).isEqualTo(beforeTweets.get(0).getReplies());
+        assertThat(afterTweets.get(0).getViews()).isEqualTo(beforeTweets.get(0).getViews());
+        assertThat(afterTweets.get(0).getDatetime()).isEqualTo(beforeTweets.get(0).getDatetime());
+        assertThat(afterTweets.get(0).getLocation()).isEqualTo(beforeTweets.get(0).getLocation());
+        assertThat(afterTweets.get(0).isDeleteFlag()).isEqualTo(beforeTweets.get(0).isDeleteFlag());
     }
 
     @Test
