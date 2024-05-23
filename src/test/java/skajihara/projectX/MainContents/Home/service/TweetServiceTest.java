@@ -187,6 +187,12 @@ class TweetServiceTest {
     }
 
     @Test
+    void createInvalidTweetIntegrationTest() {
+        Tweet invalidTweet = new Tweet();
+        assertThrows(Exception.class, () -> tweetService.createTweet(invalidTweet));
+    }
+
+    @Test
     void updateTweetIntegrationTest() {
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
