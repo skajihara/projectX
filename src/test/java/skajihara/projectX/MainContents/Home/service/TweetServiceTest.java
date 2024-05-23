@@ -16,6 +16,10 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -213,6 +217,28 @@ class TweetServiceTest {
         tweets.get(0).setText("updated!");
 
         assertThrows(TweetException.class, () -> tweetService.updateTweet(99999, tweets.get(0)));
+    }
+
+    @Test
+    public void deleteTweetIntegrationTest() throws Exception {
+
+        List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
+        assertThat(beforeTweets).hasSize(3);
+
+        tweetService.deleteTweet(beforeTweets.get(0).getId());
+
+        List<Tweet> afterTweets =tweetService.selectRecentTweets(3);
+        assertThat(afterTweets).hasSize(3);
+        assertThat(afterTweets.get(0)).isEqualTo(beforeTweets.get(1));
+    }
+
+    @Test
+    void deleteTweetExceptionIntegrationTest() {
+
+        List<Tweet> tweets =tweetService.selectRecentTweets(3);
+        assertThat(tweets).hasSize(3);
+
+        assertThrows(TweetException.class, () -> tweetService.deleteTweet(99999));
     }
 }
 
