@@ -92,6 +92,7 @@ public class TweetControllerTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/controller/getAllTweetsIntegrationTest.sql"})
     public void getAllTweetsIntegrationTest() throws Exception {
 
         String response = mockMvc.perform(get("/api/tweets"))
@@ -107,6 +108,7 @@ public class TweetControllerTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/controller/getRecentTweetsIntegrationTest.sql"})
     public void getRecentTweetsIntegrationTest() throws Exception {
 
         String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
@@ -128,6 +130,7 @@ public class TweetControllerTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/controller/createTweetIntegrationTest.sql"})
     public void createTweetIntegrationTest() throws Exception {
 
         Date date = new Date(System.currentTimeMillis());
@@ -172,6 +175,7 @@ public class TweetControllerTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/controller/updateTweetIntegrationTest.sql"})
     void updateTweetIntegrationTest() throws Exception {
 
         String beforeUpdate =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
@@ -219,6 +223,7 @@ public class TweetControllerTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/controller/deleteTweetIntegrationTest.sql"})
     public void deleteTweetIntegrationTest() throws Exception {
 
         String beforeDelete =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
@@ -250,7 +255,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:delete.sql"})
+    @Sql(scripts = {"classpath:sql/controller/getAllTweetsWithNoDataIntegrationTest.sql"})
     public void getAllTweetsWithNoDataIntegrationTest() throws Exception {
 
         String response = mockMvc.perform(get("/api/tweets"))
@@ -266,7 +271,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:delete.sql"})
+    @Sql(scripts = {"classpath:sql/controller/getRecentTweetsWithNoDataIntegrationTest.sql"})
     public void getRecentTweetsWithNoDataIntegrationTest() throws Exception {
 
         String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
@@ -282,6 +287,7 @@ public class TweetControllerTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/controller/updateNonExistentTweetIntegrationTest.sql"})
     public void updateNonExistentTweetIntegrationTest() throws Exception {
 
         Date date = new Date(System.currentTimeMillis());
@@ -305,6 +311,7 @@ public class TweetControllerTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/controller/deleteNonExistentTweetIntegrationTest.sql"})
     public void deleteNonExistentTweetIntegrationTest() throws Exception {
 
         mockMvc.perform(delete("/api/tweets/99999"))
