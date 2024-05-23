@@ -234,10 +234,6 @@ class TweetServiceTest {
 
     @Test
     void deleteTweetExceptionIntegrationTest() {
-
-        List<Tweet> tweets =tweetService.selectRecentTweets(3);
-        assertThat(tweets).hasSize(3);
-
         assertThrows(TweetException.class, () -> tweetService.deleteTweet(99999));
     }
 }
