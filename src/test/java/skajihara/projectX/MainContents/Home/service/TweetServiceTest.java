@@ -181,5 +181,38 @@ class TweetServiceTest {
         assertThat(tweets.get(0).getLocation()).isEqualTo(newTweet.getLocation());
         assertThat(tweets.get(0).isDeleteFlag()).isEqualTo(newTweet.isDeleteFlag());
     }
+
+    @Test
+    void updateTweetIntegrationTest() {
+
+        List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
+        assertThat(beforeTweets).hasSize(3);
+        beforeTweets.get(0).setText("updated!");
+
+        tweetService.updateTweet(beforeTweets.get(0).getId(), beforeTweets.get(0));
+
+        List<Tweet> afterTweets =tweetService.selectRecentTweets(3);
+        assertThat(afterTweets).hasSize(3);
+        assertThat(afterTweets.get(0).getAccountId()).isEqualTo(beforeTweets.get(0).getAccountId());
+        assertThat(afterTweets.get(0).getText()).isEqualTo(beforeTweets.get(0).getText());
+        assertThat(afterTweets.get(0).getImage()).isEqualTo(beforeTweets.get(0).getImage());
+        assertThat(afterTweets.get(0).getLikes()).isEqualTo(beforeTweets.get(0).getLikes());
+        assertThat(afterTweets.get(0).getRetweets()).isEqualTo(beforeTweets.get(0).getRetweets());
+        assertThat(afterTweets.get(0).getReplies()).isEqualTo(beforeTweets.get(0).getReplies());
+        assertThat(afterTweets.get(0).getViews()).isEqualTo(beforeTweets.get(0).getViews());
+        assertThat(afterTweets.get(0).getDatetime()).isEqualTo(beforeTweets.get(0).getDatetime());
+        assertThat(afterTweets.get(0).getLocation()).isEqualTo(beforeTweets.get(0).getLocation());
+        assertThat(afterTweets.get(0).isDeleteFlag()).isEqualTo(beforeTweets.get(0).isDeleteFlag());
+    }
+
+    @Test
+    void updateTweetExceptionIntegrationTest() {
+
+        List<Tweet> tweets =tweetService.selectRecentTweets(3);
+        assertThat(tweets).hasSize(3);
+        tweets.get(0).setText("updated!");
+
+        assertThrows(TweetException.class, () -> tweetService.updateTweet(99999, tweets.get(0)));
+    }
 }
 
