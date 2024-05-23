@@ -4,15 +4,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 import skajihara.projectX.MainContents.Home.exception.TweetException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -23,10 +24,10 @@ class TweetServiceTest {
     @Autowired
     TweetService tweetService;
 
-    @MockBean
+    @SpyBean
     TweetRepository tweetRepository;
 
-    @MockBean
+    @SpyBean
     Tweet tweet;
 
     @Test
@@ -124,6 +125,61 @@ class TweetServiceTest {
 
         verify(tweetRepository, times(1)).findById(id);
         verify(tweetRepository, times(0)).delete(any(Tweet.class));
+    }
+
+    @Test
+    public void selectAllTweetsTestIntegrationTest() {
+        List<Tweet> tweets = tweetService.selectAllTweets();
+        assertThat(tweets).hasSize(10);
+    }
+
+    @Test
+    void selectRecentTweetsIntegrationTest() throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date date1 = dateFormat.parse("2024-03-30 01:04:43");
+        Date date2 = dateFormat.parse("2024-03-29 15:30:11");
+        Date date3 = dateFormat.parse("2024-03-18 20:10:01");
+
+        List<Tweet> tweets = tweetService.selectRecentTweets(3);
+        assertThat(tweets).hasSize(3);
+        assertThat(tweets.get(0).getDatetime().getTime()).isEqualTo(date1.getTime());
+        assertThat(tweets.get(1).getDatetime().getTime()).isEqualTo(date2.getTime());
+        assertThat(tweets.get(2).getDatetime().getTime()).isEqualTo(date3.getTime());
+    }
+
+    @Test
+    void createTweetIntegrationTest() {
+
+        Date date = new Date(System.currentTimeMillis());
+
+        Tweet newTweet = new Tweet();
+        newTweet.setAccountId("user_A");
+        newTweet.setText("This is a test tweet.");
+        newTweet.setImage("/src/assets/images/img01.GIF");
+        newTweet.setLikes(999);
+        newTweet.setRetweets(999);
+        newTweet.setReplies(999);
+        newTweet.setViews(999);
+        newTweet.setDatetime(date);
+        newTweet.setLocation("Test Location.");
+        newTweet.setDeleteFlag(false);
+
+        tweetService.createTweet(newTweet);
+
+        List<Tweet> tweets = tweetService.selectRecentTweets(3);
+        assertThat(tweets).hasSize(3);
+        assertThat(tweets.get(0).getAccountId()).isEqualTo(newTweet.getAccountId());
+        assertThat(tweets.get(0).getText()).isEqualTo(newTweet.getText());
+        assertThat(tweets.get(0).getImage()).isEqualTo(newTweet.getImage());
+        assertThat(tweets.get(0).getLikes()).isEqualTo(newTweet.getLikes());
+        assertThat(tweets.get(0).getRetweets()).isEqualTo(newTweet.getRetweets());
+        assertThat(tweets.get(0).getReplies()).isEqualTo(newTweet.getReplies());
+        assertThat(tweets.get(0).getViews()).isEqualTo(newTweet.getViews());
+        assertThat(tweets.get(0).getDatetime().getTime()).isEqualTo(newTweet.getDatetime().getTime());
+        assertThat(tweets.get(0).getLocation()).isEqualTo(newTweet.getLocation());
+        assertThat(tweets.get(0).isDeleteFlag()).isEqualTo(newTweet.isDeleteFlag());
     }
 }
 
