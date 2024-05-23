@@ -242,5 +242,15 @@ class TweetServiceTest {
     void deleteTweetExceptionIntegrationTest() {
         assertThrows(TweetException.class, () -> tweetService.deleteTweet(99999));
     }
+
+    @Test
+    void performanceTest() {
+
+        long startTime = System.currentTimeMillis();
+        tweetService.selectAllTweets();
+        long endTime = System.currentTimeMillis();
+
+        assertTrue((endTime - startTime) < 1000, "Response is too slow");
+    }
 }
 
