@@ -2,19 +2,20 @@
 import { ref, defineProps, onMounted } from 'vue'
 import { tweets } from '@/consts/tweets.js'
 import { accounts } from '@/consts/accounts.js'
+import { useCurrentUserStore } from '@/stores/currentUser.js'
 
+const currentUser = useCurrentUserStore()
 const tweet = ref(null)
 const icon = ref('')
-
 const props = defineProps({
   id: {
-    type: [String, Number],
+    type: String,
     required: true
   }
 })
 
 function deleteTweet(id) {
-  const index = tweets.value.findIndex((tweet) => tweet.id == id)
+  const index = tweets.value.findIndex((tweet) => tweet.id === id)
   if (index !== -1) {
     tweets.value.splice(index, 1)
   }
@@ -45,7 +46,7 @@ onMounted(() => {
   <div v-if="tweet" class="content">
     <div class="tweet-header">
       <img class="user-icon" :src="icon" width="50" height="50" />
-      <div v-show="tweet.userId === 'q30387'">
+      <div v-show="tweet.userId === currentUser.userId">
         <BButton pill size="sm" @click="deleteTweet(props.id)">削除</BButton>
       </div>
     </div>
