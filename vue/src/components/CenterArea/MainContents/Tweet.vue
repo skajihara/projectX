@@ -65,7 +65,7 @@ const deleteTweet = (index) => {
 
 <template>
   <div class="content">
-    <router-link :to="{ name: 'tweet-detail', params: { id: props.id } }">
+    <router-link :to="{ name: 'tweet-detail', params: { id: props.id } }" class="no-hover">
       <div class="tweet-header">
         <img class="user-icon" :src="props.icon" width="50" height="50" />
         <div v-show="props.userId === 'q30387'">
@@ -147,5 +147,19 @@ const deleteTweet = (index) => {
   position: relative;
   left: -5px;
   top: 3px;
+}
+
+.no-hover {
+  color: inherit;
+  text-decoration: none;
+}
+.no-hover:hover {
+  color: inherit;
+  text-decoration: none;
+}
+a {
+  text-decoration: none;
+  color: hsla(100%, 100%, 100%, 1);
+  padding: 0px;
 }
 </style>

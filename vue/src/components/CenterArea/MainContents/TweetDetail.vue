@@ -22,9 +22,6 @@ function deleteTweet(id) {
 
 function findTweet(id) {
   return tweets.value.find((tweet) => {
-    console.log(tweet.id)
-    console.log(id)
-    console.log(id + ': ' + (tweet.id == id))
     return tweet.id == id
   })
 }
@@ -41,8 +38,6 @@ onMounted(() => {
   } else {
     console.log('Not retrieved.')
   }
-  console.log(tweet.value)
-  console.log(icon.value)
 })
 </script>
 
