@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.context.jdbc.Sql;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 import skajihara.projectX.MainContents.Home.exception.TweetException;
@@ -132,12 +133,14 @@ class TweetServiceTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/service/selectAllTweetsIntegrationTest.sql"})
     public void selectAllTweetsTestIntegrationTest() {
         List<Tweet> tweets = tweetService.selectAllTweets();
         assertThat(tweets).hasSize(10);
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/service/selectRecentTweetsIntegrationTest.sql"})
     void selectRecentTweetsIntegrationTest() throws ParseException {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -154,6 +157,7 @@ class TweetServiceTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/service/createTweetIntegrationTest.sql"})
     void createTweetIntegrationTest() {
 
         Date date = new Date(System.currentTimeMillis());
@@ -187,12 +191,14 @@ class TweetServiceTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/service/createInvalidTweetIntegrationTest.sql"})
     void createInvalidTweetIntegrationTest() {
         Tweet invalidTweet = new Tweet();
         assertThrows(Exception.class, () -> tweetService.createTweet(invalidTweet));
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/service/updateTweetIntegrationTest.sql"})
     void updateTweetIntegrationTest() {
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
@@ -216,6 +222,7 @@ class TweetServiceTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/service/updateTweetExceptionIntegrationTest.sql"})
     void updateTweetExceptionIntegrationTest() {
 
         List<Tweet> tweets =tweetService.selectRecentTweets(3);
@@ -226,6 +233,7 @@ class TweetServiceTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/service/deleteTweetIntegrationTest.sql"})
     public void deleteTweetIntegrationTest() throws Exception {
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
@@ -239,11 +247,13 @@ class TweetServiceTest {
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/service/deleteTweetExceptionIntegrationTest.sql"})
     void deleteTweetExceptionIntegrationTest() {
         assertThrows(TweetException.class, () -> tweetService.deleteTweet(99999));
     }
 
     @Test
+    @Sql(scripts = {"classpath:sql/service/performanceTest.sql"})
     void performanceTest() {
 
         long startTime = System.currentTimeMillis();
