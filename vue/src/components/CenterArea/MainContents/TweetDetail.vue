@@ -3,76 +3,93 @@ import { ref, defineProps, onMounted } from 'vue'
 import { tweets } from '@/consts/tweets.js'
 import { accounts } from '@/consts/accounts.js'
 
-const tweet = ref()
-const icon = ref()
+const tweet = ref(null)
+const icon = ref('')
 
-defineProps({
+const props = defineProps({
   id: {
-    type: String,
+    type: [String, Number],
     required: true
   }
 })
 
 function deleteTweet(id) {
-  tweets.value.splice(id, 1)
+  const index = tweets.value.findIndex((tweet) => tweet.id == id)
+  if (index !== -1) {
+    tweets.value.splice(index, 1)
+  }
 }
+
 function findTweet(id) {
-  // console.log(id)
-  return tweets.value.find((tweet) => tweet.id === id)
+  return tweets.value.find((tweet) => {
+    console.log(tweet.id)
+    console.log(id)
+    console.log(id + ': ' + (tweet.id == id))
+    return tweet.id == id
+  })
 }
+
 function searchIcon(userId) {
-  return accounts.value.find((account) => account.userId === userId).icon
+  const account = accounts.value.find((account) => account.userId === userId)
+  return account ? account.icon : ''
 }
+
 onMounted(() => {
-  tweet.value = findTweet()
+  tweet.value = findTweet(props.id)
   if (tweet.value) {
     icon.value = searchIcon(tweet.value.userId)
+  } else {
+    console.log('Not retrieved.')
   }
   console.log(tweet.value)
   console.log(icon.value)
 })
 </script>
+
 <template>
-  <div class="content">
+  <div v-if="tweet" class="content">
     <div class="tweet-header">
       <img class="user-icon" :src="icon" width="50" height="50" />
-      <div v-show="userId === 'q30387'">
-        <BButton pill size="sm" @click="deleteTweet(id)">削除</BButton>
+      <div v-show="tweet.userId === 'q30387'">
+        <BButton pill size="sm" @click="deleteTweet(props.id)">削除</BButton>
       </div>
     </div>
-    <pre class="tweet-text">{{ tweetContent }}</pre>
-    <div v-if="image" class="tweet-image">
-      <img :src="image" style="max-width: 500px; max-height: 200px" />
+    <pre class="tweet-text">{{ tweet.content }}</pre>
+    <div v-if="tweet.image" class="tweet-image">
+      <img :src="tweet.image" style="max-width: 500px; max-height: 200px" />
     </div>
     <div class="tweet-info">
-      <pre>{{ datetime }} tweet by @{{ userId }}  <b>{{ views }}</b> Views</pre>
+      <pre>{{ tweet.datetime }} tweet by @{{ tweet.userId }}  <b>{{ tweet.views }}</b> Views</pre>
       <div class="tweet-activity">
         <div>
           <BButton variant="link">
             <img src="@/assets/icons/tweet/reply.svg" width="15" height="15" />
           </BButton>
-          <span class="disabled-text">{{ reply }}</span>
+          <span class="disabled-text">{{ tweet.reply }}</span>
         </div>
         <div>
           <BButton variant="link">
             <img src="@/assets/icons/tweet/retweet.svg" width="15" height="15" />
           </BButton>
-          <span class="disabled-text">{{ retweet }}</span>
+          <span class="disabled-text">{{ tweet.retweet }}</span>
         </div>
         <div>
           <BButton variant="link">
             <img src="@/assets/icons/tweet/likes.svg" width="15" height="15" />
           </BButton>
-          <span class="disabled-text">{{ likes }}</span>
+          <span class="disabled-text">{{ tweet.likes }}</span>
         </div>
         <div>
           <BButton variant="link">
             <img src="@/assets/icons/tweet/views.svg" width="15" height="15" />
           </BButton>
-          <span class="disabled-text">{{ views }}</span>
+          <span class="disabled-text">{{ tweet.views }}</span>
         </div>
       </div>
     </div>
+  </div>
+  <div v-else>
+    <p>Tweet was not found or Error has occurred.</p>
   </div>
 </template>
 <style scoped>
