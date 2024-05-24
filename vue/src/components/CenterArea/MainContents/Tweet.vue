@@ -1,6 +1,13 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
-defineProps({
+import { useCurrentUserStore } from '@/stores/currentUser.js'
+
+const currentUser = useCurrentUserStore()
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true
+  },
   tweetContent: {
     type: String,
     required: true
@@ -57,47 +64,50 @@ const deleteTweet = (index) => {
   emit('deleteTweet', index)
 }
 </script>
+
 <template>
   <div class="content">
-    <div class="tweet-header">
-      <img class="user-icon" :src="icon" width="50" height="50" />
-      <div v-show="userId === 'q30387'">
-        <BButton pill size="sm" @click="deleteTweet(index)">削除</BButton>
-      </div>
-    </div>
-    <pre class="tweet-text">{{ tweetContent }}</pre>
-    <div v-if="image" class="tweet-image">
-      <img :src="image" style="max-width: 500px; max-height: 200px" />
-    </div>
-    <div class="tweet-info">
-      <pre>{{ datetime }} tweet by @{{ userId }}  <b>{{ views }}</b> Views</pre>
-      <div class="tweet-activity">
-        <div>
-          <BButton variant="link">
-            <img src="@/assets/icons/tweet/reply.svg" width="15" height="15" />
-          </BButton>
-          <span class="disabled-text">{{ reply }}</span>
-        </div>
-        <div>
-          <BButton variant="link">
-            <img src="@/assets/icons/tweet/retweet.svg" width="15" height="15" />
-          </BButton>
-          <span class="disabled-text">{{ retweet }}</span>
-        </div>
-        <div>
-          <BButton variant="link">
-            <img src="@/assets/icons/tweet/likes.svg" width="15" height="15" />
-          </BButton>
-          <span class="disabled-text">{{ likes }}</span>
-        </div>
-        <div>
-          <BButton variant="link">
-            <img src="@/assets/icons/tweet/views.svg" width="15" height="15" />
-          </BButton>
-          <span class="disabled-text">{{ views }}</span>
+    <router-link :to="{ name: 'tweet-detail', params: { id: props.id } }" class="no-hover">
+      <div class="tweet-header">
+        <img class="user-icon" :src="props.icon" width="50" height="50" />
+        <div v-show="props.userId === currentUser.userId">
+          <BButton pill size="sm" @click="deleteTweet(props.index)">削除</BButton>
         </div>
       </div>
-    </div>
+      <pre class="tweet-text">{{ props.tweetContent }}</pre>
+      <div v-if="props.image" class="tweet-image">
+        <img :src="props.image" style="max-width: 500px; max-height: 200px" />
+      </div>
+      <div class="tweet-info">
+        <pre>{{ props.datetime }} tweet by @{{ props.userId }}  <b>{{ props.views }}</b> Views</pre>
+        <div class="tweet-activity">
+          <div>
+            <BButton variant="link">
+              <img src="@/assets/icons/tweet/reply.svg" width="15" height="15" />
+            </BButton>
+            <span class="disabled-text">{{ props.reply }}</span>
+          </div>
+          <div>
+            <BButton variant="link">
+              <img src="@/assets/icons/tweet/retweet.svg" width="15" height="15" />
+            </BButton>
+            <span class="disabled-text">{{ props.retweet }}</span>
+          </div>
+          <div>
+            <BButton variant="link">
+              <img src="@/assets/icons/tweet/likes.svg" width="15" height="15" />
+            </BButton>
+            <span class="disabled-text">{{ props.likes }}</span>
+          </div>
+          <div>
+            <BButton variant="link">
+              <img src="@/assets/icons/tweet/views.svg" width="15" height="15" />
+            </BButton>
+            <span class="disabled-text">{{ props.views }}</span>
+          </div>
+        </div>
+      </div>
+    </router-link>
   </div>
 </template>
 <style scoped>
@@ -139,5 +149,19 @@ const deleteTweet = (index) => {
   position: relative;
   left: -5px;
   top: 3px;
+}
+
+.no-hover {
+  color: inherit;
+  text-decoration: none;
+}
+.no-hover:hover {
+  color: inherit;
+  text-decoration: none;
+}
+a {
+  text-decoration: none;
+  color: hsla(100%, 100%, 100%, 1);
+  padding: 0px;
 }
 </style>

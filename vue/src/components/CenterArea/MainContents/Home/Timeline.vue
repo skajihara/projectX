@@ -20,10 +20,12 @@ onMounted(() => {
   pickRandom20Tweets()
 })
 </script>
+
 <template>
   <div>
     <div v-for="(tweet, index) in randomTweets" :key="index" class="tweet">
       <Tweet
+        :id="tweet.id"
         :tweet-content="tweet.content"
         :index="index"
         :user-id="tweet.userId"
