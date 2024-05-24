@@ -1,5 +1,6 @@
 package skajihara.projectX.MainContents.Home.service;
 
+import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,7 +10,9 @@ import org.springframework.test.context.jdbc.Sql;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 import skajihara.projectX.MainContents.Home.exception.TweetException;
+import skajihara.projectX.MainContents.Home.util.CsvLoader;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -17,10 +20,6 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,6 +27,9 @@ class TweetServiceTest {
 
     @Autowired
     TweetService tweetService;
+
+    @Autowired
+    private CsvLoader csvLoader;
 
     @SpyBean
     TweetRepository tweetRepository;
@@ -140,8 +142,10 @@ class TweetServiceTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/selectRecentTweetsIntegrationTest.sql"})
+//    @Sql(scripts = {"classpath:sql/service/selectRecentTweetsIntegrationTest.sql"})
     void selectRecentTweetsIntegrationTest() throws ParseException {
+
+        csvLoader.loadTweets("src/test/resources/csv/selectRecentTweetsIntegrationTest.csv");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
