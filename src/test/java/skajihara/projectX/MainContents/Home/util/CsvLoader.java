@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -20,9 +21,9 @@ public class CsvLoader {
     @Autowired
     private TweetRepository tweetRepository;
 
-    public void loadTweets(String filePath){
+    public void loadTweets(String filePath) {
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             List<String[]> lines = reader.readAll();
             for (String[] line : lines) {
@@ -34,17 +35,13 @@ public class CsvLoader {
                 tweet.setRetweets(Integer.valueOf(line[4]));
                 tweet.setReplies(Integer.valueOf(line[5]));
                 tweet.setViews(Integer.valueOf(line[6]));
-                tweet.setDatetime(dateFormat.parse(line[7]));
+                Date datetime = dateFormat.parse(line[7].replace("'", ""));
+                tweet.setDatetime(datetime);
                 tweet.setLocation(line[8]);
                 tweet.setDeleteFlag(Boolean.valueOf(line[9]));
                 tweetRepository.save(tweet);
             }
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        } catch (CsvException e) {
+        } catch (IOException | CsvException | ParseException e) {
             throw new RuntimeException(e);
         }
     }

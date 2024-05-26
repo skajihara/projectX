@@ -142,7 +142,6 @@ class TweetServiceTest {
     }
 
     @Test
-//    @Sql(scripts = {"classpath:sql/service/selectRecentTweetsIntegrationTest.sql"})
     void selectRecentTweetsIntegrationTest() throws ParseException {
 
         csvLoader.loadTweets("src/test/resources/csv/selectRecentTweetsIntegrationTest.csv");
@@ -153,8 +152,23 @@ class TweetServiceTest {
         Date date2 = dateFormat.parse("2024-03-29 15:30:11");
         Date date3 = dateFormat.parse("2024-03-18 20:10:01");
 
-        List<Tweet> tweets = tweetService.selectRecentTweets(3);
-        assertThat(tweets).hasSize(3);
+        List<Tweet> tweets = tweetService.selectRecentTweets(10);
+        assertThat(tweets).hasSize(10);
+
+//        for(Tweet tweet:tweets){
+//            System.out.print(tweet.getId());
+//            System.out.print(", ");
+//            System.out.print(tweet.getDatetime());
+//            System.out.print(", ");
+//            System.out.print(tweet.getAccountId());
+//            System.out.print(", ");
+//            System.out.print(tweet.getText());
+//            System.out.print(", ");
+//            System.out.print(tweet.getImage());
+//            System.out.print(", ");
+//            System.out.println(tweet.getLocation());
+//        }
+
         assertThat(tweets.get(0).getDatetime().getTime()).isEqualTo(date1.getTime());
         assertThat(tweets.get(1).getDatetime().getTime()).isEqualTo(date2.getTime());
         assertThat(tweets.get(2).getDatetime().getTime()).isEqualTo(date3.getTime());
