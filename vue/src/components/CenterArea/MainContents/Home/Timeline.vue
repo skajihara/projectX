@@ -44,9 +44,9 @@ onBeforeMount(() => {
       <div v-for="(tweet, index) in tweets" :key="index" class="tweet">
         <Tweet
           :id="tweet.id"
-          :tweet-content="tweet.content"
+          :tweet-content="tweet.text"
           :index="index"
-          :user-id="tweet.userId"
+          :account-id="tweet.accountId"
           :datetime="tweet.datetime"
           :location="tweet.location"
           :likes="tweet.likes"

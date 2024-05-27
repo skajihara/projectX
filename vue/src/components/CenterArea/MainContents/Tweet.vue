@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+// import { defineProps, defineEmits } from 'vue'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 
 const currentUser = useCurrentUserStore()
@@ -12,7 +12,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-  userId: {
+  accountId: {
     type: String,
     required: true
   },
@@ -70,7 +70,7 @@ const deleteTweet = (index) => {
     <router-link :to="{ name: 'tweet-detail', params: { id: props.id } }" class="no-hover">
       <div class="tweet-header">
         <img class="user-icon" :src="props.icon" width="50" height="50" />
-        <div v-show="props.userId === currentUser.userId">
+        <div v-show="props.accountId === currentUser.userId">
           <BButton pill size="sm" @click="deleteTweet(props.index)">削除</BButton>
         </div>
       </div>
@@ -79,7 +79,7 @@ const deleteTweet = (index) => {
         <img :src="props.image" style="max-width: 500px; max-height: 200px" />
       </div>
       <div class="tweet-info">
-        <pre>{{ props.datetime }} tweet by @{{ props.userId }}  <b>{{ props.views }}</b> Views</pre>
+        <pre>{{ props.datetime }} tweet by @{{ props.accountId }}  <b>{{ props.views }}</b> Views</pre>
         <div class="tweet-activity">
           <div>
             <BButton variant="link">
