@@ -7,6 +7,7 @@ import skajihara.projectX.MainContents.Home.service.TweetService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/tweets")
 public class TweetController {
