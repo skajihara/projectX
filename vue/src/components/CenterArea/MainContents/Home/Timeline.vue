@@ -22,8 +22,8 @@ const fetchData = async () => {
   }
 }
 
-function searchIcon(accountId) {
-  return accounts.value.find((account) => account.userId === accountId).icon
+function searchAccount(accountId) {
+  return accounts.value.find((account) => account.userId === accountId)
 }
 async function deleteTweet(id) {
   try {
@@ -37,7 +37,6 @@ async function deleteTweet(id) {
 }
 onBeforeMount(() => {
   fetchData()
-  console.log('timeline mounted.')
 })
 </script>
 
@@ -54,13 +53,14 @@ onBeforeMount(() => {
           :id="tweet.id"
           :tweet-content="tweet.text"
           :account-id="tweet.accountId"
+          :account-name="searchAccount(tweet.accountId).userName"
           :datetime="tweet.datetime"
           :location="tweet.location"
           :likes="tweet.likes"
           :retweet="tweet.retweet"
           :reply="tweet.reply"
           :views="tweet.views"
-          :icon="searchIcon(tweet.accountId)"
+          :icon="searchAccount(tweet.accountId).icon"
           :image="tweet.image"
           @delete-tweet="deleteTweet"
         ></Tweet>

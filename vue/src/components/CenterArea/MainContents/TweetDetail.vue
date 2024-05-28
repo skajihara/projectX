@@ -16,7 +16,7 @@ const currentUser = useCurrentUserStore()
 
 const tweets = ref(null)
 const tweet = ref(null)
-const icon = ref('')
+const accountInfo = ref('')
 const loading = ref(true)
 const error = ref(null)
 const errDtl = ref(null)
@@ -28,7 +28,7 @@ const fetchData = async () => {
     tweets.value = response.data
     tweet.value = findTweet(props.id)
     if (tweet.value) {
-      icon.value = searchIcon(tweet.value.accountId)
+      accountInfo.value = searchAccount(tweet.value.accountId)
     } else {
       console.log('Not retrieved.')
     }
@@ -49,9 +49,8 @@ function findTweet(id) {
   })
 }
 
-function searchIcon(accountId) {
-  const account = accounts.value.find((account) => account.userId === accountId)
-  return account ? account.icon : ''
+function searchAccount(accountId) {
+  return accounts.value.find((account) => account.userId === accountId)
 }
 
 async function deleteTweet(id) {
@@ -77,8 +76,9 @@ onBeforeMount(() => {
   </div>
   <div v-else-if="tweet" class="content">
     <div class="tweet-header">
-      <img class="user-icon" :src="icon" width="50" height="50" />
-      <div v-show="tweet.accountId === currentUser.userId">
+      <img class="user-icon" :src="accountInfo.icon" width="50" height="50" />
+      <span>{{ accountInfo.userName }}</span>
+      <div v-show="tweet.accountId === currentUser.userId" class="delete-button">
         <BButton pill size="sm" @click="deleteTweet(tweet.id)">削除</BButton>
       </div>
     </div>
@@ -127,11 +127,15 @@ onBeforeMount(() => {
   border-radius: 5px;
   padding: 10px 10px;
 }
+.delete-button {
+  display: inline-block;
+  text-align: right;
+  margin-left: auto;
+}
 .tweet-header {
   width: 540px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 .tweet-text {
   word-wrap: break-word;

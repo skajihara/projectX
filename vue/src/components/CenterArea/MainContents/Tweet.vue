@@ -15,6 +15,10 @@ const props = defineProps({
     type: String,
     required: true
   },
+  accountName: {
+    type: String,
+    required: true
+  },
   datetime: {
     type: String,
     required: true
@@ -64,7 +68,8 @@ const deleteTweet = (id) => {
   <div class="content">
     <div class="tweet-header">
       <img class="user-icon" :src="props.icon" width="50" height="50" />
-      <div v-show="props.accountId === currentUser.userId">
+      <span>{{ props.accountName }}</span>
+      <div v-show="props.accountId === currentUser.userId" class="delete-button">
         <BButton pill size="sm" @click="deleteTweet(props.id)">削除</BButton>
       </div>
     </div>
@@ -112,11 +117,15 @@ const deleteTweet = (id) => {
   border-radius: 5px;
   padding: 10px 10px;
 }
+.delete-button {
+  display: inline-block;
+  text-align: right;
+  margin-left: auto;
+}
 .tweet-header {
   width: 540px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 .tweet-text {
   word-wrap: break-word;
