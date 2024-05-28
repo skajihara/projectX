@@ -4,17 +4,17 @@ import axios from 'axios'
 import { accounts } from '@/consts/accounts.js'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 
-const currentUser = useCurrentUserStore()
-const tweet = ref(null)
-const icon = ref('')
 const props = defineProps({
   id: {
     type: String,
     required: true
   }
 })
+const currentUser = useCurrentUserStore()
 
 const tweets = ref(null)
+const tweet = ref(null)
+const icon = ref('')
 const loading = ref(true)
 const error = ref(null)
 const errDtl = ref(null)
@@ -24,6 +24,12 @@ const fetchData = async () => {
   try {
     const response = await axios.get('http://localhost:8081/api/tweets/recent')
     tweets.value = response.data
+    tweet.value = findTweet(props.id)
+    if (tweet.value) {
+      icon.value = searchIcon(tweet.value.accountId)
+    } else {
+      console.log('Not retrieved.')
+    }
   } catch (err) {
     error.value = 'Failed to fetch data'
     errDtl.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
@@ -33,8 +39,11 @@ const fetchData = async () => {
 }
 
 function findTweet(id) {
+  if (!tweets.value) {
+    return null
+  }
   return tweets.value.find((tweet) => {
-    return tweet.value.id == id
+    return tweet.id == id
   })
 }
 
@@ -45,20 +54,19 @@ function searchIcon(accountId) {
 
 onBeforeMount(() => {
   fetchData()
-  tweet.value = findTweet(props.id)
-  if (tweet.value) {
-    icon.value = searchIcon(tweet.value.accountId)
-  } else {
-    console.log('Not retrieved.')
-  }
 })
 </script>
 
 <template>
-  <div v-if="tweet" class="content">
+  <div v-if="loading">Loading...</div>
+  <div v-else-if="error">
+    <p>{{ error }}</p>
+    <p>{{ errDtl }}</p>
+  </div>
+  <div v-else-if="tweet" class="content">
     <div class="tweet-header">
       <img class="user-icon" :src="icon" width="50" height="50" />
-      <div v-show="tweet.userId === currentUser.userId">
+      <div v-show="tweet.accountId === currentUser.userId">
         <BButton pill size="sm" @click="deleteTweet(props.id)">削除</BButton>
       </div>
     </div>
