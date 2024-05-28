@@ -27,7 +27,7 @@ const createTweet = async () => {
     })
 
     try {
-      const res = await axios.post('http://localhost:8081/api/tweets', tweet)
+      const res = await axios.post('http://localhost:8081/api/tweets', tweet.value)
       response.value = res.data
       window.location.reload()
     } catch (err) {
