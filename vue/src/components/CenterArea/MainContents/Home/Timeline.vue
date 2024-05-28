@@ -25,8 +25,16 @@ const fetchData = async () => {
 function searchIcon(accountId) {
   return accounts.value.find((account) => account.userId === accountId).icon
 }
-function deleteTweet(index) {
-  tweets.value.splice(index, 1)
+async function deleteTweet(id) {
+  // tweets.value.splice(id, 1)
+  try {
+    await axios.delete('http://localhost:8081/api/tweets/' + id)
+    window.location.reload()
+  } catch (err) {
+    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
+  } finally {
+    fetchData()
+  }
 }
 onBeforeMount(() => {
   fetchData()
@@ -45,7 +53,6 @@ onBeforeMount(() => {
         <Tweet
           :id="tweet.id"
           :tweet-content="tweet.text"
-          :index="index"
           :account-id="tweet.accountId"
           :datetime="tweet.datetime"
           :location="tweet.location"

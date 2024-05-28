@@ -1,6 +1,6 @@
 <script setup>
-import { ref, defineProps, onMounted } from 'vue'
-import { tweets } from '@/consts/tweets.js'
+import { ref, onBeforeMount } from 'vue'
+import axios from 'axios'
 import { accounts } from '@/consts/accounts.js'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 
@@ -14,28 +14,40 @@ const props = defineProps({
   }
 })
 
-function deleteTweet(id) {
-  const index = tweets.value.findIndex((tweet) => tweet.id === id)
-  if (index !== -1) {
-    tweets.value.splice(index, 1)
+const tweets = ref(null)
+const loading = ref(true)
+const error = ref(null)
+const errDtl = ref(null)
+const fetchData = async () => {
+  loading.value = true
+  error.value = null
+  try {
+    const response = await axios.get('http://localhost:8081/api/tweets/recent')
+    tweets.value = response.data
+  } catch (err) {
+    error.value = 'Failed to fetch data'
+    errDtl.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
+  } finally {
+    loading.value = false
   }
 }
 
 function findTweet(id) {
   return tweets.value.find((tweet) => {
-    return tweet.id == id
+    return tweet.value.id == id
   })
 }
 
-function searchIcon(userId) {
-  const account = accounts.value.find((account) => account.userId === userId)
+function searchIcon(accountId) {
+  const account = accounts.value.find((account) => account.userId === accountId)
   return account ? account.icon : ''
 }
 
-onMounted(() => {
+onBeforeMount(() => {
+  fetchData()
   tweet.value = findTweet(props.id)
   if (tweet.value) {
-    icon.value = searchIcon(tweet.value.userId)
+    icon.value = searchIcon(tweet.value.accountId)
   } else {
     console.log('Not retrieved.')
   }

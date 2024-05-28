@@ -1,5 +1,4 @@
 <script setup>
-// import { defineProps, defineEmits } from 'vue'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 
 const currentUser = useCurrentUserStore()
@@ -53,27 +52,23 @@ const props = defineProps({
     type: String,
     required: false,
     default: ''
-  },
-  index: {
-    type: Number,
-    required: true
   }
 })
 const emit = defineEmits(['deleteTweet'])
-const deleteTweet = (index) => {
-  emit('deleteTweet', index)
+const deleteTweet = (id) => {
+  emit('deleteTweet', id)
 }
 </script>
 
 <template>
   <div class="content">
-    <router-link :to="{ name: 'tweet-detail', params: { id: props.id } }" class="no-hover">
-      <div class="tweet-header">
-        <img class="user-icon" :src="props.icon" width="50" height="50" />
-        <div v-show="props.accountId === currentUser.userId">
-          <BButton pill size="sm" @click="deleteTweet(props.index)">削除</BButton>
-        </div>
+    <div class="tweet-header">
+      <img class="user-icon" :src="props.icon" width="50" height="50" />
+      <div v-show="props.accountId === currentUser.userId">
+        <BButton pill size="sm" @click="deleteTweet(props.id)">削除</BButton>
       </div>
+    </div>
+    <router-link :to="{ name: 'tweet-detail', params: { id: props.id } }" class="no-hover">
       <pre class="tweet-text">{{ props.tweetContent }}</pre>
       <div v-if="props.image" class="tweet-image">
         <img :src="props.image" style="max-width: 500px; max-height: 200px" />
