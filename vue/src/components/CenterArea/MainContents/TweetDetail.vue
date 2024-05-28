@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { accounts } from '@/consts/accounts.js'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
@@ -10,6 +11,7 @@ const props = defineProps({
     required: true
   }
 })
+const router = useRouter()
 const currentUser = useCurrentUserStore()
 
 const tweets = ref(null)
@@ -52,6 +54,16 @@ function searchIcon(accountId) {
   return account ? account.icon : ''
 }
 
+async function deleteTweet(id) {
+  try {
+    await axios.delete('http://localhost:8081/api/tweets/' + id)
+  } catch (err) {
+    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
+  } finally {
+    router.replace({ name: 'home' })
+  }
+}
+
 onBeforeMount(() => {
   fetchData()
 })
@@ -67,27 +79,27 @@ onBeforeMount(() => {
     <div class="tweet-header">
       <img class="user-icon" :src="icon" width="50" height="50" />
       <div v-show="tweet.accountId === currentUser.userId">
-        <BButton pill size="sm" @click="deleteTweet(props.id)">削除</BButton>
+        <BButton pill size="sm" @click="deleteTweet(tweet.id)">削除</BButton>
       </div>
     </div>
-    <pre class="tweet-text">{{ tweet.content }}</pre>
+    <pre class="tweet-text">{{ tweet.text }}</pre>
     <div v-if="tweet.image" class="tweet-image">
       <img :src="tweet.image" style="max-width: 500px; max-height: 200px" />
     </div>
     <div class="tweet-info">
-      <pre>{{ tweet.datetime }} tweet by @{{ tweet.userId }}  <b>{{ tweet.views }}</b> Views</pre>
+      <pre>{{ tweet.datetime }} tweet by @{{ tweet.accountId }}  <b>{{ tweet.views }}</b> Views</pre>
       <div class="tweet-activity">
         <div>
           <BButton variant="link">
             <img src="@/assets/icons/tweet/reply.svg" width="15" height="15" />
           </BButton>
-          <span class="disabled-text">{{ tweet.reply }}</span>
+          <span class="disabled-text">{{ tweet.replies }}</span>
         </div>
         <div>
           <BButton variant="link">
             <img src="@/assets/icons/tweet/retweet.svg" width="15" height="15" />
           </BButton>
-          <span class="disabled-text">{{ tweet.retweet }}</span>
+          <span class="disabled-text">{{ tweet.retweets }}</span>
         </div>
         <div>
           <BButton variant="link">

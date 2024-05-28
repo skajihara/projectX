@@ -26,7 +26,6 @@ function searchIcon(accountId) {
   return accounts.value.find((account) => account.userId === accountId).icon
 }
 async function deleteTweet(id) {
-  // tweets.value.splice(id, 1)
   try {
     await axios.delete('http://localhost:8081/api/tweets/' + id)
     window.location.reload()
@@ -38,6 +37,7 @@ async function deleteTweet(id) {
 }
 onBeforeMount(() => {
   fetchData()
+  console.log('timeline mounted.')
 })
 </script>
 
