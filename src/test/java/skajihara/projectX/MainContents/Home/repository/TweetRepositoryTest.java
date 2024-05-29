@@ -70,5 +70,13 @@ class TweetRepositoryTest {
         assertThat(recentTweets.get(0).getText()).isEqualTo("Third test tweet");
         assertThat(recentTweets.get(1).getText()).isEqualTo("Second test tweet");
     }
+
+    @Test
+    void selectTweetUnitTest() {
+
+        Tweet tweet = tweetRepository.selectTweet(11);
+        assertThat(tweet).isNotNull();
+        assertThat(tweet.getText()).isEqualTo("First test tweet");
+    }
 }
 

@@ -64,6 +64,20 @@ class TweetServiceTest {
     }
 
     @Test
+    void selectTweetUnitTest() {
+
+        Tweet expected = new Tweet();
+
+        doReturn(new Tweet()).when(tweetRepository).selectTweet(anyInt());
+
+        Tweet result = tweetService.selectTweet(anyInt());
+
+        verify(tweetRepository, times(1)).selectTweet(anyInt());
+        assertNotNull(result);
+        assertEquals(expected, result);
+    }
+
+    @Test
     void createTweetUnitTest() {
 
         doReturn(tweet).when(tweetRepository).save(any(Tweet.class));
@@ -154,6 +168,29 @@ class TweetServiceTest {
         assertThat(tweets.get(0).getDatetime().getTime()).isEqualTo(date1.getTime());
         assertThat(tweets.get(1).getDatetime().getTime()).isEqualTo(date2.getTime());
         assertThat(tweets.get(2).getDatetime().getTime()).isEqualTo(date3.getTime());
+    }
+
+    @Test
+    @Sql(scripts = {"classpath:sql/service/selectTweetIntegrationTest.sql"})
+    void selectTweetIntegrationTest() throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date datetime = dateFormat.parse("2024-03-01 15:30:00");
+
+        Tweet tweet = tweetService.selectTweet(11);
+        assertThat(tweet).isNotNull();
+        assertThat(tweet.getId()).isEqualTo(11);
+        assertThat(tweet.getAccountId()).isEqualTo("user_A");
+        assertThat(tweet.getText()).isEqualTo("get tweet integration test.");
+        assertThat(tweet.getImage()).isEqualTo("/src/assets/images/img02.jpg");
+        assertThat(tweet.getLikes()).isEqualTo(9);
+        assertThat(tweet.getRetweets()).isEqualTo(23);
+        assertThat(tweet.getReplies()).isEqualTo(7);
+        assertThat(tweet.getViews()).isEqualTo(14);
+        assertThat(tweet.getDatetime().getTime()).isEqualTo(datetime.getTime());
+        assertThat(tweet.getLocation()).isEqualTo("Namegawa City, Toyama Prefecture");
+        assertThat(tweet.isDeleteFlag()).isEqualTo(false);
     }
 
     @Test

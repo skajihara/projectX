@@ -1,31 +1,41 @@
 <script setup>
 import { ref } from 'vue'
-import { tweets } from '@/consts/tweets.js'
+import { format } from 'date-fns'
+import { useCurrentUserStore } from '@/stores/currentUser.js'
+import axios from 'axios'
 
 const newTweetContent = ref('')
-
-function addTweet() {
+const currentUser = useCurrentUserStore()
+const response = ref(null)
+const error = ref(null)
+const createTweet = async () => {
   if (newTweetContent.value.trim() !== '') {
-    const currentDate = new Date()
-    const year = currentDate.getFullYear()
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0') // 0から始まるため、1を足す
-    const day = String(currentDate.getDate()).padStart(2, '0')
-    const hours = String(currentDate.getHours()).padStart(2, '0')
-    const minutes = String(currentDate.getMinutes()).padStart(2, '0')
-    const seconds = String(currentDate.getSeconds()).padStart(2, '0')
-    const formattedCurrentDate =
-      year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
-    tweets.value.unshift({
-      content: newTweetContent.value,
-      userId: 'q30387',
-      datetime: formattedCurrentDate,
-      location: 'somewhere',
+    error.value = null
+    response.value = null
+
+    const tweet = ref({
+      accountId: currentUser.userId,
+      text: newTweetContent.value,
+      image: '',
       likes: 0,
-      retweet: 0,
-      reply: 0,
-      views: 0
+      retweets: 0,
+      replies: 0,
+      views: 0,
+      datetime: format(Date.now(), "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"),
+      location: 'somewhere',
+      deleteFlag: false
     })
-    newTweetContent.value = ''
+
+    try {
+      await axios.post('http://localhost:8081/api/tweets', tweet.value)
+      window.location.reload()
+    } catch (err) {
+      error.value = err.response
+        ? `${err.response.status}: ${err.response.statusText}`
+        : err.message
+    } finally {
+      newTweetContent.value = ''
+    }
   }
 }
 </script>
@@ -33,7 +43,7 @@ function addTweet() {
   <div>
     <div class="tweet-form">
       <img class="user-icon" src="@/assets/icons/user/myicon.svg" width="50" height="50" />
-      <BButton pill variant="primary" :disabled="newTweetContent === ''" @click="addTweet">
+      <BButton pill variant="primary" :disabled="newTweetContent === ''" @click="createTweet">
         ツイート
       </BButton>
       <b-form-textarea

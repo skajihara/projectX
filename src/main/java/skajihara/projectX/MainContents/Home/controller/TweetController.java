@@ -7,6 +7,7 @@ import skajihara.projectX.MainContents.Home.service.TweetService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/tweets")
 public class TweetController {
@@ -26,6 +27,11 @@ public class TweetController {
     @GetMapping("/recent")
     public List<Tweet> getRecentTweets(@RequestParam(defaultValue = "20") int num) {
         return tweetService.selectRecentTweets(num);
+    }
+
+    @GetMapping("/tweet/{id}")
+    public Tweet getTweet(@PathVariable int id) {
+        return tweetService.selectTweet(id);
     }
 
     @PostMapping

@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 
 const currentUser = useCurrentUserStore()
@@ -12,7 +11,11 @@ const props = defineProps({
     type: String,
     required: true
   },
-  userId: {
+  accountId: {
+    type: String,
+    required: true
+  },
+  accountName: {
     type: String,
     required: true
   },
@@ -53,33 +56,30 @@ const props = defineProps({
     type: String,
     required: false,
     default: ''
-  },
-  index: {
-    type: Number,
-    required: true
   }
 })
 const emit = defineEmits(['deleteTweet'])
-const deleteTweet = (index) => {
-  emit('deleteTweet', index)
+const deleteTweet = (id) => {
+  emit('deleteTweet', id)
 }
 </script>
 
 <template>
   <div class="content">
-    <router-link :to="{ name: 'tweet-detail', params: { id: props.id } }" class="no-hover">
-      <div class="tweet-header">
-        <img class="user-icon" :src="props.icon" width="50" height="50" />
-        <div v-show="props.userId === currentUser.userId">
-          <BButton pill size="sm" @click="deleteTweet(props.index)">削除</BButton>
-        </div>
+    <div class="tweet-header">
+      <img class="user-icon" :src="props.icon" width="50" height="50" />
+      <span>{{ props.accountName }}</span>
+      <div v-show="props.accountId === currentUser.userId" class="delete-button">
+        <BButton pill size="sm" @click="deleteTweet(props.id)">削除</BButton>
       </div>
+    </div>
+    <router-link :to="{ name: 'tweet-detail', params: { id: props.id } }" class="no-hover">
       <pre class="tweet-text">{{ props.tweetContent }}</pre>
       <div v-if="props.image" class="tweet-image">
         <img :src="props.image" style="max-width: 500px; max-height: 200px" />
       </div>
       <div class="tweet-info">
-        <pre>{{ props.datetime }} tweet by @{{ props.userId }}  <b>{{ props.views }}</b> Views</pre>
+        <pre>{{ props.datetime }} tweet by @{{ props.accountId }}  <b>{{ props.views }}</b> Views</pre>
         <div class="tweet-activity">
           <div>
             <BButton variant="link">
@@ -117,11 +117,15 @@ const deleteTweet = (index) => {
   border-radius: 5px;
   padding: 10px 10px;
 }
+.delete-button {
+  display: inline-block;
+  text-align: right;
+  margin-left: auto;
+}
 .tweet-header {
   width: 540px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 .tweet-text {
   word-wrap: break-word;
