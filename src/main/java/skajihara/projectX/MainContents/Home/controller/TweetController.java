@@ -29,8 +29,8 @@ public class TweetController {
         return tweetService.selectRecentTweets(num);
     }
 
-    @GetMapping("/tweet")
-    public Tweet getTweet(@RequestParam(defaultValue = "0") int id) {
+    @GetMapping("/tweet/{id}")
+    public Tweet getTweet(@PathVariable int id) {
         return tweetService.selectTweet(id);
     }
 

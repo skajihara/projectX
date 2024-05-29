@@ -60,7 +60,7 @@ public class TweetControllerTest {
 
         doReturn(new Tweet()).when(tweetService).selectTweet(anyInt());
 
-        mockMvc.perform(get("/api/tweets/tweet?id=1")).andExpect(status().isOk());
+        mockMvc.perform(get("/api/tweets/tweet/{id}",1)).andExpect(status().isOk());
 
         verify(tweetService, times(1)).selectTweet(anyInt());
     }
@@ -143,7 +143,7 @@ public class TweetControllerTest {
     @Sql(scripts = {"classpath:sql/controller/getTweetIntegrationTest.sql"})
     public void getTweetIntegrationTest() throws Exception {
 
-        String response =mockMvc.perform(get("/api/tweets/tweet").param("id","11"))
+        String response =mockMvc.perform(get("/api/tweets/tweet/11"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andExpect(jsonPath("$.length()").value(11))
