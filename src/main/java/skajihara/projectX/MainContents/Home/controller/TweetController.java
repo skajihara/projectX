@@ -29,6 +29,11 @@ public class TweetController {
         return tweetService.selectRecentTweets(num);
     }
 
+    @GetMapping("/tweet")
+    public Tweet getTweet(@RequestParam(defaultValue = "0") int id) {
+        return tweetService.selectTweet(id);
+    }
+
     @PostMapping
     public void createTweet(@RequestBody Tweet tweet) {
         tweetService.createTweet(tweet);

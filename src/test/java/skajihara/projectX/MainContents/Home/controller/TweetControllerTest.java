@@ -56,6 +56,16 @@ public class TweetControllerTest {
     }
 
     @Test
+    public void getTweetUnitTest() throws Exception {
+
+        doReturn(new Tweet()).when(tweetService).selectTweet(anyInt());
+
+        mockMvc.perform(get("/api/tweets/tweet?id=1")).andExpect(status().isOk());
+
+        verify(tweetService, times(1)).selectTweet(anyInt());
+    }
+
+    @Test
     public void createTweetUnitTest() throws Exception {
 
         doNothing().when(tweetService).createTweet(any());
@@ -127,6 +137,33 @@ public class TweetControllerTest {
         assertThat(tweets.get(0).getDatetime()).isEqualTo("2024-03-30T01:04:43.000+00:00");
         assertThat(tweets.get(1).getDatetime()).isEqualTo("2024-03-29T15:30:11.000+00:00");
         assertThat(tweets.get(2).getDatetime()).isEqualTo("2024-03-18T20:10:01.000+00:00");
+    }
+
+    @Test
+    @Sql(scripts = {"classpath:sql/controller/getTweetIntegrationTest.sql"})
+    public void getTweetIntegrationTest() throws Exception {
+
+        String response =mockMvc.perform(get("/api/tweets/tweet").param("id","11"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(11))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Tweet tweet = objectMapper.readValue(response, Tweet.class);
+        assertThat(tweet).isNotNull();
+        assertThat(tweet.getId()).isEqualTo(11);
+        assertThat(tweet.getAccountId()).isEqualTo("user_A");
+        assertThat(tweet.getText()).isEqualTo("get tweet integration test.");
+        assertThat(tweet.getImage()).isEqualTo("/src/assets/images/img02.jpg");
+        assertThat(tweet.getLikes()).isEqualTo(9);
+        assertThat(tweet.getRetweets()).isEqualTo(23);
+        assertThat(tweet.getReplies()).isEqualTo(7);
+        assertThat(tweet.getViews()).isEqualTo(14);
+        assertThat(tweet.getDatetime()).isEqualTo("2024-03-01T15:30:00.000+00:00");
+        assertThat(tweet.getLocation()).isEqualTo("Namegawa City, Toyama Prefecture");
+        assertThat(tweet.isDeleteFlag()).isEqualTo(false);
     }
 
     @Test
@@ -284,6 +321,14 @@ public class TweetControllerTest {
 
         List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
         assertThat(tweets).hasSize(0);
+    }
+
+    @Test
+    @Sql(scripts = {"classpath:sql/controller/getRecentTweetsWithNoDataIntegrationTest.sql"})
+    public void getNonExistentTweetIntegrationTest() throws Exception {
+
+        mockMvc.perform(put("/api/tweets/tweet/99999").param("id","99999"))
+                .andExpect(status().isNotFound());
     }
 
     @Test
