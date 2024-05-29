@@ -21,7 +21,7 @@ public class Account {
     private String icon;
 
     @Column(nullable = false)
-    private boolean validFlag = false;
+    private boolean validFlag = true;
 
     @Column(nullable = false)
     private boolean deleteFlag = false;
