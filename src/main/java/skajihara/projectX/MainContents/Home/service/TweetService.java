@@ -27,6 +27,10 @@ public class TweetService {
         return tweetRepository.selectRecentN(num);
     }
 
+    public Tweet selectTweet(int id){
+        return tweetRepository.selectTweet(id);
+    }
+
     public void createTweet(Tweet tweet) {
         tweetRepository.save(tweet);
     }
