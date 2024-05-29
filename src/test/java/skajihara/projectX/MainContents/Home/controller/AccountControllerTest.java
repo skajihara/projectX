@@ -37,5 +37,8 @@ public class AccountControllerTest {
         verify(accountService, times(1)).selectAccount(anyString());
     }
 
+    @Test
+    public void getAccountIntegrationTest() throws Exception {
 
+    }
 }

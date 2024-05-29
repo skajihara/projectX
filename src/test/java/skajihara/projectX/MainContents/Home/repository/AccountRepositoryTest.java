@@ -18,9 +18,6 @@ public class AccountRepositoryTest {
     @Autowired
     AccountRepository accountRepository;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @BeforeEach
     void setUp(){
 

@@ -39,4 +39,9 @@ public class AccountServiceTest {
         assertNotNull(result);
         assertEquals(expected, result);
     }
+
+    @Test
+    public void selectAccountIntegrationTest() throws Exception {
+
+    }
 }
