@@ -1,27 +1,17 @@
 package skajihara.projectX.MainContents.Home.service;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import skajihara.projectX.MainContents.Home.entity.Account;
+import skajihara.projectX.MainContents.Home.repository.AccountRepository;
 
-@Data
-@Entity
-@Table(name = "ACCOUNTS")
+@Service
 public class AccountService {
-    @Id
-    private String id;
 
-    @Column(nullable = false, length = 50)
-    private String name;
+    @Autowired
+    private AccountRepository accountRepository;
 
-    @Column(length = 200)
-    private String bio;
-
-    @Column(nullable = false, length = 200)
-    private String icon;
-
-    @Column(nullable = false)
-    private boolean validFlag = false;
-
-    @Column(nullable = false)
-    private boolean deleteFlag = false;
+    public Account selectAccount(String id) {
+        return accountRepository.selectAccount(id);
+    }
 }

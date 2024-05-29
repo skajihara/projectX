@@ -8,6 +8,6 @@ import skajihara.projectX.MainContents.Home.entity.Account;
 
 public interface AccountRepository extends JpaRepository<Account, String> {
 
-    @Query("SELECT a FROM Account a WHERE a.id = :id AND a.validFlag = false AND a.deleteFlag = false")
+    @Query("SELECT a FROM Account a WHERE a.id = :id AND a.validFlag = true AND a.deleteFlag = false")
     Account selectAccount(@Param("id") String id);
 }
