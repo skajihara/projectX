@@ -1,7 +1,5 @@
 package skajihara.projectX.MainContents.Home.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +30,7 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    void selectAccountUnitTest() {
+    void selectAccountIntegrationTest() {
 
         Account account = accountRepository.selectAccount("test_id");
         assertThat(account).isNotNull();
@@ -42,5 +40,11 @@ public class AccountRepositoryTest {
         assertThat(account.getIcon()).isEqualTo("/src/assets/icons/user/kkrn_icon_user_1.svg");
         assertThat(account.isValidFlag()).isEqualTo(true);
         assertThat(account.isDeleteFlag()).isEqualTo(false);
+    }
+
+    @Test
+    void selectNonExistentAccountIntegrationTest() {
+        Account account = accountRepository.selectAccount("abcdefg");
+        assertThat(account).isNull();
     }
 }
