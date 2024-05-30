@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import skajihara.projectX.MainContents.Home.entity.Account;
 import skajihara.projectX.MainContents.Home.service.AccountService;
-import skajihara.projectX.MainContents.Home.service.TweetService;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
