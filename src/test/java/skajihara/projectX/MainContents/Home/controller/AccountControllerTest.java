@@ -10,9 +10,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import skajihara.projectX.MainContents.Home.entity.Account;
 import skajihara.projectX.MainContents.Home.service.AccountService;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,5 +41,21 @@ public class AccountControllerTest {
     @Test
     public void getAccountIntegrationTest() throws Exception {
 
+        String response =mockMvc.perform(get("/api/accounts/user_A"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(6))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Account account = objectMapper.readValue(response, Account.class);
+        assertThat(account).isNotNull();
+        assertThat(account.getId()).isEqualTo("user_A");
+        assertThat(account.getName()).isEqualTo("Test User A");
+        assertThat(account.getBio()).isEqualTo("user_a test text.");
+        assertThat(account.getIcon()).isEqualTo("/src/assets/icons/user/kkrn_icon_user_1.svg");
+        assertThat(account.isValidFlag()).isEqualTo(true);
+        assertThat(account.isDeleteFlag()).isEqualTo(false);
     }
 }

@@ -1,6 +1,5 @@
 package skajihara.projectX.MainContents.Home.service;
 
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import skajihara.projectX.MainContents.Home.entity.Account;
 import skajihara.projectX.MainContents.Home.repository.AccountRepository;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -22,9 +22,6 @@ public class AccountServiceTest {
 
     @SpyBean
     AccountRepository accountRepository;
-
-    @SpyBean
-    Account account;
 
     @Test
     public void selectAccountUnitTest() {
@@ -41,7 +38,15 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void selectAccountIntegrationTest() throws Exception {
+    public void selectAccountIntegrationTest() {
 
+        Account account = accountService.selectAccount("user_A");
+        assertThat(account).isNotNull();
+        assertThat(account.getId()).isEqualTo("user_A");
+        assertThat(account.getName()).isEqualTo("Test User A");
+        assertThat(account.getBio()).isEqualTo("user_a test text.");
+        assertThat(account.getIcon()).isEqualTo("/src/assets/icons/user/kkrn_icon_user_1.svg");
+        assertThat(account.isValidFlag()).isEqualTo(true);
+        assertThat(account.isDeleteFlag()).isEqualTo(false);
     }
 }
