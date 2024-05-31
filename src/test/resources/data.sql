@@ -1,8 +1,8 @@
 INSERT INTO ACCOUNTS (id, name, bio, icon, valid_flag, delete_flag)
 VALUES
-('user_A','Test User A','/src/assets/icons/user/kkrn_icon_user_1.svg','user_a test text.',true,false),
-('user_B','Test User B','/src/assets/icons/user/kkrn_icon_user_2.svg','user_b test text.',true,false),
-('user_C','Test User C','/src/assets/icons/user/kkrn_icon_user_3.svg','user_c test text.',true,false);
+('user_A','Test User A','user_a test text.','/src/assets/icons/user/kkrn_icon_user_1.svg',true,false),
+('user_B','Test User B','user_b test text.','/src/assets/icons/user/kkrn_icon_user_2.svg',true,false),
+('user_C','Test User C','user_c test text.','/src/assets/icons/user/kkrn_icon_user_3.svg',true,false);
 
 INSERT INTO TWEETS (account_id, text, image, likes, retweets, replies, views, datetime, location, delete_flag)
 VALUES
