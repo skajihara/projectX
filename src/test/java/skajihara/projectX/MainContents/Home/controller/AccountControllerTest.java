@@ -8,11 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import skajihara.projectX.MainContents.Home.entity.Account;
+import skajihara.projectX.MainContents.Home.exception.AccountException;
 import skajihara.projectX.MainContents.Home.service.AccountService;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -57,5 +60,11 @@ public class AccountControllerTest {
         assertThat(account.getIcon()).isEqualTo("/src/assets/icons/user/kkrn_icon_user_1.svg");
         assertThat(account.isValidFlag()).isEqualTo(true);
         assertThat(account.isDeleteFlag()).isEqualTo(false);
+    }
+
+    @Test
+    public void getNonExistentAccountIntegrationTest() throws Exception {
+        mockMvc.perform(get("/api/accounts/user_exception"))
+                .andExpect(status().isNotFound());
     }
 }

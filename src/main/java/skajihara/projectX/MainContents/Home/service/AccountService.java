@@ -15,7 +15,7 @@ public class AccountService {
     public Account selectAccount(String id) {
         Account account = accountRepository.selectAccount(id);
         if (account == null) {
-            throw new AccountException("Account id: " + id + "is not found");
+            throw new AccountException("Account id: " + id + " is not found");
         }
         return account;
     }

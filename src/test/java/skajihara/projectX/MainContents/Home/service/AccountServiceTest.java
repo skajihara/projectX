@@ -6,11 +6,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import skajihara.projectX.MainContents.Home.entity.Account;
+import skajihara.projectX.MainContents.Home.exception.AccountException;
 import skajihara.projectX.MainContents.Home.repository.AccountRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -48,5 +48,10 @@ public class AccountServiceTest {
         assertThat(account.getIcon()).isEqualTo("/src/assets/icons/user/kkrn_icon_user_1.svg");
         assertThat(account.isValidFlag()).isEqualTo(true);
         assertThat(account.isDeleteFlag()).isEqualTo(false);
+    }
+
+    @Test
+    public void selectNonExistentAccountIntegrationTest() {
+        assertThrows(AccountException.class, () -> accountService.selectAccount("user_exception"));
     }
 }
