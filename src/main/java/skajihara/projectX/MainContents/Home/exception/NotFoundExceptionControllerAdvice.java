@@ -1,15 +1,16 @@
 package skajihara.projectX.MainContents.Home.exception;
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class AccountExceptionControllerAdvice {
+public class NotFoundExceptionControllerAdvice {
 
-    @ExceptionHandler(AccountException.class)
-    public ResponseEntity<String> handleAccountException(AccountException ex) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleAccountException(NotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import skajihara.projectX.MainContents.Home.entity.Account;
-import skajihara.projectX.MainContents.Home.exception.AccountException;
 import skajihara.projectX.MainContents.Home.repository.AccountRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +24,7 @@ public class AccountServiceTest {
     AccountRepository accountRepository;
 
     @Test
-    public void selectAccountUnitTest() {
+    public void selectAccountUnitTest() throws NotFoundException {
 
         Account expected = new Account();
 
@@ -38,7 +38,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void selectAccountIntegrationTest() {
+    public void selectAccountIntegrationTest() throws NotFoundException {
 
         Account account = accountService.selectAccount("user_A");
         assertThat(account).isNotNull();
@@ -52,6 +52,6 @@ public class AccountServiceTest {
 
     @Test
     public void selectNonExistentAccountIntegrationTest() {
-        assertThrows(AccountException.class, () -> accountService.selectAccount("user_exception"));
+        assertThrows(NotFoundException.class, () -> accountService.selectAccount("user_exception"));
     }
 }
