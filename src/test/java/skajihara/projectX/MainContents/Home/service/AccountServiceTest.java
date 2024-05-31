@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import skajihara.projectX.MainContents.Home.entity.Account;
+import skajihara.projectX.MainContents.Home.exception.NotFoundException;
 import skajihara.projectX.MainContents.Home.repository.AccountRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
