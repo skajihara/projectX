@@ -9,6 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 import skajihara.projectX.MainContents.Home.exception.TweetException;
+import skajihara.projectX.MainContents.Home.util.CsvLoader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,10 +18,6 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,6 +25,9 @@ class TweetServiceTest {
 
     @Autowired
     TweetService tweetService;
+
+    @Autowired
+    private CsvLoader csvLoader;
 
     @SpyBean
     TweetRepository tweetRepository;
@@ -147,15 +147,18 @@ class TweetServiceTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/selectAllTweetsIntegrationTest.sql"})
     public void selectAllTweetsTestIntegrationTest() {
+
+        csvLoader.loadTweets("src/test/resources/csv/service/selectAllTweetsIntegrationTest.csv");
+
         List<Tweet> tweets = tweetService.selectAllTweets();
         assertThat(tweets).hasSize(10);
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/selectRecentTweetsIntegrationTest.sql"})
     void selectRecentTweetsIntegrationTest() throws ParseException {
+
+        csvLoader.loadTweets("src/test/resources/csv/service/selectRecentTweetsIntegrationTest.csv");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -171,8 +174,9 @@ class TweetServiceTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/selectTweetIntegrationTest.sql"})
     void selectTweetIntegrationTest() throws ParseException {
+
+        csvLoader.loadTweets("src/test/resources/csv/service/selectTweetIntegrationTest.csv");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -189,13 +193,14 @@ class TweetServiceTest {
         assertThat(tweet.getReplies()).isEqualTo(7);
         assertThat(tweet.getViews()).isEqualTo(14);
         assertThat(tweet.getDatetime().getTime()).isEqualTo(datetime.getTime());
-        assertThat(tweet.getLocation()).isEqualTo("Namegawa City, Toyama Prefecture");
+        assertThat(tweet.getLocation()).isEqualTo("Namegawa City,Toyama Prefecture");
         assertThat(tweet.isDeleteFlag()).isEqualTo(false);
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/createTweetIntegrationTest.sql"})
     void createTweetIntegrationTest() {
+
+        csvLoader.loadTweets("src/test/resources/csv/service/createTweetIntegrationTest.csv");
 
         Date date = new Date(System.currentTimeMillis());
 
@@ -228,15 +233,18 @@ class TweetServiceTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/createInvalidTweetIntegrationTest.sql"})
     void createInvalidTweetIntegrationTest() {
+
+        csvLoader.loadTweets("src/test/resources/csv/service/createInvalidTweetIntegrationTest.csv");
+
         Tweet invalidTweet = new Tweet();
         assertThrows(Exception.class, () -> tweetService.createTweet(invalidTweet));
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/updateTweetIntegrationTest.sql"})
     void updateTweetIntegrationTest() {
+
+        csvLoader.loadTweets("src/test/resources/csv/service/updateTweetIntegrationTest.csv");
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
         assertThat(beforeTweets).hasSize(3);
@@ -259,8 +267,9 @@ class TweetServiceTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/updateTweetExceptionIntegrationTest.sql"})
     void updateTweetExceptionIntegrationTest() {
+
+        csvLoader.loadTweets("src/test/resources/csv/service/updateTweetExceptionIntegrationTest.csv");
 
         List<Tweet> tweets =tweetService.selectRecentTweets(3);
         assertThat(tweets).hasSize(3);
@@ -270,8 +279,9 @@ class TweetServiceTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/deleteTweetIntegrationTest.sql"})
-    public void deleteTweetIntegrationTest() throws Exception {
+    public void deleteTweetIntegrationTest() {
+
+        csvLoader.loadTweets("src/test/resources/csv/service/deleteTweetIntegrationTest.csv");
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
         assertThat(beforeTweets).hasSize(3);
@@ -284,8 +294,8 @@ class TweetServiceTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/service/deleteTweetExceptionIntegrationTest.sql"})
     void deleteTweetExceptionIntegrationTest() {
+        csvLoader.loadTweets("src/test/resources/csv/service/deleteTweetExceptionIntegrationTest.csv");
         assertThrows(TweetException.class, () -> tweetService.deleteTweet(99999));
     }
 

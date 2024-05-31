@@ -27,8 +27,12 @@ public class TweetService {
         return tweetRepository.selectRecentN(num);
     }
 
-    public Tweet selectTweet(int id){
-        return tweetRepository.selectTweet(id);
+    public Tweet selectTweet(int id) {
+        Tweet tweet = tweetRepository.selectTweet(id);
+        if (tweet == null) {
+            throw new TweetException("Tweet not found with id: " + id);
+        }
+        return tweet;
     }
 
     public void createTweet(Tweet tweet) {
