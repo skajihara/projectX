@@ -1,6 +1,5 @@
 package skajihara.projectX.MainContents.Home.service;
 
-import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,7 +11,6 @@ import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 import skajihara.projectX.MainContents.Home.exception.TweetException;
 import skajihara.projectX.MainContents.Home.util.CsvLoader;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -144,7 +142,7 @@ class TweetServiceTest {
     @Test
     void selectRecentTweetsIntegrationTest() throws ParseException {
 
-        csvLoader.loadTweets("src/test/resources/csv/selectRecentTweetsIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/selectRecentTweetsIntegrationTest.csv");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -154,20 +152,6 @@ class TweetServiceTest {
 
         List<Tweet> tweets = tweetService.selectRecentTweets(10);
         assertThat(tweets).hasSize(10);
-
-//        for(Tweet tweet:tweets){
-//            System.out.print(tweet.getId());
-//            System.out.print(", ");
-//            System.out.print(tweet.getDatetime());
-//            System.out.print(", ");
-//            System.out.print(tweet.getAccountId());
-//            System.out.print(", ");
-//            System.out.print(tweet.getText());
-//            System.out.print(", ");
-//            System.out.print(tweet.getImage());
-//            System.out.print(", ");
-//            System.out.println(tweet.getLocation());
-//        }
 
         assertThat(tweets.get(0).getDatetime().getTime()).isEqualTo(date1.getTime());
         assertThat(tweets.get(1).getDatetime().getTime()).isEqualTo(date2.getTime());
@@ -252,7 +236,7 @@ class TweetServiceTest {
 
     @Test
     @Sql(scripts = {"classpath:sql/service/deleteTweetIntegrationTest.sql"})
-    public void deleteTweetIntegrationTest() throws Exception {
+    public void deleteTweetIntegrationTest() {
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
         assertThat(beforeTweets).hasSize(3);

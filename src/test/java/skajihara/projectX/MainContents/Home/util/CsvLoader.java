@@ -22,11 +22,18 @@ public class CsvLoader {
     private TweetRepository tweetRepository;
 
     public void loadTweets(String filePath) {
+
+        tweetRepository.deleteAll();
+
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             List<String[]> lines = reader.readAll();
             for (String[] line : lines) {
+                for (int i = 0; i < line.length; i++) {
+                    // シングルクォーテーションで囲まれていない部分の半角スペースを除外
+                    line[i] = line[i].replaceAll("(?<!')\\s(?!')", "");
+                }
                 Tweet tweet = new Tweet();
                 tweet.setAccountId(line[0]);
                 tweet.setText(line[1]);
