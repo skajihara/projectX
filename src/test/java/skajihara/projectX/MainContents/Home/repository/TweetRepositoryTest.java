@@ -53,17 +53,29 @@ class TweetRepositoryTest {
         tweet3.setText("Third test tweet");
         tweet3.setDatetime(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 1)); // 1日前
         tweetRepository.save(tweet3);
+
+        Tweet tweet4 = new Tweet();
+        tweet4.setAccountId("user3");
+        tweet4.setText("Fourth test tweet");
+        tweet4.setDatetime(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 4));
+        tweetRepository.save(tweet4);
+
+        Tweet tweet5 = new Tweet();
+        tweet5.setAccountId("user3");
+        tweet5.setText("Fifth test tweet");
+        tweet5.setDatetime(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 5));
+        tweetRepository.save(tweet5);
     }
 
     @Test
-    void selectAllUnitTest() {
+    void selectAllIntegrationTest() {
 
         List<Tweet> tweets = tweetRepository.selectAll();
         assertThat(tweets).hasSize(3);
     }
 
     @Test
-    void selectRecentNUnitTest() {
+    void selectRecentNIntegrationTest() {
 
         List<Tweet> recentTweets = tweetRepository.selectRecentN(2);
         assertThat(recentTweets).hasSize(2);
@@ -72,7 +84,20 @@ class TweetRepositoryTest {
     }
 
     @Test
-    void selectTweetUnitTest() {
+    void selectTweetsByAccountIdIntegrationTest() {
+
+        List<Tweet> Tweets = tweetRepository.selectTweetsByAccountId("user3");
+        assertThat(Tweets).hasSize(3);
+        assertThat(Tweets.get(0).getAccountId()).isEqualTo("user3");
+        assertThat(Tweets.get(0).getText()).isEqualTo("Third test tweet");
+        assertThat(Tweets.get(1).getAccountId()).isEqualTo("user3");
+        assertThat(Tweets.get(1).getText()).isEqualTo("Fourth test tweet");
+        assertThat(Tweets.get(2).getAccountId()).isEqualTo("user3");
+        assertThat(Tweets.get(2).getText()).isEqualTo("Fifth test tweet");
+    }
+
+    @Test
+    void selectTweetIntegrationTest() {
 
         Tweet tweet = tweetRepository.selectTweet(11);
         assertThat(tweet).isNotNull();
