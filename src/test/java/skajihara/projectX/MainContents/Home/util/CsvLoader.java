@@ -24,6 +24,7 @@ public class CsvLoader {
     public void loadTweets(String filePath) {
 
         tweetRepository.deleteAll();
+        if(filePath.equals("")) {return;}
 
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");

@@ -149,7 +149,7 @@ class TweetServiceTest {
     @Test
     public void selectAllTweetsTestIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/selectAllTweetsIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Test2.csv");
 
         List<Tweet> tweets = tweetService.selectAllTweets();
         assertThat(tweets).hasSize(10);
@@ -158,7 +158,7 @@ class TweetServiceTest {
     @Test
     void selectRecentTweetsIntegrationTest() throws ParseException {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/selectRecentTweetsIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Test2.csv");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -176,7 +176,7 @@ class TweetServiceTest {
     @Test
     void selectTweetIntegrationTest() throws ParseException {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/selectTweetIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Test3.csv");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -186,7 +186,7 @@ class TweetServiceTest {
         assertThat(tweet).isNotNull();
         assertThat(tweet.getId()).isEqualTo(11);
         assertThat(tweet.getAccountId()).isEqualTo("user_A");
-        assertThat(tweet.getText()).isEqualTo("get tweet integration test.");
+        assertThat(tweet.getText()).isEqualTo("富山のホタルイカ、最高🍻");
         assertThat(tweet.getImage()).isEqualTo("/src/assets/images/img02.jpg");
         assertThat(tweet.getLikes()).isEqualTo(9);
         assertThat(tweet.getRetweets()).isEqualTo(23);
@@ -200,7 +200,7 @@ class TweetServiceTest {
     @Test
     void createTweetIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/createTweetIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Test1.csv");
 
         Date date = new Date(System.currentTimeMillis());
 
@@ -235,7 +235,7 @@ class TweetServiceTest {
     @Test
     void createInvalidTweetIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/createInvalidTweetIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Test1.csv");
 
         Tweet invalidTweet = new Tweet();
         assertThrows(Exception.class, () -> tweetService.createTweet(invalidTweet));
@@ -244,7 +244,7 @@ class TweetServiceTest {
     @Test
     void updateTweetIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/updateTweetIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Test3.csv");
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
         assertThat(beforeTweets).hasSize(3);
@@ -269,7 +269,7 @@ class TweetServiceTest {
     @Test
     void updateTweetExceptionIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/updateTweetExceptionIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Test3.csv");
 
         List<Tweet> tweets =tweetService.selectRecentTweets(3);
         assertThat(tweets).hasSize(3);
@@ -281,7 +281,7 @@ class TweetServiceTest {
     @Test
     public void deleteTweetIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/deleteTweetIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Test4.csv");
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
         assertThat(beforeTweets).hasSize(3);
@@ -295,7 +295,7 @@ class TweetServiceTest {
 
     @Test
     void deleteTweetExceptionIntegrationTest() {
-        csvLoader.loadTweets("src/test/resources/csv/service/deleteTweetExceptionIntegrationTest.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Test1.csv");
         assertThrows(TweetException.class, () -> tweetService.deleteTweet(99999));
     }
 
