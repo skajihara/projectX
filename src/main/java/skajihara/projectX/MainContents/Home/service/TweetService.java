@@ -27,7 +27,9 @@ public class TweetService {
         return tweetRepository.selectRecentN(num);
     }
 
-    public List<Tweet> selectTweetsByAccountId(String account_id){ return tweetRepository.selectTweetsByAccountId(account_id);}
+    public List<Tweet> selectTweetsByAccountId(String account_id){ 
+        return tweetRepository.selectTweetsByAccountId(account_id);
+    }
 
     public Tweet selectTweet(int id) {
         Tweet tweet = tweetRepository.selectTweet(id);
