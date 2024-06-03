@@ -303,6 +303,7 @@ public class TweetControllerTest {
     @Test
     public void getAllTweetsWithNoDataIntegrationTest() throws Exception {
 
+        // cleanup database
         csvLoader.loadTweets("");
 
         String response = mockMvc.perform(get("/api/tweets"))
@@ -320,6 +321,7 @@ public class TweetControllerTest {
     @Test
     public void getRecentTweetsWithNoDataIntegrationTest() throws Exception {
 
+        // cleanup database
         csvLoader.loadTweets("");
 
         String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
@@ -337,6 +339,7 @@ public class TweetControllerTest {
     @Test
     public void getNonExistentTweetIntegrationTest() throws Exception {
 
+        // cleanup database
         csvLoader.loadTweets("");
 
         mockMvc.perform(get("/api/tweets/tweet/99999"))
