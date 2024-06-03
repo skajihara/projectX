@@ -64,6 +64,20 @@ class TweetServiceTest {
     }
 
     @Test
+    void selectTweetByAccountIdUnitTest() {
+
+        List<Tweet> expected = new ArrayList<>();
+
+        doReturn(new ArrayList<Tweet>()).when(tweetRepository).selectTweetsByAccountId(anyString());
+
+        List<Tweet> result = tweetService.selectTweetsByAccountId(anyString());
+
+        verify(tweetRepository, times(1)).selectTweetsByAccountId(anyString());
+        assertNotNull(result);
+        assertEquals(expected, result);
+    }
+
+    @Test
     void selectTweetUnitTest() {
 
         Tweet expected = new Tweet();
@@ -171,6 +185,26 @@ class TweetServiceTest {
         assertThat(tweets.get(0).getDatetime().getTime()).isEqualTo(date1.getTime());
         assertThat(tweets.get(1).getDatetime().getTime()).isEqualTo(date2.getTime());
         assertThat(tweets.get(2).getDatetime().getTime()).isEqualTo(date3.getTime());
+    }
+
+    @Test
+    void selectTweetsByAccountIdIntegrationTest() throws ParseException {
+
+        csvLoader.loadTweets("src/test/resources/csv/service/Test2.csv");
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date date1 = dateFormat.parse("2024-03-18 20:10:01");
+        Date date2 = dateFormat.parse("2024-03-01 15:30:00");
+        Date date3 = dateFormat.parse("2023-07-30 00:51:59");
+        Date date4 = dateFormat.parse("2023-07-12 23:01:39");
+
+        List<Tweet> tweets = tweetService.selectTweetsByAccountId("user_A");
+        assertThat(tweets).hasSize(4);
+        assertThat(tweets.get(0).getDatetime().getTime()).isEqualTo(date1.getTime());
+        assertThat(tweets.get(1).getDatetime().getTime()).isEqualTo(date2.getTime());
+        assertThat(tweets.get(2).getDatetime().getTime()).isEqualTo(date3.getTime());
+        assertThat(tweets.get(3).getDatetime().getTime()).isEqualTo(date4.getTime());
     }
 
     @Test

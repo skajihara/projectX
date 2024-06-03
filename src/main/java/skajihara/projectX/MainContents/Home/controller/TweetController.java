@@ -29,6 +29,11 @@ public class TweetController {
         return tweetService.selectRecentTweets(num);
     }
 
+    @GetMapping("/{account_id}")
+    public List<Tweet> getTweetsByAccountId(@PathVariable String account_id) {
+        return tweetService.selectTweetsByAccountId(account_id);
+    }
+
     @GetMapping("/tweet/{id}")
     public Tweet getTweet(@PathVariable int id) {
         return tweetService.selectTweet(id);

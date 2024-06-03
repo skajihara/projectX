@@ -59,6 +59,16 @@ public class TweetControllerTest {
     }
 
     @Test
+    public void getTweetsByAccountIdUnitTest() throws Exception {
+
+        doReturn(new ArrayList<>()).when(tweetService).selectTweetsByAccountId(anyString());
+
+        mockMvc.perform(get("/api/tweets/{account_id}","user_A")).andExpect(status().isOk());
+
+        verify(tweetService, times(1)).selectTweetsByAccountId(anyString());
+    }
+
+    @Test
     public void getTweetUnitTest() throws Exception {
 
         doReturn(new Tweet()).when(tweetService).selectTweet(anyInt());
@@ -142,6 +152,31 @@ public class TweetControllerTest {
         assertThat(tweets.get(0).getDatetime()).isEqualTo("2024-03-30T01:04:43.000+00:00");
         assertThat(tweets.get(1).getDatetime()).isEqualTo("2024-03-29T15:30:11.000+00:00");
         assertThat(tweets.get(2).getDatetime()).isEqualTo("2024-03-18T20:10:01.000+00:00");
+    }
+
+    @Test
+    public void getTweetsByAccountIdIntegrationTest() throws Exception {
+
+        csvLoader.loadTweets("src/test/resources/csv/controller/Test3.csv");
+
+        String response =mockMvc.perform(get("/api/tweets/user_A"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(4))
+                .andExpect(jsonPath("$[0].datetime").value("2024-03-18T20:10:01.000+00:00"))
+                .andExpect(jsonPath("$[1].datetime").value("2024-03-01T15:30:00.000+00:00"))
+                .andExpect(jsonPath("$[2].datetime").value("2023-07-30T00:51:59.000+00:00"))
+                .andExpect(jsonPath("$[3].datetime").value("2023-07-12T23:01:39.000+00:00"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
+        assertThat(tweets).hasSize(4);
+        assertThat(tweets.get(0).getDatetime()).isEqualTo("2024-03-18T20:10:01.000+00:00");
+        assertThat(tweets.get(1).getDatetime()).isEqualTo("2024-03-01T15:30:00.000+00:00");
+        assertThat(tweets.get(2).getDatetime()).isEqualTo("2023-07-30T00:51:59.000+00:00");
+        assertThat(tweets.get(3).getDatetime()).isEqualTo("2023-07-12T23:01:39.000+00:00");
     }
 
     @Test
@@ -325,6 +360,24 @@ public class TweetControllerTest {
         csvLoader.loadTweets("");
 
         String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(0))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Tweet> tweets = Arrays.asList(objectMapper.readValue(response, Tweet[].class));
+        assertThat(tweets).hasSize(0);
+    }
+
+    @Test
+    public void getTweetsByAccountIdWithNoDataIntegrationTest() throws Exception {
+
+        // cleanup database
+        csvLoader.loadTweets("");
+
+        String response =mockMvc.perform(get("/api/tweets/user_A"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andExpect(jsonPath("$.length()").value(0))
