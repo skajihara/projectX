@@ -7,10 +7,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.service.TweetService;
+import skajihara.projectX.MainContents.Home.util.CsvLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +31,9 @@ public class TweetControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private CsvLoader csvLoader;
 
     @SpyBean
     TweetService tweetService;
@@ -102,8 +105,9 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/getAllTweetsIntegrationTest.sql"})
     public void getAllTweetsIntegrationTest() throws Exception {
+
+        csvLoader.loadTweets("src/test/resources/csv/controller/Test3.csv");
 
         String response = mockMvc.perform(get("/api/tweets"))
                 .andExpect(status().isOk())
@@ -118,8 +122,9 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/getRecentTweetsIntegrationTest.sql"})
     public void getRecentTweetsIntegrationTest() throws Exception {
+
+        csvLoader.loadTweets("src/test/resources/csv/controller/Test3.csv");
 
         String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
@@ -140,8 +145,9 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/getTweetIntegrationTest.sql"})
     public void getTweetIntegrationTest() throws Exception {
+
+        csvLoader.loadTweets("src/test/resources/csv/controller/Test2.csv");
 
         String response =mockMvc.perform(get("/api/tweets/tweet/11"))
                 .andExpect(status().isOk())
@@ -162,13 +168,14 @@ public class TweetControllerTest {
         assertThat(tweet.getReplies()).isEqualTo(7);
         assertThat(tweet.getViews()).isEqualTo(14);
         assertThat(tweet.getDatetime()).isEqualTo("2024-03-01T15:30:00.000+00:00");
-        assertThat(tweet.getLocation()).isEqualTo("Namegawa City, Toyama Prefecture");
+        assertThat(tweet.getLocation()).isEqualTo("Namegawa City,Toyama Prefecture");
         assertThat(tweet.isDeleteFlag()).isEqualTo(false);
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/createTweetIntegrationTest.sql"})
     public void createTweetIntegrationTest() throws Exception {
+
+        csvLoader.loadTweets("src/test/resources/csv/controller/Test1.csv");
 
         Date date = new Date(System.currentTimeMillis());
 
@@ -212,8 +219,9 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/updateTweetIntegrationTest.sql"})
     void updateTweetIntegrationTest() throws Exception {
+
+        csvLoader.loadTweets("src/test/resources/csv/controller/Test2.csv");
 
         String beforeUpdate =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
@@ -260,8 +268,9 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/deleteTweetIntegrationTest.sql"})
     public void deleteTweetIntegrationTest() throws Exception {
+
+        csvLoader.loadTweets("src/test/resources/csv/controller/Test2.csv");
 
         String beforeDelete =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
@@ -280,20 +289,22 @@ public class TweetControllerTest {
         String afterDelete =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
-                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].id").value(String.valueOf(beforeTweets.get(1).getId())))
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
 
         List<Tweet> afterTweets = Arrays.asList(objectMapper.readValue(afterDelete, Tweet[].class));
-        assertThat(afterTweets).hasSize(3);
+        assertThat(afterTweets).hasSize(2);
         assertThat(afterTweets.get(0).getId()).isEqualTo(beforeTweets.get(1).getId());
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/getAllTweetsWithNoDataIntegrationTest.sql"})
     public void getAllTweetsWithNoDataIntegrationTest() throws Exception {
+
+        // cleanup database
+        csvLoader.loadTweets("");
 
         String response = mockMvc.perform(get("/api/tweets"))
                 .andExpect(status().isOk())
@@ -308,8 +319,10 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/getRecentTweetsWithNoDataIntegrationTest.sql"})
     public void getRecentTweetsWithNoDataIntegrationTest() throws Exception {
+
+        // cleanup database
+        csvLoader.loadTweets("");
 
         String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
@@ -324,16 +337,19 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/getRecentTweetsWithNoDataIntegrationTest.sql"})
     public void getNonExistentTweetIntegrationTest() throws Exception {
 
-        mockMvc.perform(put("/api/tweets/tweet/99999").param("id","99999"))
+        // cleanup database
+        csvLoader.loadTweets("");
+
+        mockMvc.perform(get("/api/tweets/tweet/99999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/updateNonExistentTweetIntegrationTest.sql"})
     public void updateNonExistentTweetIntegrationTest() throws Exception {
+
+        csvLoader.loadTweets("src/test/resources/csv/controller/Test1.csv");
 
         Date date = new Date(System.currentTimeMillis());
 
@@ -356,8 +372,9 @@ public class TweetControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:sql/controller/deleteNonExistentTweetIntegrationTest.sql"})
     public void deleteNonExistentTweetIntegrationTest() throws Exception {
+
+        csvLoader.loadTweets("src/test/resources/csv/controller/Test1.csv");
 
         mockMvc.perform(delete("/api/tweets/99999"))
                 .andExpect(status().isNotFound());
