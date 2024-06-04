@@ -1,8 +1,8 @@
 INSERT INTO ACCOUNTS (id, name, bio, icon, valid_flag, delete_flag)
 VALUES
-('user_A','Test User A','user_a test text.','/src/assets/icons/user/kkrn_icon_user_1.svg',true,false),
-('user_B','Test User B','user_b test text.','/src/assets/icons/user/kkrn_icon_user_2.svg',true,false),
-('user_C','Test User C','user_c test text.','/src/assets/icons/user/kkrn_icon_user_3.svg',true,false);
+('user_A','Test User A','user_a test text.','/src/assets/icons/user/kkrn_icon_user_1.svg','/src/assets/images/header/h01.jpg','愛知県','1988-04-10','2016-05-17',5,7,true,false),
+('user_B','Test User B','user_b test text.','/src/assets/icons/user/kkrn_icon_user_2.svg','/src/assets/images/header/h02.jpg','神奈川県','1992-11-01','2017-07-25',3,10,true,false),
+('user_C','Test User C','user_c test text.','/src/assets/icons/user/kkrn_icon_user_3.svg','/src/assets/images/header/h03.jpg','千葉県','1985-03-13','2011-09-19',8,12,true,false);
 
 INSERT INTO TWEETS (account_id, text, image, likes, retweets, replies, views, datetime, location, delete_flag)
 VALUES
