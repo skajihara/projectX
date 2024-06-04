@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import skajihara.projectX.MainContents.Home.entity.Account;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -24,6 +26,12 @@ public class AccountRepositoryTest {
         account.setName("test_name");
         account.setBio("これはテストです。");
         account.setIcon("/src/assets/icons/user/kkrn_icon_user_1.svg");
+        account.setHeaderPhoto("/src/assets/images/header/default_header.jpg");
+        account.setLocation("東京都");
+        account.setBirthday(LocalDate.of(2000,01,01));
+        account.setRegistered(LocalDate.of(2020,12,31));
+        account.setFollowing(100);
+        account.setFollower(200);
         account.setValidFlag(true);
         account.setDeleteFlag(false);
         accountRepository.save(account);
@@ -38,6 +46,12 @@ public class AccountRepositoryTest {
         assertThat(account.getName()).isEqualTo("test_name");
         assertThat(account.getBio()).isEqualTo("これはテストです。");
         assertThat(account.getIcon()).isEqualTo("/src/assets/icons/user/kkrn_icon_user_1.svg");
+        assertThat(account.getHeaderPhoto()).isEqualTo("/src/assets/images/header/default_header.jpg");
+        assertThat(account.getLocation()).isEqualTo("東京都");
+        assertThat(account.getBirthday()).isEqualTo(LocalDate.of(2000,01,01));
+        assertThat(account.getRegistered()).isEqualTo(LocalDate.of(2020,12,31));
+        assertThat(account.getFollowing()).isEqualTo(100);
+        assertThat(account.getFollower()).isEqualTo(200);
         assertThat(account.isValidFlag()).isEqualTo(true);
         assertThat(account.isDeleteFlag()).isEqualTo(false);
     }
