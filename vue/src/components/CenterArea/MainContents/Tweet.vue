@@ -67,7 +67,9 @@ const deleteTweet = (id) => {
 <template>
   <div class="content">
     <div class="tweet-header">
-      <img class="user-icon" :src="props.icon" width="50" height="50" />
+      <router-link :to="{ name: 'profile', params: { userId: props.accountId } }">
+        <img class="user-icon" :src="props.icon" width="50" height="50" />
+      </router-link>
       <span>{{ props.accountName }}</span>
       <div v-show="props.accountId === currentUser.userId" class="delete-button">
         <BButton pill size="sm" @click="deleteTweet(props.id)">削除</BButton>

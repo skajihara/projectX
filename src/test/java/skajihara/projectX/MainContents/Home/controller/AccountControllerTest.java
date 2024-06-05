@@ -10,6 +10,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import skajihara.projectX.MainContents.Home.entity.Account;
 import skajihara.projectX.MainContents.Home.service.AccountService;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -44,7 +46,6 @@ public class AccountControllerTest {
         String response =mockMvc.perform(get("/api/accounts/user_A"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
-                .andExpect(jsonPath("$.length()").value(6))
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
@@ -55,6 +56,12 @@ public class AccountControllerTest {
         assertThat(account.getName()).isEqualTo("Test User A");
         assertThat(account.getBio()).isEqualTo("user_a test text.");
         assertThat(account.getIcon()).isEqualTo("/src/assets/icons/user/kkrn_icon_user_1.svg");
+        assertThat(account.getHeaderPhoto()).isEqualTo("/src/assets/images/header/h01.jpg");
+        assertThat(account.getLocation()).isEqualTo("test prefectureA");
+        assertThat(account.getBirthday()).isEqualTo(LocalDate.of(1988,04,10));
+        assertThat(account.getRegistered()).isEqualTo(LocalDate.of(2016,05,17));
+        assertThat(account.getFollowing()).isEqualTo(5);
+        assertThat(account.getFollower()).isEqualTo(7);
         assertThat(account.isValidFlag()).isEqualTo(true);
         assertThat(account.isDeleteFlag()).isEqualTo(false);
     }

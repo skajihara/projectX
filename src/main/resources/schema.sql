@@ -6,8 +6,14 @@ DROP TABLE IF EXISTS ACCOUNTS;
 CREATE TABLE IF NOT EXISTS ACCOUNTS (
     id VARCHAR(20) PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
-    icon VARCHAR(100) DEFAULT '/src/assets/icons/user/default_icon.svg',
     bio VARCHAR(200) NOT NULL,
+    icon VARCHAR(100) DEFAULT '/src/assets/icons/user/default_icon.svg',
+    header_photo VARCHAR(100) DEFAULT '/src/assets/images/header/default_header.jpg',
+    location VARCHAR(50),
+    birthday DATE CHECK (birthday < CURRENT_DATE),
+    registered DATE NOT NULL DEFAULT CURRENT_DATE CHECK (registered <= CURRENT_DATE),
+    following INT NOT NULL DEFAULT 0,
+    follower INT NOT NULL DEFAULT 0,
     valid_flag BOOLEAN NOT NULL DEFAULT true,
     delete_flag BOOLEAN NOT NULL DEFAULT false
 );
