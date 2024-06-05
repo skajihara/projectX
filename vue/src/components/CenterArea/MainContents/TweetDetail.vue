@@ -2,7 +2,6 @@
 import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import { accounts } from '@/consts/accounts.js'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 
 const props = defineProps({
@@ -14,9 +13,8 @@ const props = defineProps({
 const router = useRouter()
 const currentUser = useCurrentUserStore()
 
-const tweets = ref(null)
 const tweet = ref(null)
-const accountInfo = ref('')
+const account = ref(null)
 const loading = ref(true)
 const error = ref(null)
 const errDtl = ref(null)
@@ -24,11 +22,13 @@ const fetchData = async () => {
   loading.value = true
   error.value = null
   try {
-    const response = await axios.get('http://localhost:8081/api/tweets/recent')
-    tweets.value = response.data
-    tweet.value = findTweet(props.id)
+    const resTweet = await axios.get('http://localhost:8081/api/tweets/tweet/' + props.id)
+    tweet.value = resTweet.data
     if (tweet.value) {
-      accountInfo.value = searchAccount(tweet.value.accountId)
+      const resAccount = await axios.get(
+        'http://localhost:8081/api/accounts/' + tweet.value.accountId
+      )
+      account.value = resAccount.data
     } else {
       console.log('Not retrieved.')
     }
@@ -38,19 +38,6 @@ const fetchData = async () => {
   } finally {
     loading.value = false
   }
-}
-
-function findTweet(id) {
-  if (!tweets.value) {
-    return null
-  }
-  return tweets.value.find((tweet) => {
-    return tweet.id == id
-  })
-}
-
-function searchAccount(accountId) {
-  return accounts.value.find((account) => account.userId === accountId)
 }
 
 async function deleteTweet(id) {
@@ -76,8 +63,10 @@ onBeforeMount(() => {
   </div>
   <div v-else-if="tweet" class="content">
     <div class="tweet-header">
-      <img class="user-icon" :src="accountInfo.icon" width="50" height="50" />
-      <span>{{ accountInfo.userName }}</span>
+      <router-link :to="{ name: 'profile', params: { userId: account.id } }">
+        <img class="user-icon" :src="account.icon" width="50" height="50" />
+      </router-link>
+      <span>{{ account.name }}</span>
       <div v-show="tweet.accountId === currentUser.userId" class="delete-button">
         <BButton pill size="sm" @click="deleteTweet(tweet.id)">削除</BButton>
       </div>

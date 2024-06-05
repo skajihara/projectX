@@ -2,9 +2,10 @@
 import { ref, onBeforeMount } from 'vue'
 import axios from 'axios'
 import Tweet from '../Tweet.vue'
-import { useCurrentUserStore } from '@/stores/currentUser.js'
+import { useRoute } from 'vue-router'
 
-const currentUser = useCurrentUserStore()
+const route = useRoute()
+const userId = route.params.userId
 const account = ref(null)
 const tweets = ref(null)
 const loading = ref(true)
@@ -15,9 +16,9 @@ async function fetchData() {
   loading.value = true
   error.value = null
   try {
-    const resAccount = await axios.get('http://localhost:8081/api/accounts/' + currentUser.userId)
+    const resAccount = await axios.get('http://localhost:8081/api/accounts/' + userId)
     account.value = resAccount.data
-    const resTweets = await axios.get('http://localhost:8081/api/tweets/' + currentUser.userId)
+    const resTweets = await axios.get('http://localhost:8081/api/tweets/' + userId)
     tweets.value = resTweets.data
   } catch (err) {
     error.value = 'Failed to fetch data'

@@ -1,11 +1,12 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
 import axios from 'axios'
-import { useCurrentUserStore } from '@/stores/currentUser.js'
+import { useRoute } from 'vue-router'
 
 var isFollowing = ref(true)
 
-const currentUser = useCurrentUserStore()
+const route = useRoute()
+const userId = route.params.userId
 const error = ref(null)
 const errDtl = ref(null)
 const account = ref(null)
@@ -23,7 +24,7 @@ function formatRegistered(dateString) {
 
 async function fetchData() {
   try {
-    const response = await axios.get('http://localhost:8081/api/accounts/' + currentUser.userId)
+    const response = await axios.get('http://localhost:8081/api/accounts/' + userId)
     account.value = response.data
   } catch (err) {
     error.value = 'Failed to fetch data'
@@ -35,7 +36,6 @@ onBeforeMount(() => {
   fetchData()
 })
 </script>
-
 <template>
   <div>
     <router-link :to="{ name: 'home' }">🔙戻る</router-link>
@@ -48,9 +48,9 @@ onBeforeMount(() => {
         <div class="account-icon-border">
           <img :src="account.icon" width="150" height="150" class="account-icon" />
         </div>
-        <button class="follow-button" @click="toggleFollow">
+        <BButton variant="primary" class="follow-button" @click="toggleFollow">
           {{ isFollowing ? 'フォロー中' : 'フォロー' }}
-        </button>
+        </BButton>
         <div class="account-detail">
           <div>
             <h3 class="account-name">{{ account.name }}</h3>

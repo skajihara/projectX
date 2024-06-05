@@ -1,11 +1,12 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { format } from 'date-fns'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 import axios from 'axios'
 
 const newTweetContent = ref('')
 const currentUser = useCurrentUserStore()
+const account = ref(null)
 const response = ref(null)
 const error = ref(null)
 const createTweet = async () => {
@@ -38,11 +39,24 @@ const createTweet = async () => {
     }
   }
 }
+async function fetchData() {
+  try {
+    const response = await axios.get('http://localhost:8081/api/accounts/' + currentUser.userId)
+    account.value = response.data
+  } catch (err) {
+    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
+  }
+}
+onBeforeMount(() => {
+  fetchData()
+})
 </script>
 <template>
   <div>
-    <div class="tweet-form">
-      <img class="user-icon" src="@/assets/icons/user/myicon.svg" width="50" height="50" />
+    <div v-if="account" class="tweet-form">
+      <router-link :to="{ name: 'profile', params: { userId: account.id } }">
+        <img class="user-icon" :src="account.icon" width="50" height="50" />
+      </router-link>
       <BButton pill variant="primary" :disabled="newTweetContent === ''" @click="createTweet">
         ツイート
       </BButton>
