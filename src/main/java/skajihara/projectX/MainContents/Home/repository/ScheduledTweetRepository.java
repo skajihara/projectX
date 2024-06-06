@@ -9,11 +9,11 @@ import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
 import java.util.List;
 
 @Repository
-public interface ScheduledTweetRepository extends JpaRepository<ScheduledTweet,Integer> {
+public interface ScheduledTweetRepository extends JpaRepository<ScheduledTweet, Integer> {
 
-    @Query("SELECT t FROM ScheduledTweet t WHERE t.accountId = :account_id AND t.deleteFlag = false ORDER BY t.datetime DESC")
-    List<ScheduledTweet> selectScheduledTweets(@Param("account_id") String account_id);
+    @Query("SELECT st FROM ScheduledTweet st WHERE st.accountId = :account_id AND st.deleteFlag = false ORDER BY st.scheduledDatetime, st.createdDatetime DESC")
+    List<ScheduledTweet> selectScheduledTweets(@Param("account_id") String accountId);
 
-    @Query("SELECT t FROM ScheduledTweet t WHERE t.id = :schedule_id AND t.deleteFlag = false")
+    @Query("SELECT st FROM ScheduledTweet st WHERE st.id = :schedule_id AND st.deleteFlag = false")
     ScheduledTweet selectScheduledTweet(@Param("schedule_id") int schedule_id);
 }

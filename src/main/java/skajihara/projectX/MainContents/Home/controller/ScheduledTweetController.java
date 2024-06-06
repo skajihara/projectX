@@ -24,7 +24,7 @@ public class ScheduledTweetController {
         return scheduledTweetService.selectScheduledTweets(account_id);
     }
 
-    @GetMapping("/scheduledTweet/{account_id}/{schedule_id}")
+    @GetMapping("/{account_id}/{schedule_id}")
     public ScheduledTweet getScheduledTweet(@PathVariable int schedule_id) {
         return scheduledTweetService.selectScheduledTweet(schedule_id);
     }

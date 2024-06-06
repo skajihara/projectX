@@ -163,7 +163,7 @@ class TweetServiceTest {
     @Test
     public void selectAllTweetsTestIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/Test2.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test2.csv");
 
         List<Tweet> tweets = tweetService.selectAllTweets();
         assertThat(tweets).hasSize(10);
@@ -172,7 +172,7 @@ class TweetServiceTest {
     @Test
     void selectRecentTweetsIntegrationTest() throws ParseException {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/Test2.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test2.csv");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -190,7 +190,7 @@ class TweetServiceTest {
     @Test
     void selectTweetsByAccountIdIntegrationTest() throws ParseException {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/Test2.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test2.csv");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -210,7 +210,7 @@ class TweetServiceTest {
     @Test
     void selectTweetIntegrationTest() throws ParseException {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/Test3.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test3.csv");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -234,7 +234,7 @@ class TweetServiceTest {
     @Test
     void createTweetIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/Test1.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test1.csv");
 
         Date date = new Date(System.currentTimeMillis());
 
@@ -269,7 +269,7 @@ class TweetServiceTest {
     @Test
     void createInvalidTweetIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/Test1.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test1.csv");
 
         Tweet invalidTweet = new Tweet();
         assertThrows(Exception.class, () -> tweetService.createTweet(invalidTweet));
@@ -278,7 +278,7 @@ class TweetServiceTest {
     @Test
     void updateTweetIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/Test3.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test3.csv");
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
         assertThat(beforeTweets).hasSize(3);
@@ -303,7 +303,7 @@ class TweetServiceTest {
     @Test
     void updateTweetExceptionIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/Test3.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test3.csv");
 
         List<Tweet> tweets =tweetService.selectRecentTweets(3);
         assertThat(tweets).hasSize(3);
@@ -315,7 +315,7 @@ class TweetServiceTest {
     @Test
     public void deleteTweetIntegrationTest() {
 
-        csvLoader.loadTweets("src/test/resources/csv/service/Test4.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test4.csv");
 
         List<Tweet> beforeTweets =tweetService.selectRecentTweets(3);
         assertThat(beforeTweets).hasSize(3);
@@ -329,7 +329,7 @@ class TweetServiceTest {
 
     @Test
     void deleteTweetExceptionIntegrationTest() {
-        csvLoader.loadTweets("src/test/resources/csv/service/Test1.csv");
+        csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test1.csv");
         assertThrows(TweetException.class, () -> tweetService.deleteTweet(99999));
     }
 

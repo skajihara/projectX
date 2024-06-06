@@ -117,7 +117,7 @@ public class TweetControllerTest {
     @Test
     public void getAllTweetsIntegrationTest() throws Exception {
 
-        csvLoader.loadTweets("src/test/resources/csv/controller/Test3.csv");
+        csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test3.csv");
 
         String response = mockMvc.perform(get("/api/tweets"))
                 .andExpect(status().isOk())
@@ -134,7 +134,7 @@ public class TweetControllerTest {
     @Test
     public void getRecentTweetsIntegrationTest() throws Exception {
 
-        csvLoader.loadTweets("src/test/resources/csv/controller/Test3.csv");
+        csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test3.csv");
 
         String response =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
@@ -157,7 +157,7 @@ public class TweetControllerTest {
     @Test
     public void getTweetsByAccountIdIntegrationTest() throws Exception {
 
-        csvLoader.loadTweets("src/test/resources/csv/controller/Test3.csv");
+        csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test3.csv");
 
         String response =mockMvc.perform(get("/api/tweets/user_A"))
                 .andExpect(status().isOk())
@@ -182,7 +182,7 @@ public class TweetControllerTest {
     @Test
     public void getTweetIntegrationTest() throws Exception {
 
-        csvLoader.loadTweets("src/test/resources/csv/controller/Test2.csv");
+        csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test2.csv");
 
         String response =mockMvc.perform(get("/api/tweets/tweet/11"))
                 .andExpect(status().isOk())
@@ -210,7 +210,7 @@ public class TweetControllerTest {
     @Test
     public void createTweetIntegrationTest() throws Exception {
 
-        csvLoader.loadTweets("src/test/resources/csv/controller/Test1.csv");
+        csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test1.csv");
 
         Date date = new Date(System.currentTimeMillis());
 
@@ -256,7 +256,7 @@ public class TweetControllerTest {
     @Test
     void updateTweetIntegrationTest() throws Exception {
 
-        csvLoader.loadTweets("src/test/resources/csv/controller/Test2.csv");
+        csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test2.csv");
 
         String beforeUpdate =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
@@ -305,7 +305,7 @@ public class TweetControllerTest {
     @Test
     public void deleteTweetIntegrationTest() throws Exception {
 
-        csvLoader.loadTweets("src/test/resources/csv/controller/Test2.csv");
+        csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test2.csv");
 
         String beforeDelete =mockMvc.perform(get("/api/tweets/recent").param("num","3"))
                 .andExpect(status().isOk())
@@ -402,7 +402,7 @@ public class TweetControllerTest {
     @Test
     public void updateNonExistentTweetIntegrationTest() throws Exception {
 
-        csvLoader.loadTweets("src/test/resources/csv/controller/Test1.csv");
+        csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test1.csv");
 
         Date date = new Date(System.currentTimeMillis());
 
@@ -427,7 +427,7 @@ public class TweetControllerTest {
     @Test
     public void deleteNonExistentTweetIntegrationTest() throws Exception {
 
-        csvLoader.loadTweets("src/test/resources/csv/controller/Test1.csv");
+        csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test1.csv");
 
         mockMvc.perform(delete("/api/tweets/99999"))
                 .andExpect(status().isNotFound());
