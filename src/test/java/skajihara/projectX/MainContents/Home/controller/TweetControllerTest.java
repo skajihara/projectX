@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.service.TweetService;
-import skajihara.projectX.MainContents.Home.util.CsvLoader;
+import skajihara.projectX.MainContents.Home.util.TweetCsvLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +33,7 @@ public class TweetControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private CsvLoader csvLoader;
+    private TweetCsvLoader csvLoader;
 
     @SpyBean
     TweetService tweetService;

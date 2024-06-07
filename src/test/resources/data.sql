@@ -16,3 +16,12 @@ VALUES
 ('user_B','【お昼ごはん】宇都宮市の有名なラーメン屋さんに行ってきました！美味しかったです♪ #ラーメン #宇都宮','/src/assets/images/img05.jpg',27,1,1,29,'2023-09-13T14:26:56.000+00:00','Utsunomiya City, Tochigi',false),
 ('user_C','【最近のお気に入り】新潟市のカフェで見つけた素敵な本、読み終わりました！おすすめです！ #読書 #新潟','/src/assets/images/img06.jpg',1,2,1,1,'2023-09-09T15:36:57.000+00:00','Niigata City, Niigata Prefecture',false),
 ('user_A','【夜の八戸市】夜景が綺麗な八戸市、今日も癒されました♪ #夜景 #八戸','/src/assets/images/img01.GIF',31,3,1,148,'2023-07-30T00:51:59.000+00:00','Hachinohe City, Aomori Prefecture',false);
+
+INSERT INTO SCHEDULED_TWEETS (account_id, text, image, location, scheduled_datetime, created_datetime, delete_flag)
+VALUES
+('user_A', 'ツイート内容1', '/src/assets/images/img01.GIF', '東京都', '2024-06-13 01:00:00', '2024-06-07 11:11:11', false),
+('user_A', 'ツイート内容2', '/src/assets/images/img02.jpg', '大阪府', '2024-06-13 01:00:00', '2024-06-07 12:12:12', false),
+('user_A', 'ツイート内容3', '/src/assets/images/img03.jpg', '北海道', '2024-06-13 03:00:00', '2024-06-07 12:12:12', false),
+('user_B', 'ツイート内容4', '/src/assets/images/img04.jpg', '福岡県', '2024-06-13 04:00:00', '2024-06-07 12:12:12', false),
+('user_B', 'ツイート内容5', '/src/assets/images/img05.jpg', '愛知県', '2024-06-13 05:00:00', '2024-06-07 12:12:12', false),
+('user_B', 'ツイート内容6', '/src/assets/images/img06.jpg', '神奈川県', '2024-06-13 06:00:00', '2024-06-07 12:12:12', false);

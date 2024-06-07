@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 @Component
-public class CsvLoader {
+public class TweetCsvLoader {
 
     @Autowired
     private TweetRepository tweetRepository;

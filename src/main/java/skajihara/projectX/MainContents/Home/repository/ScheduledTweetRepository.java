@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ScheduledTweetRepository extends JpaRepository<ScheduledTweet, Integer> {
 
-    @Query("SELECT st FROM ScheduledTweet st WHERE st.accountId = :account_id AND st.deleteFlag = false ORDER BY st.scheduledDatetime, st.createdDatetime DESC")
+    @Query("SELECT st FROM ScheduledTweet st WHERE st.accountId = :account_id AND st.deleteFlag = false ORDER BY st.scheduledDatetime ASC, st.createdDatetime DESC")
     List<ScheduledTweet> selectScheduledTweets(@Param("account_id") String accountId);
 
     @Query("SELECT st FROM ScheduledTweet st WHERE st.id = :schedule_id AND st.deleteFlag = false")
