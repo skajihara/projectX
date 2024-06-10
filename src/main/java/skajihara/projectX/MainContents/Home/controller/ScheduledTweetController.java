@@ -41,7 +41,6 @@ public class ScheduledTweetController {
 
     @DeleteMapping("/{account_id}/{schedule_id}")
     public void deleteScheduledTweet(
-            @PathVariable("account_id") String account_id,
             @PathVariable("schedule_id") int schedule_id) {
         scheduledTweetService.deleteScheduledTweet(schedule_id);
     }
