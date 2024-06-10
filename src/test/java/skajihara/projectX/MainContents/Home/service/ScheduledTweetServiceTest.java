@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
 import skajihara.projectX.MainContents.Home.exception.NotFoundException;
 import skajihara.projectX.MainContents.Home.util.ScheduledTweetCsvLoader;
@@ -27,7 +26,7 @@ class ScheduledTweetServiceTest {
     private ScheduledTweetCsvLoader scheduledTweetCsvLoader;
 
     @Test
-    public void selectScheduledTweetsIntegrationTest() throws ParseException {
+    public void selectScheduledTweets_IntegrationTest() throws ParseException {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
 
@@ -50,7 +49,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    public void selectScheduledTweetsWithNoDataIntegrationTest() {
+    public void selectScheduledTweets_WithNoData_IntegrationTest() {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -60,7 +59,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void selectScheduledTweetIntegrationTest() throws ParseException {
+    void selectScheduledTweet_IntegrationTest() throws ParseException {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
 
@@ -81,7 +80,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void selectNonExistentScheduledTweetIntegrationTest() {
+    void selectScheduledTweet_NonExistent_IntegrationTest() {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -89,7 +88,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void createScheduledTweetIntegrationTest() throws ParseException {
+    void createScheduledTweet_IntegrationTest() throws ParseException {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -120,7 +119,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void createInvalidScheduledTweetIntegrationTest() {
+    void createScheduledTweet_Invalid_IntegrationTest() {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -130,7 +129,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void updateTweetIntegrationTest() {
+    void updateTweet_IntegrationTest() {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
 
@@ -149,7 +148,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void updateScheduledTweetExceptionIntegrationTest() {
+    void updateScheduledTweet_Exception_IntegrationTest() {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
 
@@ -161,7 +160,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    public void deleteScheduledTweetIntegrationTest() {
+    public void deleteScheduledTweet_IntegrationTest() {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
 
@@ -172,7 +171,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void deleteTweetExceptionIntegrationTest() {
+    void deleteScheduledTweet_Exception_IntegrationTest() {
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
         assertThrows(NotFoundException.class, () -> scheduledTweetService.deleteScheduledTweet(99999));
     }

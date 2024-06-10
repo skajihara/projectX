@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
@@ -17,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -34,11 +34,11 @@ public class ScheduledTweetControllerTest {
     private ScheduledTweetCsvLoader scheduledTweetCsvLoader;
 
     @Test
-    public void getScheduledTweetsIntegrationTest() throws Exception {
+    public void getScheduledTweets_IntegrationTest() throws Exception {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/controller/ScheduledTweet/Test01.csv");
 
-        String response = mockMvc.perform(get("/api/tweets/scheduled/user_A"))
+        String response = mockMvc.perform(get("/api/schedule/account/user_A"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andExpect(jsonPath("$.length()").value(3))
@@ -51,12 +51,12 @@ public class ScheduledTweetControllerTest {
     }
 
     @Test
-    public void getScheduledTweetsWithNoDataIntegrationTest() throws Exception {
+    public void getScheduledTweets_WithNoData_IntegrationTest() throws Exception {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
 
-        String response = mockMvc.perform(get("/api/tweets/scheduled/user_A"))
+        String response = mockMvc.perform(get("/api/schedule/account/user_A"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andExpect(jsonPath("$.length()").value(0))
@@ -69,11 +69,11 @@ public class ScheduledTweetControllerTest {
     }
 
     @Test
-    public void getTweetIntegrationTest() throws Exception {
+    public void getScheduledTweet_IntegrationTest() throws Exception {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/controller/ScheduledTweet/Test01.csv");
 
-        String response = mockMvc.perform(get("/api/tweets/scheduled/user_A/7"))
+        String response = mockMvc.perform(get("/api/schedule/7"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andReturn()
@@ -97,17 +97,17 @@ public class ScheduledTweetControllerTest {
     }
 
     @Test
-    public void getNonExistentScheduledTweetIntegrationTest() throws Exception {
+    public void getScheduledTweet_NonExistent_IntegrationTest() throws Exception {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
 
-        mockMvc.perform(get("/api/tweets/scheduled/user_A/99999"))
+        mockMvc.perform(get("/api/schedule/99999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void createScheduledTweetIntegrationTest() throws Exception {
+    public void createScheduledTweet_IntegrationTest() throws Exception {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -125,12 +125,12 @@ public class ScheduledTweetControllerTest {
         newTweet.setCreatedDatetime(created_datetime);
         newTweet.setDeleteFlag(false);
 
-        mockMvc.perform(post("/api/tweets/scheduled/" + newTweet.getAccountId())
+        mockMvc.perform(post("/api/schedule")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newTweet)))
                 .andExpect(status().isOk());
 
-        String response = mockMvc.perform(get("/api/tweets/scheduled/" + newTweet.getAccountId()))
+        String response = mockMvc.perform(get("/api/schedule/account/" + newTweet.getAccountId()))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andExpect(jsonPath("$.length()").value(1))
@@ -150,23 +150,26 @@ public class ScheduledTweetControllerTest {
     }
 
     @Test
-    void createInvalidScheduledTweetIntegrationTest() throws Exception {
+    void createScheduledTweet_Invalid_IntegrationTest() throws Exception {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
 
         ScheduledTweet invalidTweet = new ScheduledTweet();
         invalidTweet.setAccountId("user_A");
-        mockMvc.perform(post("/api/tweets/scheduled/" + invalidTweet.getAccountId()))
-                .andExpect(status().isBadRequest());
+
+        assertThrows(Exception.class, () -> mockMvc.perform(post("/api/schedule")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidTweet)))
+                .andExpect(status().isBadRequest()));
     }
 
     @Test
-    void updateTweetIntegrationTest() throws Exception {
+    void updateTweet_IntegrationTest() throws Exception {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/controller/ScheduledTweet/Test01.csv");
 
-        String beforeUpdate =mockMvc.perform(get("/api/tweets/scheduled/user_A/7"))
+        String beforeUpdate =mockMvc.perform(get("/api/schedule/7"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andReturn()
@@ -176,12 +179,12 @@ public class ScheduledTweetControllerTest {
         ScheduledTweet beforeTweet = objectMapper.readValue(beforeUpdate, ScheduledTweet.class);
         beforeTweet.setText("updated!");
 
-        mockMvc.perform(put("/api/tweets/scheduled/user_A/7")
+        mockMvc.perform(put("/api/schedule/7")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(beforeTweet)))
                 .andExpect(status().isOk());
 
-        String afterUpdate = mockMvc.perform(get("/api/tweets/scheduled/user_A/7"))
+        String afterUpdate = mockMvc.perform(get("/api/schedule/7"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andExpect(jsonPath("$.text").value("updated!"))
@@ -200,7 +203,7 @@ public class ScheduledTweetControllerTest {
     }
 
     @Test
-    public void updateNonExistentScheduledTweetIntegrationTest() throws Exception {
+    public void updateScheduledTweet_NonExistent_IntegrationTest() throws Exception {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -216,35 +219,35 @@ public class ScheduledTweetControllerTest {
         updateTweet.setCreatedDatetime(date);
         updateTweet.setDeleteFlag(false);
 
-        mockMvc.perform(put("/api/tweets/scheduled/user_A/99999")
+        mockMvc.perform(put("/api/schedule/7")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateTweet)))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void deleteScheduledTweetIntegrationTest() throws Exception {
+    public void deleteScheduledTweet_IntegrationTest() throws Exception {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/controller/ScheduledTweet/Test01.csv");
 
-        mockMvc.perform(get("/api/tweets/scheduled/user_A/7"))
+        mockMvc.perform(get("/api/schedule/7"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"));
 
-        mockMvc.perform(delete("/api/tweets/scheduled/user_A/7"))
+        mockMvc.perform(delete("/api/schedule/7"))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/api/tweets/scheduled/user_A/7"))
+        mockMvc.perform(get("/api/schedule/7"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void deleteNonExistentScheduledTweetIntegrationTest() throws Exception {
+    public void deleteScheduledTweet_NonExistent_IntegrationTest() throws Exception {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
 
-        mockMvc.perform(delete("/api/tweets/scheduled/user_A/99999"))
+        mockMvc.perform(delete("/api/schedule/99999"))
                 .andExpect(status().isNotFound());
     }
 }
