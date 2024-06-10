@@ -227,14 +227,14 @@ public class ScheduledTweetControllerTest {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/controller/ScheduledTweet/Test01.csv");
 
-        mockMvc.perform(get("/api/tweets/scheduled/user_A/4"))
+        mockMvc.perform(get("/api/tweets/scheduled/user_A/7"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"));
 
-        mockMvc.perform(delete("/api/tweets/scheduled/user_A/4"))
+        mockMvc.perform(delete("/api/tweets/scheduled/user_A/7"))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(post("/api/tweets/scheduled/user_A/4"))
+        mockMvc.perform(get("/api/tweets/scheduled/user_A/7"))
                 .andExpect(status().isNotFound());
     }
 
