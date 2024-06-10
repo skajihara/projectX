@@ -8,8 +8,10 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import skajihara.projectX.MainContents.Home.entity.Account;
 import skajihara.projectX.MainContents.Home.exception.NotFoundException;
 import skajihara.projectX.MainContents.Home.repository.AccountRepository;
+import skajihara.projectX.MainContents.Home.util.AccountCsvLoader;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +26,9 @@ public class AccountServiceTest {
 
     @SpyBean
     AccountRepository accountRepository;
+
+    @Autowired
+    private AccountCsvLoader accountCsvLoader;
 
     @Test
     public void selectAccount_UnitTest() throws NotFoundException {
@@ -61,5 +66,24 @@ public class AccountServiceTest {
     @Test
     public void selectAccount_MissingData_IntegrationTest() {
         assertThrows(NotFoundException.class, () -> accountService.selectAccount("user_exception"));
+    }
+
+    @Test
+    public void selectAllAccounts_IntegrationTest() {
+
+        accountCsvLoader.loadAccounts("src/test/resources/csv/service/Account/Test01.csv");
+
+        List<Account> accounts = accountService.selectAllAccounts();
+        assertThat(accounts).hasSize(3);
+    }
+
+    @Test
+    public void selectAllAccounts_WithNoData_IntegrationTest() {
+
+        // cleanup database
+        accountCsvLoader.loadAccounts("");
+
+        List<Account> accounts = accountService.selectAllAccounts();
+        assertThat(accounts).hasSize(0);
     }
 }
