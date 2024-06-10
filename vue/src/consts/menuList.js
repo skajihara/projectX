@@ -58,5 +58,11 @@ export const menuList = [
     link: '#',
     path1: '/src/assets/icons/menu/icon101.svg',
     path2: '/src/assets/icons/menu/icon102.svg'
+  },
+  {
+    name: '予約ツイート',
+    link: 'schedule',
+    path1: '/src/assets/icons/menu/icon111.svg',
+    path2: '/src/assets/icons/menu/icon112.svg'
   }
 ]

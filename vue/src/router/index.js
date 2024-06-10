@@ -9,6 +9,7 @@ import Bookmarks from '@/components/CenterArea/MainContents/Bookmarks.vue'
 import Communities from '@/components/CenterArea/MainContents/Communities.vue'
 import Premium from '@/components/CenterArea/MainContents/Premium.vue'
 import Profile from '@/components/CenterArea/MainContents/Profile.vue'
+import Schedule from '@/components/CenterArea/MainContents/Schedule.vue'
 import TweetDetail from '@/components/CenterArea/MainContents/TweetDetail.vue'
 import NotFound from '@/components/NotFound.vue'
 
@@ -50,11 +51,6 @@ const router = createRouter({
       component: Bookmarks
     },
     {
-      path: '/:userId/profile',
-      name: 'profile',
-      component: Profile
-    },
-    {
       path: '/communities',
       name: 'communities',
       component: Communities
@@ -68,6 +64,12 @@ const router = createRouter({
       path: '/:userId/profile',
       name: 'profile',
       component: Profile,
+      props: true
+    },
+    {
+      path: '/:userId/schedule',
+      name: 'schedule',
+      component: Schedule,
       props: true
     },
     {
