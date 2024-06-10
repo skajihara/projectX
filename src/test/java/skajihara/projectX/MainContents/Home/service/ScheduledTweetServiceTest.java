@@ -80,7 +80,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void selectScheduledTweet_NonExistent_IntegrationTest() {
+    void selectScheduledTweet_MissingData_IntegrationTest() {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -119,7 +119,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void createScheduledTweet_Invalid_IntegrationTest() {
+    void createScheduledTweet_InvalidData_IntegrationTest() {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -148,7 +148,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void updateScheduledTweet_Exception_IntegrationTest() {
+    void updateScheduledTweet_ThrowsException_IntegrationTest() {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
 
@@ -171,7 +171,7 @@ class ScheduledTweetServiceTest {
     }
 
     @Test
-    void deleteScheduledTweet_Exception_IntegrationTest() {
+    void deleteScheduledTweet_ThrowsException_IntegrationTest() {
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
         assertThrows(NotFoundException.class, () -> scheduledTweetService.deleteScheduledTweet(99999));
     }

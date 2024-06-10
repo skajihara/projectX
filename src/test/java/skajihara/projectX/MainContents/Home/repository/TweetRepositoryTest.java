@@ -68,14 +68,14 @@ class TweetRepositoryTest {
     }
 
     @Test
-    void selectAllIntegrationTest() {
+    void selectAll_IntegrationTest() {
 
         List<Tweet> tweets = tweetRepository.selectAll();
         assertThat(tweets).hasSize(3);
     }
 
     @Test
-    void selectRecentNIntegrationTest() {
+    void selectRecentN_IntegrationTest() {
 
         List<Tweet> recentTweets = tweetRepository.selectRecentN(2);
         assertThat(recentTweets).hasSize(2);
@@ -84,7 +84,7 @@ class TweetRepositoryTest {
     }
 
     @Test
-    void selectTweetsByAccountIdIntegrationTest() {
+    void selectTweetsByAccountId_IntegrationTest() {
 
         List<Tweet> Tweets = tweetRepository.selectTweetsByAccountId("user3");
         assertThat(Tweets).hasSize(3);
@@ -97,7 +97,7 @@ class TweetRepositoryTest {
     }
 
     @Test
-    void selectTweetIntegrationTest() {
+    void selectTweet_IntegrationTest() {
 
         Tweet tweet = tweetRepository.selectTweet(11);
         assertThat(tweet).isNotNull();

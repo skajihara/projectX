@@ -36,7 +36,7 @@ class TweetServiceTest {
     Tweet tweet;
 
     @Test
-    void selectAllTweetsUnitTest() {
+    void selectAllTweets_UnitTest() {
 
         List<Tweet> expected = new ArrayList<>();
 
@@ -50,7 +50,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void selectRecentTweetsUnitTest() {
+    void selectRecentTweets_UnitTest() {
 
         List<Tweet> expected = new ArrayList<>();
 
@@ -64,7 +64,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void selectTweetByAccountIdUnitTest() {
+    void selectTweetByAccountId_UnitTest() {
 
         List<Tweet> expected = new ArrayList<>();
 
@@ -78,7 +78,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void selectTweetUnitTest() {
+    void selectTweet_UnitTest() {
 
         Tweet expected = new Tweet();
 
@@ -92,7 +92,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void createTweetUnitTest() {
+    void createTweet_UnitTest() {
 
         doReturn(tweet).when(tweetRepository).save(any(Tweet.class));
 
@@ -102,7 +102,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void updateTweetUnitTest() {
+    void updateTweet_UnitTest() {
 
         int id = 1;
         Tweet tweet = new Tweet();
@@ -119,7 +119,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void updateTweetExceptionUnitTest() {
+    void updateTweet_ThrowsException_UnitTest() {
 
         int id = 1;
         Tweet tweet = new Tweet();
@@ -133,7 +133,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void deleteTweetUnitTest() {
+    void deleteTweet_UnitTest() {
 
         int id = 1;
         Tweet tweet = new Tweet();
@@ -148,7 +148,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void deleteTweetExceptionUnitTest() {
+    void deleteTweet_ThrowsException_UnitTest() {
 
         int id = 1;
 
@@ -161,7 +161,7 @@ class TweetServiceTest {
     }
 
     @Test
-    public void selectAllTweetsTestIntegrationTest() {
+    public void selectAllTweets_IntegrationTest() {
 
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test2.csv");
 
@@ -170,7 +170,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void selectRecentTweetsIntegrationTest() throws ParseException {
+    void selectRecentTweets_IntegrationTest() throws ParseException {
 
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test2.csv");
 
@@ -188,7 +188,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void selectTweetsByAccountIdIntegrationTest() throws ParseException {
+    void selectTweetsByAccountId_IntegrationTest() throws ParseException {
 
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test2.csv");
 
@@ -208,7 +208,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void selectTweetIntegrationTest() throws ParseException {
+    void selectTweet_IntegrationTest() throws ParseException {
 
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test3.csv");
 
@@ -232,7 +232,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void createTweetIntegrationTest() {
+    void createTweet_IntegrationTest() {
 
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test1.csv");
 
@@ -267,7 +267,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void createInvalidTweetIntegrationTest() {
+    void createInvalidTweet_IntegrationTest() {
 
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test1.csv");
 
@@ -276,7 +276,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void updateTweetIntegrationTest() {
+    void updateTweet_IntegrationTest() {
 
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test3.csv");
 
@@ -301,7 +301,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void updateTweetExceptionIntegrationTest() {
+    void updateTweet_ThrowsException_IntegrationTest() {
 
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test3.csv");
 
@@ -313,7 +313,7 @@ class TweetServiceTest {
     }
 
     @Test
-    public void deleteTweetIntegrationTest() {
+    public void deleteTweet_IntegrationTest() {
 
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test4.csv");
 
@@ -328,7 +328,7 @@ class TweetServiceTest {
     }
 
     @Test
-    void deleteTweetExceptionIntegrationTest() {
+    void deleteTweet_ThrowsException_IntegrationTest() {
         csvLoader.loadTweets("src/test/resources/csv/service/Tweet/Test1.csv");
         assertThrows(TweetException.class, () -> tweetService.deleteTweet(99999));
     }

@@ -39,7 +39,7 @@ public class TweetControllerTest {
     TweetService tweetService;
 
     @Test
-    public void getAllTweetsUnitTest() throws Exception {
+    public void getAllTweets_UnitTest() throws Exception {
 
         doReturn(new ArrayList<>()).when(tweetService).selectAllTweets();
 
@@ -49,7 +49,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getRecentTweetsUnitTest() throws Exception {
+    public void getRecentTweets_UnitTest() throws Exception {
 
         doReturn(new ArrayList<>()).when(tweetService).selectRecentTweets(anyInt());
 
@@ -59,7 +59,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getTweetsByAccountIdUnitTest() throws Exception {
+    public void getTweetsByAccountId_UnitTest() throws Exception {
 
         doReturn(new ArrayList<>()).when(tweetService).selectTweetsByAccountId(anyString());
 
@@ -69,7 +69,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getTweetUnitTest() throws Exception {
+    public void getTweet_UnitTest() throws Exception {
 
         doReturn(new Tweet()).when(tweetService).selectTweet(anyInt());
 
@@ -79,7 +79,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void createTweetUnitTest() throws Exception {
+    public void createTweet_UnitTest() throws Exception {
 
         doNothing().when(tweetService).createTweet(any());
 
@@ -92,7 +92,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void updateTweetUnitTest() throws Exception {
+    public void updateTweet_UnitTest() throws Exception {
 
         doNothing().when(tweetService).updateTweet(anyInt(),any());
 
@@ -105,7 +105,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void deleteTweetUnitTest() throws Exception {
+    public void deleteTweet_UnitTest() throws Exception {
 
         doNothing().when(tweetService).deleteTweet(anyInt());
 
@@ -115,7 +115,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getAllTweetsIntegrationTest() throws Exception {
+    public void getAllTweets_IntegrationTest() throws Exception {
 
         csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test3.csv");
 
@@ -132,7 +132,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getRecentTweetsIntegrationTest() throws Exception {
+    public void getRecentTweets_IntegrationTest() throws Exception {
 
         csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test3.csv");
 
@@ -155,7 +155,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getTweetsByAccountIdIntegrationTest() throws Exception {
+    public void getTweetsByAccountId_IntegrationTest() throws Exception {
 
         csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test3.csv");
 
@@ -180,7 +180,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getTweetIntegrationTest() throws Exception {
+    public void getTweet_IntegrationTest() throws Exception {
 
         csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test2.csv");
 
@@ -208,7 +208,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void createTweetIntegrationTest() throws Exception {
+    public void createTweet_IntegrationTest() throws Exception {
 
         csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test1.csv");
 
@@ -254,7 +254,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    void updateTweetIntegrationTest() throws Exception {
+    void updateTweet_IntegrationTest() throws Exception {
 
         csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test2.csv");
 
@@ -303,7 +303,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void deleteTweetIntegrationTest() throws Exception {
+    public void deleteTweet_IntegrationTest() throws Exception {
 
         csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test2.csv");
 
@@ -336,7 +336,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getAllTweetsWithNoDataIntegrationTest() throws Exception {
+    public void getAllTweets_WithNoData_IntegrationTest() throws Exception {
 
         // cleanup database
         csvLoader.loadTweets("");
@@ -354,7 +354,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getRecentTweetsWithNoDataIntegrationTest() throws Exception {
+    public void getRecentTweets_WithNoData_IntegrationTest() throws Exception {
 
         // cleanup database
         csvLoader.loadTweets("");
@@ -372,7 +372,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getTweetsByAccountIdWithNoDataIntegrationTest() throws Exception {
+    public void getTweetsByAccountId_WithNoData_IntegrationTest() throws Exception {
 
         // cleanup database
         csvLoader.loadTweets("");
@@ -390,7 +390,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void getNonExistentTweetIntegrationTest() throws Exception {
+    public void getTweet_MissingData_IntegrationTest() throws Exception {
 
         // cleanup database
         csvLoader.loadTweets("");
@@ -400,7 +400,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void updateNonExistentTweetIntegrationTest() throws Exception {
+    public void updateTweet_MissingData_IntegrationTest() throws Exception {
 
         csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test1.csv");
 
@@ -425,7 +425,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void deleteNonExistentTweetIntegrationTest() throws Exception {
+    public void deleteTweet_MissingData_IntegrationTest() throws Exception {
 
         csvLoader.loadTweets("src/test/resources/csv/controller/Tweet/Test1.csv");
 

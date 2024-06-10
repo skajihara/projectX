@@ -97,7 +97,7 @@ public class ScheduledTweetControllerTest {
     }
 
     @Test
-    public void getScheduledTweet_NonExistent_IntegrationTest() throws Exception {
+    public void getScheduledTweet_MissingData_IntegrationTest() throws Exception {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -150,7 +150,7 @@ public class ScheduledTweetControllerTest {
     }
 
     @Test
-    void createScheduledTweet_Invalid_IntegrationTest() throws Exception {
+    void createScheduledTweet_InvalidData_IntegrationTest() {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -203,7 +203,7 @@ public class ScheduledTweetControllerTest {
     }
 
     @Test
-    public void updateScheduledTweet_NonExistent_IntegrationTest() throws Exception {
+    public void updateScheduledTweet_MissingData_IntegrationTest() throws Exception {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");
@@ -242,7 +242,7 @@ public class ScheduledTweetControllerTest {
     }
 
     @Test
-    public void deleteScheduledTweet_NonExistent_IntegrationTest() throws Exception {
+    public void deleteScheduledTweet_MissingData_IntegrationTest() throws Exception {
 
         // cleanup database
         scheduledTweetCsvLoader.loadScheduledTweets("");

@@ -38,7 +38,7 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    void selectAccountIntegrationTest() {
+    void selectAccount_IntegrationTest() {
 
         Account account = accountRepository.selectAccount("test_id");
         assertThat(account).isNotNull();
@@ -57,7 +57,7 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    void selectNonExistentAccountIntegrationTest() {
+    void selectAccount_MissingData_IntegrationTest() {
         Account account = accountRepository.selectAccount("abcdefg");
         assertThat(account).isNull();
     }

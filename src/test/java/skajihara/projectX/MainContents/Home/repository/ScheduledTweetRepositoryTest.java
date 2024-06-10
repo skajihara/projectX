@@ -21,14 +21,14 @@ class ScheduledTweetRepositoryTest {
     ScheduledTweetRepository scheduledTweetRepository;
 
     @Test
-    void selectScheduledTweetsIntegrationTest() {
+    void selectScheduledTweets_IntegrationTest() {
 
         List<ScheduledTweet> scheduledTweets = scheduledTweetRepository.selectScheduledTweets("user_A");
         assertThat(scheduledTweets).hasSize(3);
     }
 
     @Test
-    void selectScheduledTweetIntegrationTest() throws ParseException {
+    void selectScheduledTweet_IntegrationTest() throws ParseException {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date scheduled_datetime = dateFormat.parse("2024-06-13 03:00:00");
