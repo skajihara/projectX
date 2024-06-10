@@ -1,0 +1,6 @@
+user_A,tweet content 1,/src/assets/images/img01.GIF,Tokyo,2024-06-13 01:00:00,2024-06-07 11:11:11,false
+user_A,tweet content 2,/src/assets/images/img02.jpg,Oosaka,2024-06-13 01:00:00,2024-06-07 12:12:12,false
+user_A,tweet content 3,/src/assets/images/img03.jpg,Hokkaido,2024-06-13 03:00:00,2024-06-07 12:12:12,false
+user_B,tweet content 4,/src/assets/images/img04.jpg,Fukuoka,2024-06-13 04:00:00,2024-06-07 12:12:12,false
+user_B,tweet content 5,/src/assets/images/img05.jpg,Aichi,2024-06-13 05:00:00,2024-06-07 12:12:12,false
+user_B,tweet content 6,/src/assets/images/img06.jpg,Kanagawa,2024-06-13 06:00:00,2024-06-07 12:12:12,false

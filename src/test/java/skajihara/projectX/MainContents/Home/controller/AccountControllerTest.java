@@ -31,7 +31,7 @@ public class AccountControllerTest {
     AccountService accountService;
 
     @Test
-    public void getAccountUnitTest() throws Exception {
+    public void getAccount_UnitTest() throws Exception {
 
         doReturn(new Account()).when(accountService).selectAccount(anyString());
 
@@ -41,7 +41,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getAccountIntegrationTest() throws Exception {
+    public void getAccount_IntegrationTest() throws Exception {
 
         String response =mockMvc.perform(get("/api/accounts/user_A"))
                 .andExpect(status().isOk())
@@ -67,7 +67,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getNonExistentAccountIntegrationTest() throws Exception {
+    public void getAccount_MissingData_IntegrationTest() throws Exception {
         mockMvc.perform(get("/api/accounts/user_exception"))
                 .andExpect(status().isNotFound());
     }

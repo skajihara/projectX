@@ -26,7 +26,7 @@ public class AccountServiceTest {
     AccountRepository accountRepository;
 
     @Test
-    public void selectAccountUnitTest() throws NotFoundException {
+    public void selectAccount_UnitTest() throws NotFoundException {
 
         Account expected = new Account();
 
@@ -40,7 +40,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void selectAccountIntegrationTest() throws NotFoundException {
+    public void selectAccount_IntegrationTest() throws NotFoundException {
 
         Account account = accountService.selectAccount("user_A");
         assertThat(account).isNotNull();
@@ -59,7 +59,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void selectNonExistentAccountIntegrationTest() {
+    public void selectAccount_MissingData_IntegrationTest() {
         assertThrows(NotFoundException.class, () -> accountService.selectAccount("user_exception"));
     }
 }
