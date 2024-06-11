@@ -39,7 +39,6 @@ const fetchData = async () => {
     loading.value = false
   }
 }
-
 async function deleteTweet(id) {
   try {
     await axios.delete('http://localhost:8081/api/schedule/' + id)
@@ -49,7 +48,37 @@ async function deleteTweet(id) {
     router.replace({ name: 'home' })
   }
 }
+function formatDateTime(datetimeStr) {
+  const date = new Date(datetimeStr)
+  // 日本のタイムゾーンに合わせて日時を変換する設定
+  const options = {
+    timeZone: 'Asia/Tokyo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }
+  const dateTimeFormat = new Intl.DateTimeFormat('ja-JP', options)
+  const [
+    { value: year },
+    ,
+    { value: month },
+    ,
+    { value: day },
+    ,
+    { value: hour },
+    ,
+    { value: minute },
+    ,
+    { value: second }
+  ] = dateTimeFormat.formatToParts(date)
+  const formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`
 
+  return formattedDateTime
+}
 onBeforeMount(() => {
   fetchData()
 })
@@ -61,10 +90,11 @@ onBeforeMount(() => {
     <p>{{ errDtl }}</p>
   </div>
   <div v-else-if="tweet" class="content">
-    <!-- <div class="tweet-header">
-      <router-link :to="{ name: 'profile', params: { userId: account.id } }">
+    <div class="tweet-header">
+      <!-- <router-link :to="{ name: 'profile', params: { userId: account.id } }">
         <img class="user-icon" :src="account.icon" width="50" height="50" />
-      </router-link>
+      </router-link> -->
+      <img class="user-icon" :src="account.icon" width="50" height="50" />
       <span>{{ account.name }}</span>
       <div v-show="tweet.accountId === currentUser.userId" class="delete-button">
         <BButton pill size="sm" @click="deleteTweet(tweet.id)">削除</BButton>
@@ -75,8 +105,10 @@ onBeforeMount(() => {
       <img :src="tweet.image" style="max-width: 500px; max-height: 200px" />
     </div>
     <div class="tweet-info">
-      <pre>{{ tweet.datetime }} tweet by @{{ tweet.accountId }}  <b>{{ tweet.views }}</b> Views</pre>
-    </div> -->
+      <span>ツイート予定：{{ formatDateTime(tweet.scheduledDatetime) }}</span>
+      <br />
+      <span>登録日時：{{ formatDateTime(tweet.createdDatetime) }}</span>
+    </div>
   </div>
   <div v-else>
     <p>Tweet was not found or Error has occurred.</p>

@@ -39,10 +39,8 @@ const deleteTweet = (id) => {
   emit('deleteTweet', id)
 }
 function formatDateTime(datetimeStr) {
-  // 入力された日時データをDateオブジェクトに変換
   const date = new Date(datetimeStr)
-
-  // 日本のタイムゾーンに合わせて日時を取得
+  // 日本のタイムゾーンに合わせて日時を変換する設定
   const options = {
     timeZone: 'Asia/Tokyo',
     year: 'numeric',
@@ -67,8 +65,6 @@ function formatDateTime(datetimeStr) {
     ,
     { value: second }
   ] = dateTimeFormat.formatToParts(date)
-
-  // yyyy-MM-dd HH:mm:ss形式にフォーマット
   const formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`
 
   return formattedDateTime
