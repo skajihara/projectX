@@ -45,7 +45,7 @@ async function deleteTweet(id) {
   } catch (err) {
     error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
   } finally {
-    router.replace({ name: 'home' })
+    router.replace({ name: 'schedule', params: { userId: currentUser.userId } })
   }
 }
 function formatDateTime(datetimeStr) {
