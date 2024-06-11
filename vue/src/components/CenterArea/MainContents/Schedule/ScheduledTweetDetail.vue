@@ -1,8 +1,9 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
+import { format } from 'date-fns'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
+import axios from 'axios'
 
 const props = defineProps({
   scheduleId: {
@@ -18,6 +19,10 @@ const account = ref(null)
 const loading = ref(true)
 const error = ref(null)
 const errDtl = ref(null)
+const isEditMode = ref(false)
+const editedText = ref('')
+const editedScheduledDatetime = ref('')
+
 const fetchData = async () => {
   loading.value = true
   error.value = null
@@ -29,6 +34,8 @@ const fetchData = async () => {
         'http://localhost:8081/api/accounts/' + tweet.value.accountId
       )
       account.value = resAccount.data
+      editedText.value = tweet.value.text
+      editedScheduledDatetime.value = tweet.value.scheduledDatetime.slice(0, 16)
     } else {
       console.log('Not retrieved.')
     }
@@ -39,6 +46,19 @@ const fetchData = async () => {
     loading.value = false
   }
 }
+
+async function updateTweet() {
+  try {
+    tweet.value.text = editedText.value
+    tweet.value.scheduledDatetime = editedScheduledDatetime.value
+    tweet.value.createdDatetime = format(Date.now(), 'yyyy-MM-dd HH:mm')
+    await axios.put('http://localhost:8081/api/schedule/' + tweet.value.id, tweet.value)
+    isEditMode.value = false
+  } catch (err) {
+    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
+  }
+}
+
 async function deleteTweet(id) {
   try {
     await axios.delete('http://localhost:8081/api/schedule/' + id)
@@ -48,6 +68,7 @@ async function deleteTweet(id) {
     router.replace({ name: 'schedule', params: { userId: currentUser.userId } })
   }
 }
+
 function formatDateTime(datetimeStr) {
   const date = new Date(datetimeStr)
   // 日本のタイムゾーンに合わせて日時を変換する設定
@@ -79,10 +100,12 @@ function formatDateTime(datetimeStr) {
 
   return formattedDateTime
 }
+
 onBeforeMount(() => {
   fetchData()
 })
 </script>
+
 <template>
   <div v-if="loading">Loading...</div>
   <div v-else-if="error">
@@ -98,11 +121,27 @@ onBeforeMount(() => {
     <div class="tweet-header">
       <img class="user-icon" :src="account.icon" width="50" height="50" />
       <span>{{ account.name }}</span>
-      <div v-show="tweet.accountId === currentUser.userId" class="delete-button">
+      <div v-show="tweet.accountId === currentUser.userId" class="action-buttons">
+        <BButton pill size="sm" @click="isEditMode = true">編集</BButton>
         <BButton pill size="sm" @click="deleteTweet(tweet.id)">削除</BButton>
       </div>
     </div>
-    <pre class="tweet-text">{{ tweet.text }}</pre>
+    <div v-if="isEditMode">
+      <textarea v-model="editedText" rows="5" cols="40"></textarea>
+      <br />
+      <input
+        v-model="editedScheduledDatetime"
+        type="datetime-local"
+        :min="new Date().toISOString().slice(0, 16)"
+      />
+      <div>
+        <BButton pill size="sm" @click="updateTweet">更新</BButton>
+        <BButton pill size="sm" @click="isEditMode = false">キャンセル</BButton>
+      </div>
+    </div>
+    <div v-else>
+      <pre class="tweet-text">{{ tweet.text }}</pre>
+    </div>
     <div v-if="tweet.image" class="tweet-image">
       <img :src="tweet.image" style="max-width: 500px; max-height: 200px" />
     </div>
@@ -146,13 +185,6 @@ onBeforeMount(() => {
   color: gray;
   position: relative;
   top: -15px;
-}
-.tweet-activity {
-  width: 400px;
-  display: grid;
-  grid-template-columns: repeat(4, 80px);
-  grid-column-gap: 50px;
-  align-items: center;
 }
 .disabled-text {
   color: gray;

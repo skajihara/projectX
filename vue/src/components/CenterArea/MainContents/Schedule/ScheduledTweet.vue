@@ -125,20 +125,12 @@ function formatDateTime(datetimeStr) {
   position: relative;
   top: -15px;
 }
-.tweet-activity {
-  width: 400px;
-  display: grid;
-  grid-template-columns: repeat(4, 80px);
-  grid-column-gap: 50px;
-  align-items: center;
-}
 .disabled-text {
   color: gray;
   position: relative;
   left: -5px;
   top: 3px;
 }
-
 .no-hover {
   color: inherit;
   text-decoration: none;
