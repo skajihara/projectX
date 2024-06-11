@@ -90,10 +90,12 @@ onBeforeMount(() => {
     <p>{{ errDtl }}</p>
   </div>
   <div v-else-if="tweet" class="content">
+    <div>
+      <router-link :to="{ name: 'schedule', params: { userId: currentUser.userId } }"
+        >🔙戻る</router-link
+      >
+    </div>
     <div class="tweet-header">
-      <!-- <router-link :to="{ name: 'profile', params: { userId: account.id } }">
-        <img class="user-icon" :src="account.icon" width="50" height="50" />
-      </router-link> -->
       <img class="user-icon" :src="account.icon" width="50" height="50" />
       <span>{{ account.name }}</span>
       <div v-show="tweet.accountId === currentUser.userId" class="delete-button">
