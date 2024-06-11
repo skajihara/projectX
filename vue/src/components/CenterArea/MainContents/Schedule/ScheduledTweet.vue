@@ -3,52 +3,15 @@ import { useCurrentUserStore } from '@/stores/currentUser.js'
 
 const currentUser = useCurrentUserStore()
 const props = defineProps({
-  id: {
+  scheduleId: {
     type: Number,
-    required: true
-  },
-  tweetContent: {
-    type: String,
     required: true
   },
   accountId: {
     type: String,
     required: true
   },
-  accountName: {
-    type: String,
-    required: true
-  },
-  datetime: {
-    type: String,
-    required: true
-  },
-  location: {
-    type: String,
-    required: false,
-    default: ''
-  },
-  likes: {
-    type: Number,
-    required: false,
-    default: 0
-  },
-  retweet: {
-    type: Number,
-    required: false,
-    default: 0
-  },
-  reply: {
-    type: Number,
-    required: false,
-    default: 0
-  },
-  views: {
-    type: Number,
-    required: false,
-    default: 0
-  },
-  icon: {
+  text: {
     type: String,
     required: true
   },
@@ -56,58 +19,81 @@ const props = defineProps({
     type: String,
     required: false,
     default: ''
+  },
+  location: {
+    type: String,
+    required: false,
+    default: ''
+  },
+  scheduledDatetime: {
+    type: String,
+    required: true
+  },
+  createdDatetime: {
+    type: String,
+    required: true
   }
 })
 const emit = defineEmits(['deleteTweet'])
 const deleteTweet = (id) => {
   emit('deleteTweet', id)
 }
-</script>
+function formatDateTime(datetimeStr) {
+  // 入力された日時データをDateオブジェクトに変換
+  const date = new Date(datetimeStr)
 
+  // 日本のタイムゾーンに合わせて日時を取得
+  const options = {
+    timeZone: 'Asia/Tokyo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }
+  const dateTimeFormat = new Intl.DateTimeFormat('ja-JP', options)
+  const [
+    { value: year },
+    ,
+    { value: month },
+    ,
+    { value: day },
+    ,
+    { value: hour },
+    ,
+    { value: minute },
+    ,
+    { value: second }
+  ] = dateTimeFormat.formatToParts(date)
+
+  // yyyy-MM-dd HH:mm:ss形式にフォーマット
+  const formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`
+
+  return formattedDateTime
+}
+</script>
 <template>
   <div class="content">
     <div class="tweet-header">
-      <router-link :to="{ name: 'profile', params: { userId: props.accountId } }">
-        <img class="user-icon" :src="props.icon" width="50" height="50" />
-      </router-link>
-      <span>{{ props.accountName }}</span>
+      <span>@{{ props.accountId }}</span>
       <div v-show="props.accountId === currentUser.userId" class="delete-button">
-        <BButton pill size="sm" @click="deleteTweet(props.id)">削除</BButton>
+        <BButton pill size="sm" @click="deleteTweet(props.scheduleId)">削除</BButton>
       </div>
     </div>
-    <router-link :to="{ name: 'tweet-detail', params: { id: props.id } }" class="no-hover">
-      <pre class="tweet-text">{{ props.tweetContent }}</pre>
+    <router-link
+      :to="{ name: 'scheduled-tweet-detail', params: { scheduleId: props.scheduleId } }"
+      class="no-hover"
+    >
+      <pre class="tweet-text">{{ props.text }}</pre>
       <div v-if="props.image" class="tweet-image">
         <img :src="props.image" style="max-width: 500px; max-height: 200px" />
       </div>
       <div class="tweet-info">
-        <pre>{{ props.datetime }} tweet by @{{ props.accountId }}  <b>{{ props.views }}</b> Views</pre>
-        <div class="tweet-activity">
-          <div>
-            <BButton variant="link">
-              <img src="@/assets/icons/tweet/reply.svg" width="15" height="15" />
-            </BButton>
-            <span class="disabled-text">{{ props.reply }}</span>
-          </div>
-          <div>
-            <BButton variant="link">
-              <img src="@/assets/icons/tweet/retweet.svg" width="15" height="15" />
-            </BButton>
-            <span class="disabled-text">{{ props.retweet }}</span>
-          </div>
-          <div>
-            <BButton variant="link">
-              <img src="@/assets/icons/tweet/likes.svg" width="15" height="15" />
-            </BButton>
-            <span class="disabled-text">{{ props.likes }}</span>
-          </div>
-          <div>
-            <BButton variant="link">
-              <img src="@/assets/icons/tweet/views.svg" width="15" height="15" />
-            </BButton>
-            <span class="disabled-text">{{ props.views }}</span>
-          </div>
-        </div>
+        <span>ツイート予定：{{ formatDateTime(props.scheduledDatetime) }}</span>
+        <br />
+        <span>登録日時：{{ formatDateTime(props.createdDatetime) }}</span>
       </div>
     </router-link>
   </div>

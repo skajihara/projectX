@@ -1,5 +1,5 @@
 <script setup>
-import ScheduledTweetsList from './Scheduled/ScheduledTweetsList.vue'
+import ScheduledTweetsList from './Schedule/ScheduledTweetsList.vue'
 </script>
 <template>
   <div class="scheduled">

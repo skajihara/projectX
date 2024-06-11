@@ -1,19 +1,25 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
+import { useCurrentUserStore } from '@/stores/currentUser.js'
 import axios from 'axios'
-import Tweet from '../Tweet.vue'
-import { accounts } from '@/consts/accounts.js'
+import ScheduledTweet from './ScheduledTweet.vue'
 
+const currentUser = useCurrentUserStore()
+const accounts = ref(null)
 const tweets = ref(null)
 const loading = ref(true)
 const error = ref(null)
 const errDtl = ref(null)
-const fetchData = async () => {
+async function fetchData() {
   loading.value = true
   error.value = null
   try {
-    const response = await axios.get('http://localhost:8081/api/tweets/recent')
-    tweets.value = response.data
+    const resAccounts = await axios.get('http://localhost:8081/api/accounts')
+    accounts.value = resAccounts.data
+    const resTweets = await axios.get(
+      'http://localhost:8081/api/schedule/account/' + currentUser.userId
+    )
+    tweets.value = resTweets.data
   } catch (err) {
     error.value = 'Failed to fetch data'
     errDtl.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
@@ -21,13 +27,9 @@ const fetchData = async () => {
     loading.value = false
   }
 }
-
-function searchAccount(accountId) {
-  return accounts.value.find((account) => account.userId === accountId)
-}
 async function deleteTweet(id) {
   try {
-    await axios.delete('http://localhost:8081/api/tweets/' + id)
+    await axios.delete('http://localhost:8081/api/schedule/' + id)
     window.location.reload()
   } catch (err) {
     error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
@@ -39,7 +41,6 @@ onBeforeMount(() => {
   fetchData()
 })
 </script>
-
 <template>
   <div>
     <div v-if="loading">Loading...</div>
@@ -49,21 +50,16 @@ onBeforeMount(() => {
     </div>
     <template v-else-if="tweets">
       <div v-for="(tweet, index) in tweets" :key="index" class="tweet">
-        <Tweet
-          :id="tweet.id"
-          :tweet-content="tweet.text"
+        <ScheduledTweet
+          :schedule-id="tweet.id"
           :account-id="tweet.accountId"
-          :account-name="searchAccount(tweet.accountId).userName"
-          :datetime="tweet.datetime"
-          :location="tweet.location"
-          :likes="tweet.likes"
-          :retweet="tweet.retweet"
-          :reply="tweet.reply"
-          :views="tweet.views"
-          :icon="searchAccount(tweet.accountId).icon"
+          :text="tweet.text"
           :image="tweet.image"
+          :location="tweet.location"
+          :scheduled-datetime="tweet.scheduledDatetime"
+          :created-datetime="tweet.createdDatetime"
           @delete-tweet="deleteTweet"
-        ></Tweet>
+        ></ScheduledTweet>
       </div>
     </template>
     <div v-else>No data.</div>

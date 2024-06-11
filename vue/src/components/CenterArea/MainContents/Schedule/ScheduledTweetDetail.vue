@@ -5,8 +5,8 @@ import axios from 'axios'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 
 const props = defineProps({
-  id: {
-    type: String,
+  scheduleId: {
+    type: Number,
     required: true
   }
 })
@@ -22,7 +22,7 @@ const fetchData = async () => {
   loading.value = true
   error.value = null
   try {
-    const resTweet = await axios.get('http://localhost:8081/api/tweets/tweet/' + props.id)
+    const resTweet = await axios.get('http://localhost:8081/api/schedule/' + props.scheduleId)
     tweet.value = resTweet.data
     if (tweet.value) {
       const resAccount = await axios.get(
@@ -42,7 +42,7 @@ const fetchData = async () => {
 
 async function deleteTweet(id) {
   try {
-    await axios.delete('http://localhost:8081/api/tweets/' + id)
+    await axios.delete('http://localhost:8081/api/schedule/' + id)
   } catch (err) {
     error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
   } finally {
@@ -54,7 +54,6 @@ onBeforeMount(() => {
   fetchData()
 })
 </script>
-
 <template>
   <div v-if="loading">Loading...</div>
   <div v-else-if="error">
@@ -62,7 +61,7 @@ onBeforeMount(() => {
     <p>{{ errDtl }}</p>
   </div>
   <div v-else-if="tweet" class="content">
-    <div class="tweet-header">
+    <!-- <div class="tweet-header">
       <router-link :to="{ name: 'profile', params: { userId: account.id } }">
         <img class="user-icon" :src="account.icon" width="50" height="50" />
       </router-link>
@@ -77,33 +76,7 @@ onBeforeMount(() => {
     </div>
     <div class="tweet-info">
       <pre>{{ tweet.datetime }} tweet by @{{ tweet.accountId }}  <b>{{ tweet.views }}</b> Views</pre>
-      <div class="tweet-activity">
-        <div>
-          <BButton variant="link">
-            <img src="@/assets/icons/tweet/reply.svg" width="15" height="15" />
-          </BButton>
-          <span class="disabled-text">{{ tweet.replies }}</span>
-        </div>
-        <div>
-          <BButton variant="link">
-            <img src="@/assets/icons/tweet/retweet.svg" width="15" height="15" />
-          </BButton>
-          <span class="disabled-text">{{ tweet.retweets }}</span>
-        </div>
-        <div>
-          <BButton variant="link">
-            <img src="@/assets/icons/tweet/likes.svg" width="15" height="15" />
-          </BButton>
-          <span class="disabled-text">{{ tweet.likes }}</span>
-        </div>
-        <div>
-          <BButton variant="link">
-            <img src="@/assets/icons/tweet/views.svg" width="15" height="15" />
-          </BButton>
-          <span class="disabled-text">{{ tweet.views }}</span>
-        </div>
-      </div>
-    </div>
+    </div> -->
   </div>
   <div v-else>
     <p>Tweet was not found or Error has occurred.</p>

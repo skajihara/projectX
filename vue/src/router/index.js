@@ -11,6 +11,7 @@ import Premium from '@/components/CenterArea/MainContents/Premium.vue'
 import Profile from '@/components/CenterArea/MainContents/Profile.vue'
 import Schedule from '@/components/CenterArea/MainContents/Schedule.vue'
 import TweetDetail from '@/components/CenterArea/MainContents/TweetDetail.vue'
+import ScheduledTweetDetail from '@/components/CenterArea/MainContents/Schedule/ScheduledTweetDetail.vue'
 import NotFound from '@/components/NotFound.vue'
 
 const router = createRouter({
@@ -76,6 +77,12 @@ const router = createRouter({
       path: '/tweet/:id',
       name: 'tweet-detail',
       component: TweetDetail,
+      props: true
+    },
+    {
+      path: '/schedule/:scheduleId',
+      name: 'scheduled-tweet-detail',
+      component: ScheduledTweetDetail,
       props: true
     },
     {
