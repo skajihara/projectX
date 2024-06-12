@@ -47,7 +47,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getAccount_IntegrationTest() throws Exception {
+    public void getAccount() throws Exception {
 
         String response =mockMvc.perform(get("/api/accounts/user_A"))
                 .andExpect(status().isOk())
@@ -73,13 +73,13 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getAccount_MissingData_IntegrationTest() throws Exception {
+    public void getAccount_MissingData() throws Exception {
         mockMvc.perform(get("/api/accounts/user_exception"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void getAllAccounts_IntegrationTest() throws Exception {
+    public void getAllAccounts_GettingSomedata() throws Exception {
 
         accountCsvLoader.loadAccounts("src/test/resources/csv/controller/Account/Test01.csv");
 
@@ -96,7 +96,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getAllAccounts_WithNoData_IntegrationTest() throws Exception {
+    public void getAllAccounts_GettingNoData() throws Exception {
 
         // cleanup database
         accountCsvLoader.loadAccounts("");

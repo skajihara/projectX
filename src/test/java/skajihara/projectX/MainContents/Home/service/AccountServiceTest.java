@@ -45,7 +45,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void selectAccount_IntegrationTest() throws NotFoundException {
+    public void selectAccount() throws NotFoundException {
 
         Account account = accountService.selectAccount("user_A");
         assertThat(account).isNotNull();
@@ -64,12 +64,12 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void selectAccount_MissingData_IntegrationTest() {
+    public void selectAccount_MissingData() {
         assertThrows(NotFoundException.class, () -> accountService.selectAccount("user_exception"));
     }
 
     @Test
-    public void selectAllAccounts_IntegrationTest() {
+    public void selectAllAccounts_GettingSomeData() {
 
         accountCsvLoader.loadAccounts("src/test/resources/csv/service/Account/Test01.csv");
 
@@ -78,7 +78,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void selectAllAccounts_WithNoData_IntegrationTest() {
+    public void selectAllAccounts_GettingNoData() {
 
         // cleanup database
         accountCsvLoader.loadAccounts("");

@@ -43,7 +43,7 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    void selectAccount_IntegrationTest() {
+    void selectAccount() {
 
         Account account = accountRepository.selectAccount("test_id");
         assertThat(account).isNotNull();
@@ -62,19 +62,19 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    void selectAccount_MissingData_IntegrationTest() {
+    void selectAccount_MissingData() {
         Account account = accountRepository.selectAccount("abcdefg");
         assertThat(account).isNull();
     }
 
     @Test
-    void selectAll_IntegrationTest() {
+    void selectAll_GettingSomeData() {
         List<Account> accounts = accountRepository.selectAll();
         assertThat(accounts).hasSize(4);
     }
 
     @Test
-    void selectAll_WithNoData_IntegrationTest() {
+    void selectAll_GettingNoData() {
         accountCsvLoader.loadAccounts("");
         List<Account> accounts = accountRepository.selectAll();
         assertThat(accounts).hasSize(0);
