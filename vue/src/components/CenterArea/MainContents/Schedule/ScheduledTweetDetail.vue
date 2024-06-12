@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
-import { format } from 'date-fns'
 import { useRouter } from 'vue-router'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 import axios from 'axios'
@@ -50,12 +49,14 @@ const fetchData = async () => {
 async function updateTweet() {
   try {
     tweet.value.text = editedText.value
-    tweet.value.scheduledDatetime = editedScheduledDatetime.value
-    tweet.value.createdDatetime = format(Date.now(), 'yyyy-MM-dd HH:mm')
+    tweet.value.scheduledDatetime = formatDateTime(editedScheduledDatetime.value, 'update')
+    tweet.value.createdDatetime = formatDateTime(Date.now(), 'update')
     await axios.put('http://localhost:8081/api/schedule/' + tweet.value.id, tweet.value)
     isEditMode.value = false
   } catch (err) {
     error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
+  } finally {
+    router.replace({ name: 'schedule', params: { userId: currentUser.userId } })
   }
 }
 
@@ -69,7 +70,7 @@ async function deleteTweet(id) {
   }
 }
 
-function formatDateTime(datetimeStr) {
+function formatDateTime(datetimeStr, mode) {
   const date = new Date(datetimeStr)
   // 日本のタイムゾーンに合わせて日時を変換する設定
   const options = {
@@ -92,11 +93,17 @@ function formatDateTime(datetimeStr) {
     ,
     { value: hour },
     ,
-    { value: minute },
-    ,
-    { value: second }
+    { value: minute }
   ] = dateTimeFormat.formatToParts(date)
-  const formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`
+
+  var formattedDateTime = null
+  if (mode == 'update') {
+    formattedDateTime = `${year}-${month}-${day}T${hour}:${minute}:00.000+00:00`
+    console.log('update passed')
+  } else if (mode == 'display') {
+    formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}`
+    console.log('display passed')
+  }
 
   return formattedDateTime
 }
@@ -146,9 +153,9 @@ onBeforeMount(() => {
       <img :src="tweet.image" style="max-width: 500px; max-height: 200px" />
     </div>
     <div class="tweet-info">
-      <span>ツイート予定：{{ formatDateTime(tweet.scheduledDatetime) }}</span>
+      <span>ツイート予定：{{ formatDateTime(tweet.scheduledDatetime, 'display') }}</span>
       <br />
-      <span>登録日時：{{ formatDateTime(tweet.createdDatetime) }}</span>
+      <span>登録日時：{{ formatDateTime(tweet.createdDatetime, 'display') }}</span>
     </div>
   </div>
   <div v-else>
