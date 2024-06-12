@@ -98,11 +98,9 @@ function formatDateTime(datetimeStr, mode) {
 
   var formattedDateTime = null
   if (mode == 'update') {
-    formattedDateTime = `${year}-${month}-${day}T${hour}:${minute}:00.000+00:00`
-    console.log('update passed')
+    formattedDateTime = `${year}-${month}-${day}T${hour}:${minute}:00.000+09:00`
   } else if (mode == 'display') {
     formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}`
-    console.log('display passed')
   }
 
   return formattedDateTime
