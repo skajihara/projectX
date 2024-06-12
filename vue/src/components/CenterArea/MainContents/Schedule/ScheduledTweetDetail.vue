@@ -126,8 +126,8 @@ onBeforeMount(() => {
     <div class="tweet-header">
       <img class="user-icon" :src="account.icon" width="50" height="50" />
       <span>{{ account.name }}</span>
-      <div v-show="tweet.accountId === currentUser.userId" class="action-buttons">
-        <BButton pill size="sm" @click="isEditMode = true">編集</BButton>
+      <div v-show="tweet.accountId === currentUser.userId" class="action-buttons-1">
+        <BButton pill size="sm" @click="isEditMode = true">編集</BButton>&nbsp;
         <BButton pill size="sm" @click="deleteTweet(tweet.id)">削除</BButton>
       </div>
     </div>
@@ -139,8 +139,8 @@ onBeforeMount(() => {
         type="datetime-local"
         :min="new Date().toISOString().slice(0, 16)"
       />
-      <div>
-        <BButton pill size="sm" @click="updateTweet">更新</BButton>
+      <div class="action-buttons-2">
+        <BButton pill size="sm" @click="updateTweet">更新</BButton>&nbsp;
         <BButton pill size="sm" @click="isEditMode = false">キャンセル</BButton>
       </div>
     </div>
@@ -167,10 +167,17 @@ onBeforeMount(() => {
   border-radius: 5px;
   padding: 10px 10px;
 }
-.delete-button {
+.action-buttons-1 {
   display: inline-block;
   text-align: right;
   margin-left: auto;
+}
+.action-buttons-2 {
+  /* display: inline-block; */
+  /* text-align: right; */
+  /* margin-left: auto; */
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .tweet-header {
   width: 540px;
