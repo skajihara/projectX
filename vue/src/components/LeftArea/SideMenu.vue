@@ -5,11 +5,7 @@ const currentUserId = 'q30387'
 <template>
   <div>
     <div v-for="(menuItem, index) in menuList" :key="index" class="menu-item">
-      <template
-        v-if="
-          menuItem.link === 'lists' || menuItem.link === 'profile' || menuItem.link === 'schedule'
-        "
-      >
+      <template v-if="menuItem.param === 'userId'">
         <router-link :to="{ name: menuItem.link, params: { userId: currentUserId } }">
           <img class="menu-icon" :src="menuItem.path1" width="32" height="32" />
           {{ menuItem.name }}

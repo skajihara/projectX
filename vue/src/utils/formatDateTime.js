@@ -1,4 +1,5 @@
 export function formatDateTime(datetimeStr, mode) {
+
   const date = new Date(datetimeStr)
   // 日本のタイムゾーンに合わせて日時を変換する設定
   const options = {

@@ -73,7 +73,6 @@ async function updateTweet() {
     router.replace({ name: 'schedule', params: { userId: currentUser.userId } })
   }
 }
-
 async function deleteTweet(id) {
   try {
     await axios.delete('http://localhost:8081/api/schedule/' + id)
