@@ -57,9 +57,9 @@ const deleteTweet = (id) => {
         <img :src="props.image" style="max-width: 500px; max-height: 200px" />
       </div>
       <div class="tweet-info">
-        <span>ツイート予定：{{ formatDateTime(props.scheduledDatetime) }}</span>
+        <span>ツイート予定：{{ formatDateTime(props.scheduledDatetime, 'display') }}</span>
         <br />
-        <span>登録日時：{{ formatDateTime(props.createdDatetime) }}</span>
+        <span>登録日時：{{ formatDateTime(props.createdDatetime, 'display') }}</span>
       </div>
     </router-link>
   </div>
@@ -95,20 +95,12 @@ const deleteTweet = (id) => {
   position: relative;
   top: -15px;
 }
-.tweet-activity {
-  width: 400px;
-  display: grid;
-  grid-template-columns: repeat(4, 80px);
-  grid-column-gap: 50px;
-  align-items: center;
-}
 .disabled-text {
   color: gray;
   position: relative;
   left: -5px;
   top: 3px;
 }
-
 .no-hover {
   color: inherit;
   text-decoration: none;

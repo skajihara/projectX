@@ -1,4 +1,5 @@
-export function formatDateTime(datetimeStr) {
+export function formatDateTime(datetimeStr, mode) {
+
   const date = new Date(datetimeStr)
   // 日本のタイムゾーンに合わせて日時を変換する設定
   const options = {
@@ -21,11 +22,15 @@ export function formatDateTime(datetimeStr) {
     ,
     { value: hour },
     ,
-    { value: minute },
-    ,
-    { value: second }
+    { value: minute }
   ] = dateTimeFormat.formatToParts(date)
-  const formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`
+
+  var formattedDateTime = null
+  if (mode == 'update') {
+    formattedDateTime = `${year}-${month}-${day}T${hour}:${minute}:00.000+09:00`
+  } else if (mode == 'display') {
+    formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}`
+  }
 
   return formattedDateTime
 }

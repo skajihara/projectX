@@ -83,7 +83,9 @@ const router = createRouter({
       path: '/schedule/:scheduleId',
       name: 'scheduled-tweet-detail',
       component: ScheduledTweetDetail,
-      props: true
+      props: (route) => ({
+        scheduleId: Number(route.params.scheduleId)
+      })
     },
     {
       path: '/:catchError(.*)*',
