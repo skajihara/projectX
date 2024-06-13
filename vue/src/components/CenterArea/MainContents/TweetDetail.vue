@@ -62,6 +62,9 @@ onBeforeMount(() => {
     <p>{{ errDtl }}</p>
   </div>
   <div v-else-if="tweet" class="content">
+    <div>
+      <router-link :to="{ name: 'home' }">🔙戻る</router-link>
+    </div>
     <div class="tweet-header">
       <router-link :to="{ name: 'profile', params: { userId: account.id } }">
         <img class="user-icon" :src="account.icon" width="50" height="50" />

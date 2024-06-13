@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import skajihara.projectX.MainContents.Home.entity.Account;
+import skajihara.projectX.MainContents.Home.util.AccountCsvLoader;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,6 +19,9 @@ public class AccountRepositoryTest {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    private AccountCsvLoader accountCsvLoader;
 
     @BeforeEach
     void setUp(){
@@ -38,7 +43,7 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    void selectAccount_IntegrationTest() {
+    void selectAccount() {
 
         Account account = accountRepository.selectAccount("test_id");
         assertThat(account).isNotNull();
@@ -57,8 +62,21 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    void selectAccount_MissingData_IntegrationTest() {
+    void selectAccount_MissingData() {
         Account account = accountRepository.selectAccount("abcdefg");
         assertThat(account).isNull();
+    }
+
+    @Test
+    void selectAll_GettingSomeData() {
+        List<Account> accounts = accountRepository.selectAll();
+        assertThat(accounts).hasSize(4);
+    }
+
+    @Test
+    void selectAll_GettingNoData() {
+        accountCsvLoader.loadAccounts("");
+        List<Account> accounts = accountRepository.selectAll();
+        assertThat(accounts).hasSize(0);
     }
 }

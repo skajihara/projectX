@@ -9,8 +9,11 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import skajihara.projectX.MainContents.Home.entity.Account;
 import skajihara.projectX.MainContents.Home.service.AccountService;
+import skajihara.projectX.MainContents.Home.util.AccountCsvLoader;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -30,6 +33,9 @@ public class AccountControllerTest {
     @SpyBean
     AccountService accountService;
 
+    @Autowired
+    private AccountCsvLoader accountCsvLoader;
+
     @Test
     public void getAccount_UnitTest() throws Exception {
 
@@ -41,7 +47,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getAccount_IntegrationTest() throws Exception {
+    public void getAccount() throws Exception {
 
         String response =mockMvc.perform(get("/api/accounts/user_A"))
                 .andExpect(status().isOk())
@@ -67,8 +73,43 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getAccount_MissingData_IntegrationTest() throws Exception {
+    public void getAccount_MissingData() throws Exception {
         mockMvc.perform(get("/api/accounts/user_exception"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void getAllAccounts_GettingSomedata() throws Exception {
+
+        accountCsvLoader.loadAccounts("src/test/resources/csv/controller/Account/Test01.csv");
+
+        String response = mockMvc.perform(get("/api/accounts"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Account> accounts = Arrays.asList(objectMapper.readValue(response, Account[].class));
+        assertThat(accounts).hasSize(3);
+    }
+
+    @Test
+    public void getAllAccounts_GettingNoData() throws Exception {
+
+        // cleanup database
+        accountCsvLoader.loadAccounts("");
+
+        String response = mockMvc.perform(get("/api/accounts"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.length()").value(0))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<Account> accounts = Arrays.asList(objectMapper.readValue(response, Account[].class));
+        assertThat(accounts).hasSize(0);
     }
 }

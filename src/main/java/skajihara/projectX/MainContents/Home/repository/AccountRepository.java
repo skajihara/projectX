@@ -6,8 +6,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import skajihara.projectX.MainContents.Home.entity.Account;
 
+import java.util.List;
+
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
+
+    @Query("SELECT a FROM Account a WHERE a.validFlag = true AND a.deleteFlag = false ORDER BY a.id DESC")
+    List<Account> selectAll();
 
     @Query("SELECT a FROM Account a WHERE a.id = :id AND a.validFlag = true AND a.deleteFlag = false")
     Account selectAccount(@Param("id") String id);

@@ -6,11 +6,17 @@ import skajihara.projectX.MainContents.Home.entity.Account;
 import skajihara.projectX.MainContents.Home.exception.NotFoundException;
 import skajihara.projectX.MainContents.Home.repository.AccountRepository;
 
+import java.util.List;
+
 @Service
 public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    public List<Account> selectAllAccounts() {
+        return accountRepository.selectAll();
+    }
 
     public Account selectAccount(String id) throws NotFoundException {
         Account account = accountRepository.selectAccount(id);
