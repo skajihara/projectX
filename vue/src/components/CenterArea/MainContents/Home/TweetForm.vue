@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 import axios from 'axios'
 import { formatDateTime } from '@/utils/formatDateTime.js'
+// import { handleDateTimeInput } from '@/utils/handleDateTimeInput.js'
 
 const newTweetContent = ref('')
 const scheduledTweetContent = ref('')
@@ -13,6 +14,21 @@ const account = ref(null)
 const response = ref(null)
 const error = ref(null)
 const isScheduledMode = ref(false)
+const modeText = ref('通常モード')
+
+const handleDateTimeInput = (event) => {
+  // カレンダーから選択された値が 5 分単位でない場合、最も近い 5 分単位に丸める
+  const selectedDatetime = new Date(event.target.value)
+  const minutes = selectedDatetime.getMinutes()
+  const roundedMinutes = Math.round(minutes / 5) * 5
+  selectedDatetime.setMinutes(roundedMinutes)
+  selectedDatetime.setHours(selectedDatetime.getHours() + 9)
+  scheduledDatetime.value = selectedDatetime.toISOString().slice(0, 16)
+}
+const selectMode = (isScheduled) => {
+  isScheduledMode.value = isScheduled
+  modeText.value = isScheduled ? '予約モード' : '通常モード'
+}
 
 const createTweet = async () => {
   if (newTweetContent.value.trim() !== '') {
@@ -44,7 +60,6 @@ const createTweet = async () => {
     }
   }
 }
-
 const createScheduledTweet = async () => {
   if (scheduledTweetContent.value.trim() !== '' && scheduledDatetime.value) {
     error.value = null
@@ -73,7 +88,6 @@ const createScheduledTweet = async () => {
     }
   }
 }
-
 async function fetchData() {
   try {
     const response = await axios.get('http://localhost:8081/api/accounts/' + currentUser.userId)
@@ -82,7 +96,6 @@ async function fetchData() {
     error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
   }
 }
-
 onBeforeMount(() => {
   fetchData()
 })
@@ -91,22 +104,16 @@ onBeforeMount(() => {
 <template>
   <div>
     <div v-if="account" class="tweet-form">
-      <router-link :to="{ name: 'profile', params: { userId: account.id } }">
-        <img class="user-icon" :src="account.icon" width="50" height="50" />
-      </router-link>
       <div>
-        <BButton
-          pill
-          variant="primary"
-          :disabled="!isScheduledMode"
-          @click="isScheduledMode = false"
-          >通常モード</BButton
-        >
-        <BButton pill variant="primary" :disabled="isScheduledMode" @click="isScheduledMode = true"
-          >予約モード</BButton
-        >
+        <router-link :to="{ name: 'profile', params: { userId: account.id } }">
+          <img class="user-icon" :src="account.icon" width="50" height="50" />
+        </router-link>
+        <b-dropdown id="mode-dropdown" :text="modeText" class="m-2">
+          <b-dropdown-item @click="selectMode(false)">通常モード</b-dropdown-item>
+          <b-dropdown-item @click="selectMode(true)">予約モード</b-dropdown-item>
+        </b-dropdown>
       </div>
-      <div v-if="!isScheduledMode">
+      <div v-if="!isScheduledMode" class="textarea">
         <b-form-textarea
           id="new-tweet"
           v-model="newTweetContent"
@@ -116,11 +123,17 @@ onBeforeMount(() => {
           :maxlength="280"
           style="width: 600px"
         />
-        <BButton pill variant="primary" :disabled="newTweetContent === ''" @click="createTweet">
+        <BButton
+          pill
+          variant="primary"
+          class="tweet-button"
+          :disabled="newTweetContent === ''"
+          @click="createTweet"
+        >
           ツイート
         </BButton>
       </div>
-      <div v-else>
+      <div v-else class="textarea">
         <b-form-textarea
           id="scheduled-tweet"
           v-model="scheduledTweetContent"
@@ -132,12 +145,16 @@ onBeforeMount(() => {
         />
         <input
           v-model="scheduledDatetime"
+          class="datetime-input"
           type="datetime-local"
           :min="new Date().toISOString().slice(0, 16)"
+          step="300"
+          @input="handleDateTimeInput"
         />
         <BButton
           pill
           variant="primary"
+          class="tweet-button"
           :disabled="scheduledTweetContent === '' || !scheduledDatetime"
           @click="createScheduledTweet"
         >
@@ -153,5 +170,20 @@ onBeforeMount(() => {
 <style scoped>
 .tweet-form {
   margin-bottom: 10px;
+}
+.tweet-button {
+  display: inline-flex;
+  height: 20px;
+  font-size: 12px;
+  text-align: center;
+  align-items: center;
+}
+.datetime-input {
+  display: inline-flex;
+  height: 20px;
+  font-size: 12px;
+  text-align: center;
+  align-items: center;
+  margin-right: 5px;
 }
 </style>

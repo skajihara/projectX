@@ -2,6 +2,7 @@
 import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
+import { formatDateTime } from '@/utils/formatDateTime.js'
 import axios from 'axios'
 
 const props = defineProps({
@@ -22,6 +23,16 @@ const isEditMode = ref(false)
 const editedText = ref('')
 const editedScheduledDatetime = ref('')
 
+const handleDateTimeInput = (event) => {
+  // カレンダーから選択された値が 5 分単位でない場合、最も近い 5 分単位に丸める
+  const selectedDatetime = new Date(event.target.value)
+  const minutes = selectedDatetime.getMinutes()
+  const roundedMinutes = Math.round(minutes / 5) * 5
+  selectedDatetime.setMinutes(roundedMinutes)
+  selectedDatetime.setHours(selectedDatetime.getHours() + 9)
+  editedScheduledDatetime.value = selectedDatetime.toISOString().slice(0, 16)
+}
+
 const fetchData = async () => {
   loading.value = true
   error.value = null
@@ -34,7 +45,10 @@ const fetchData = async () => {
       )
       account.value = resAccount.data
       editedText.value = tweet.value.text
-      editedScheduledDatetime.value = tweet.value.scheduledDatetime.slice(0, 16)
+      // 取得した scheduledDatetime を 9 時間進める
+      const scheduledDatetime = new Date(tweet.value.scheduledDatetime)
+      scheduledDatetime.setHours(scheduledDatetime.getHours() + 9)
+      editedScheduledDatetime.value = scheduledDatetime.toISOString().slice(0, 16)
     } else {
       console.log('Not retrieved.')
     }
@@ -69,43 +83,6 @@ async function deleteTweet(id) {
     router.replace({ name: 'schedule', params: { userId: currentUser.userId } })
   }
 }
-
-function formatDateTime(datetimeStr, mode) {
-  const date = new Date(datetimeStr)
-  // 日本のタイムゾーンに合わせて日時を変換する設定
-  const options = {
-    timeZone: 'Asia/Tokyo',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-  }
-  const dateTimeFormat = new Intl.DateTimeFormat('ja-JP', options)
-  const [
-    { value: year },
-    ,
-    { value: month },
-    ,
-    { value: day },
-    ,
-    { value: hour },
-    ,
-    { value: minute }
-  ] = dateTimeFormat.formatToParts(date)
-
-  var formattedDateTime = null
-  if (mode == 'update') {
-    formattedDateTime = `${year}-${month}-${day}T${hour}:${minute}:00.000+09:00`
-  } else if (mode == 'display') {
-    formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}`
-  }
-
-  return formattedDateTime
-}
-
 onBeforeMount(() => {
   fetchData()
 })
@@ -134,14 +111,19 @@ onBeforeMount(() => {
     <div v-if="isEditMode">
       <textarea v-model="editedText" rows="5" cols="40"></textarea>
       <br />
-      <input
-        v-model="editedScheduledDatetime"
-        type="datetime-local"
-        :min="new Date().toISOString().slice(0, 16)"
-      />
-      <div class="action-buttons-2">
-        <BButton pill size="sm" @click="updateTweet">更新</BButton>&nbsp;
-        <BButton pill size="sm" @click="isEditMode = false">キャンセル</BButton>
+      <div class="edit-area">
+        <input
+          v-model="editedScheduledDatetime"
+          class="datetime-input"
+          type="datetime-local"
+          :min="new Date().toISOString().slice(0, 16)"
+          step="300"
+          @input="handleDateTimeInput"
+        />
+        <div class="action-buttons-2">
+          <BButton pill size="sm" class="button-2" @click="updateTweet">更新</BButton>&nbsp;
+          <BButton pill size="sm" class="button-2" @click="isEditMode = false">キャンセル</BButton>
+        </div>
       </div>
     </div>
     <div v-else>
@@ -172,12 +154,22 @@ onBeforeMount(() => {
   text-align: right;
   margin-left: auto;
 }
-.action-buttons-2 {
-  /* display: inline-block; */
-  /* text-align: right; */
-  /* margin-left: auto; */
-  margin-top: 10px;
-  margin-bottom: 10px;
+.edit-area {
+  display: inline-flex;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.datetime-input {
+  margin-right: 5px;
+  text-align: center;
+}
+.button-2 {
+  display: inline-flex;
+  height: 20px;
+  font-size: 12px;
+  text-align: center;
+  align-items: center;
 }
 .tweet-header {
   width: 540px;
@@ -196,7 +188,6 @@ onBeforeMount(() => {
 .tweet-info {
   color: gray;
   position: relative;
-  top: -15px;
 }
 .disabled-text {
   color: gray;
