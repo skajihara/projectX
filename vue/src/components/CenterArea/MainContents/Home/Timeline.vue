@@ -1,19 +1,27 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 import Tweet from '../Tweet.vue'
-import { accounts } from '@/consts/accounts.js'
 
+const router = useRouter()
 const tweets = ref(null)
+const accounts = ref(null)
 const loading = ref(true)
 const error = ref(null)
 const errDtl = ref(null)
-const fetchData = async () => {
+
+function searchAccount(accountId) {
+  return accounts.value.find((account) => account.id === accountId)
+}
+async function fetchData() {
   loading.value = true
   error.value = null
   try {
-    const response = await axios.get('http://localhost:8081/api/tweets/recent')
-    tweets.value = response.data
+    const resAccounts = await axios.get('http://localhost:8081/api/accounts')
+    accounts.value = resAccounts.data
+    const resTweets = await axios.get('http://localhost:8081/api/tweets/recent')
+    tweets.value = resTweets.data
   } catch (err) {
     error.value = 'Failed to fetch data'
     errDtl.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
@@ -21,18 +29,19 @@ const fetchData = async () => {
     loading.value = false
   }
 }
-
-function searchAccount(accountId) {
-  return accounts.value.find((account) => account.userId === accountId)
-}
 async function deleteTweet(id) {
-  try {
-    await axios.delete('http://localhost:8081/api/tweets/' + id)
-    window.location.reload()
-  } catch (err) {
-    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
-  } finally {
-    fetchData()
+  const confirmed = window.confirm('この予約ツイートを削除しますか？')
+  if (confirmed) {
+    try {
+      await axios.delete('http://localhost:8081/api/tweets/' + id)
+      router.replace({ name: 'home' }).then(() => {
+        fetchData()
+      })
+    } catch (err) {
+      error.value = err.response
+        ? `${err.response.status}: ${err.response.statusText}`
+        : err.message
+    }
   }
 }
 onBeforeMount(() => {
@@ -53,7 +62,7 @@ onBeforeMount(() => {
           :id="tweet.id"
           :tweet-content="tweet.text"
           :account-id="tweet.accountId"
-          :account-name="searchAccount(tweet.accountId).userName"
+          :account-name="searchAccount(tweet.accountId).name"
           :datetime="tweet.datetime"
           :location="tweet.location"
           :likes="tweet.likes"

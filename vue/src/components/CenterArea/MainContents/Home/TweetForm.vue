@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
 import { format } from 'date-fns'
+import { useRouter } from 'vue-router'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 import axios from 'axios'
 import { formatDateTime } from '@/utils/formatDateTime.js'
@@ -8,6 +9,7 @@ import { formatDateTime } from '@/utils/formatDateTime.js'
 const newTweetContent = ref('')
 const scheduledTweetContent = ref('')
 const scheduledDatetime = ref('')
+const router = useRouter()
 const currentUser = useCurrentUserStore()
 const account = ref(null)
 const response = ref(null)
@@ -57,7 +59,11 @@ const createTweet = async () => {
 
     try {
       await axios.post('http://localhost:8081/api/tweets', tweet)
-      window.location.reload()
+      // fetchData()
+      // window.location.reload()
+      router.replace({ name: 'home' }).then(() => {
+        fetchData()
+      })
     } catch (err) {
       error.value = err.response
         ? `${err.response.status}: ${err.response.statusText}`
@@ -84,7 +90,7 @@ const createScheduledTweet = async () => {
 
     try {
       await axios.post('http://localhost:8081/api/schedule', scheduledTweet)
-      window.location.reload()
+      // window.location.reload()
     } catch (err) {
       error.value = err.response
         ? `${err.response.status}: ${err.response.statusText}`

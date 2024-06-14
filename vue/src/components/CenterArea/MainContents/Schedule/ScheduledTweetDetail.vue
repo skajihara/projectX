@@ -82,12 +82,17 @@ async function updateTweet() {
   }
 }
 async function deleteTweet(id) {
-  try {
-    await axios.delete('http://localhost:8081/api/schedule/' + id)
-  } catch (err) {
-    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
-  } finally {
-    router.replace({ name: 'schedule', params: { userId: currentUser.userId } })
+  const confirmed = window.confirm('この予約ツイートを削除しますか？')
+  if (confirmed) {
+    try {
+      await axios.delete('http://localhost:8081/api/schedule/' + id)
+    } catch (err) {
+      error.value = err.response
+        ? `${err.response.status}: ${err.response.statusText}`
+        : err.message
+    } finally {
+      router.replace({ name: 'schedule', params: { userId: currentUser.userId } })
+    }
   }
 }
 onBeforeMount(() => {
