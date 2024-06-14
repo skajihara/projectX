@@ -3,6 +3,7 @@ import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import Tweet from '../Tweet.vue'
+import eventBus from '@/utils/eventBus.js'
 
 const router = useRouter()
 const tweets = ref(null)
@@ -46,6 +47,7 @@ async function deleteTweet(id) {
 }
 onBeforeMount(() => {
   fetchData()
+  eventBus.value.set('update-timeline', fetchData)
 })
 </script>
 
