@@ -22,15 +22,23 @@ const errDtl = ref(null)
 const isEditMode = ref(false)
 const editedText = ref('')
 const editedScheduledDatetime = ref('')
+const dateError = ref(null)
 
 const handleDateTimeInput = (event) => {
   // カレンダーから選択された値が 5 分単位でない場合、最も近い 5 分単位に丸める
   const selectedDatetime = new Date(event.target.value)
-  const minutes = selectedDatetime.getMinutes()
-  const roundedMinutes = Math.round(minutes / 5) * 5
-  selectedDatetime.setMinutes(roundedMinutes)
-  selectedDatetime.setHours(selectedDatetime.getHours() + 9)
-  editedScheduledDatetime.value = selectedDatetime.toISOString().slice(0, 16)
+  const now = new Date()
+
+  if (selectedDatetime < now) {
+    dateError.value = '過去の日時は選択できません。'
+  } else {
+    dateError.value = null
+    const minutes = selectedDatetime.getMinutes()
+    const roundedMinutes = Math.round(minutes / 5) * 5
+    selectedDatetime.setMinutes(roundedMinutes)
+    selectedDatetime.setHours(selectedDatetime.getHours() + 9)
+    editedScheduledDatetime.value = selectedDatetime.toISOString().slice(0, 16)
+  }
 }
 
 const fetchData = async () => {
@@ -120,10 +128,18 @@ onBeforeMount(() => {
           @input="handleDateTimeInput"
         />
         <div class="action-buttons-2">
-          <BButton pill size="sm" class="button-2" @click="updateTweet">更新</BButton>&nbsp;
+          <BButton
+            pill
+            size="sm"
+            class="button-2"
+            :disabled="editedText === '' || !editedScheduledDatetime || dateError"
+            @click="updateTweet"
+            >更新</BButton
+          >&nbsp;
           <BButton pill size="sm" class="button-2" @click="isEditMode = false">キャンセル</BButton>
         </div>
       </div>
+      <p v-if="dateError" class="error-message">{{ dateError }}</p>
     </div>
     <div v-else>
       <pre class="tweet-text">{{ tweet.text }}</pre>
@@ -193,5 +209,8 @@ onBeforeMount(() => {
   position: relative;
   left: -5px;
   top: 3px;
+}
+.error-message {
+  color: red;
 }
 </style>
