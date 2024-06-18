@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 import Tweet from '../Tweet.vue'
 import eventBus from '@/utils/eventBus.js'
+import { messages } from '@/utils/messages.js'
 
 const router = useRouter()
 const tweets = ref(null)
@@ -31,7 +32,7 @@ async function fetchData() {
   }
 }
 async function deleteTweet(id) {
-  const confirmed = window.confirm('この予約ツイートを削除しますか？')
+  const confirmed = window.confirm(messages.CONFIRM_DELETE_TWEET)
   if (confirmed) {
     try {
       await axios.delete('http://localhost:8081/api/tweets/' + id)

@@ -85,7 +85,6 @@ const createScheduledTweet = async () => {
 
     try {
       await axios.post('http://localhost:8081/api/schedule', scheduledTweet)
-      // window.location.reload()
     } catch (err) {
       error.value = err.response
         ? `${err.response.status}: ${err.response.statusText}`

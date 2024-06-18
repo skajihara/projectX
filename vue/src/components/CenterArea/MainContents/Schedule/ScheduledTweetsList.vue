@@ -3,6 +3,7 @@ import { ref, onBeforeMount } from 'vue'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { messages } from '@/utils/messages.js'
 import ScheduledTweet from './ScheduledTweet.vue'
 
 const router = useRouter()
@@ -30,7 +31,7 @@ async function fetchData() {
   }
 }
 async function deleteTweet(id) {
-  const confirmed = window.confirm('この予約ツイートを削除しますか？')
+  const confirmed = window.confirm(messages.CONFIRM_DELETE_SCHEDULED_TWEET)
   if (confirmed) {
     try {
       await axios.delete('http://localhost:8081/api/schedule/' + id)

@@ -3,6 +3,7 @@ import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
+import { messages } from '@/utils/messages.js'
 
 const props = defineProps({
   id: {
@@ -41,12 +42,17 @@ const fetchData = async () => {
 }
 
 async function deleteTweet(id) {
-  try {
-    await axios.delete('http://localhost:8081/api/tweets/' + id)
-  } catch (err) {
-    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
-  } finally {
-    router.replace({ name: 'home' })
+  const confirmed = window.confirm(messages.CONFIRM_DELETE_TWEET)
+  if (confirmed) {
+    try {
+      await axios.delete('http://localhost:8081/api/tweets/' + id)
+    } catch (err) {
+      error.value = err.response
+        ? `${err.response.status}: ${err.response.statusText}`
+        : err.message
+    } finally {
+      router.replace({ name: 'home' })
+    }
   }
 }
 
