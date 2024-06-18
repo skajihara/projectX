@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 import axios from 'axios'
 import { formatDateTime } from '@/utils/formatDateTime.js'
-// import { handleDateTimeInput } from '@/utils/handleDateTimeInput.js'
+import eventBus from '@/utils/eventBus.js'
 
 const newTweetContent = ref('')
 const scheduledTweetContent = ref('')
@@ -15,15 +15,23 @@ const response = ref(null)
 const error = ref(null)
 const isScheduledMode = ref(false)
 const modeText = ref('通常モード')
+const dateError = ref(null)
 
 const handleDateTimeInput = (event) => {
   // カレンダーから選択された値が 5 分単位でない場合、最も近い 5 分単位に丸める
   const selectedDatetime = new Date(event.target.value)
-  const minutes = selectedDatetime.getMinutes()
-  const roundedMinutes = Math.round(minutes / 5) * 5
-  selectedDatetime.setMinutes(roundedMinutes)
-  selectedDatetime.setHours(selectedDatetime.getHours() + 9)
-  scheduledDatetime.value = selectedDatetime.toISOString().slice(0, 16)
+  const now = new Date()
+
+  if (selectedDatetime < now) {
+    dateError.value = '過去の日時は選択できません。'
+  } else {
+    dateError.value = null
+    const minutes = selectedDatetime.getMinutes()
+    const roundedMinutes = Math.round(minutes / 5) * 5
+    selectedDatetime.setMinutes(roundedMinutes)
+    selectedDatetime.setHours(selectedDatetime.getHours() + 9)
+    scheduledDatetime.value = selectedDatetime.toISOString().slice(0, 16)
+  }
 }
 const selectMode = (isScheduled) => {
   isScheduledMode.value = isScheduled
@@ -50,7 +58,7 @@ const createTweet = async () => {
 
     try {
       await axios.post('http://localhost:8081/api/tweets', tweet)
-      window.location.reload()
+      eventBus.value.get('update-timeline')()
     } catch (err) {
       error.value = err.response
         ? `${err.response.status}: ${err.response.statusText}`
@@ -61,7 +69,7 @@ const createTweet = async () => {
   }
 }
 const createScheduledTweet = async () => {
-  if (scheduledTweetContent.value.trim() !== '' && scheduledDatetime.value) {
+  if (scheduledTweetContent.value.trim() !== '' && scheduledDatetime.value && !dateError.value) {
     error.value = null
     response.value = null
 
@@ -77,7 +85,6 @@ const createScheduledTweet = async () => {
 
     try {
       await axios.post('http://localhost:8081/api/schedule', scheduledTweet)
-      window.location.reload()
     } catch (err) {
       error.value = err.response
         ? `${err.response.status}: ${err.response.statusText}`
@@ -155,11 +162,12 @@ onBeforeMount(() => {
           pill
           variant="primary"
           class="tweet-button"
-          :disabled="scheduledTweetContent === '' || !scheduledDatetime"
+          :disabled="scheduledTweetContent === '' || !scheduledDatetime || dateError"
           @click="createScheduledTweet"
         >
           予約ツイート
         </BButton>
+        <p v-if="dateError" class="error-message">{{ dateError }}</p>
       </div>
     </div>
     <div v-if="error" class="error-message">
@@ -185,5 +193,8 @@ onBeforeMount(() => {
   text-align: center;
   align-items: center;
   margin-right: 5px;
+}
+.error-message {
+  color: red;
 }
 </style>

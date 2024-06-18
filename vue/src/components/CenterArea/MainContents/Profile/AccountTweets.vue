@@ -2,9 +2,11 @@
 import { ref, onBeforeMount } from 'vue'
 import axios from 'axios'
 import Tweet from '../Tweet.vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { messages } from '@/utils/messages.js'
 
 const route = useRoute()
+const router = useRouter()
 const userId = route.params.userId
 const account = ref(null)
 const tweets = ref(null)
@@ -28,13 +30,18 @@ async function fetchData() {
   }
 }
 async function deleteTweet(id) {
-  try {
-    await axios.delete('http://localhost:8081/api/tweets/' + id)
-    window.location.reload()
-  } catch (err) {
-    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
-  } finally {
-    fetchData()
+  const confirmed = window.confirm(messages.CONFIRM_DELETE_TWEET)
+  if (confirmed) {
+    try {
+      await axios.delete('http://localhost:8081/api/tweets/' + id)
+      router.replace({ name: 'profile', params: { userId: id } }).then(() => {
+        fetchData()
+      })
+    } catch (err) {
+      error.value = err.response
+        ? `${err.response.status}: ${err.response.statusText}`
+        : err.message
+    }
   }
 }
 

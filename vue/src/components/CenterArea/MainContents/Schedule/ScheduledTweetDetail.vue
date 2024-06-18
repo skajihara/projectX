@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 import { formatDateTime } from '@/utils/formatDateTime.js'
 import axios from 'axios'
+import { messages } from '@/utils/messages.js'
 
 const props = defineProps({
   scheduleId: {
@@ -22,15 +23,23 @@ const errDtl = ref(null)
 const isEditMode = ref(false)
 const editedText = ref('')
 const editedScheduledDatetime = ref('')
+const dateError = ref(null)
 
 const handleDateTimeInput = (event) => {
   // カレンダーから選択された値が 5 分単位でない場合、最も近い 5 分単位に丸める
   const selectedDatetime = new Date(event.target.value)
-  const minutes = selectedDatetime.getMinutes()
-  const roundedMinutes = Math.round(minutes / 5) * 5
-  selectedDatetime.setMinutes(roundedMinutes)
-  selectedDatetime.setHours(selectedDatetime.getHours() + 9)
-  editedScheduledDatetime.value = selectedDatetime.toISOString().slice(0, 16)
+  const now = new Date()
+
+  if (selectedDatetime < now) {
+    dateError.value = '過去の日時は選択できません。'
+  } else {
+    dateError.value = null
+    const minutes = selectedDatetime.getMinutes()
+    const roundedMinutes = Math.round(minutes / 5) * 5
+    selectedDatetime.setMinutes(roundedMinutes)
+    selectedDatetime.setHours(selectedDatetime.getHours() + 9)
+    editedScheduledDatetime.value = selectedDatetime.toISOString().slice(0, 16)
+  }
 }
 
 const fetchData = async () => {
@@ -74,12 +83,17 @@ async function updateTweet() {
   }
 }
 async function deleteTweet(id) {
-  try {
-    await axios.delete('http://localhost:8081/api/schedule/' + id)
-  } catch (err) {
-    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
-  } finally {
-    router.replace({ name: 'schedule', params: { userId: currentUser.userId } })
+  const confirmed = window.confirm(messages.CONFIRM_DELETE_SCHEDULED_TWEET)
+  if (confirmed) {
+    try {
+      await axios.delete('http://localhost:8081/api/schedule/' + id)
+    } catch (err) {
+      error.value = err.response
+        ? `${err.response.status}: ${err.response.statusText}`
+        : err.message
+    } finally {
+      router.replace({ name: 'schedule', params: { userId: currentUser.userId } })
+    }
   }
 }
 onBeforeMount(() => {
@@ -120,10 +134,18 @@ onBeforeMount(() => {
           @input="handleDateTimeInput"
         />
         <div class="action-buttons-2">
-          <BButton pill size="sm" class="button-2" @click="updateTweet">更新</BButton>&nbsp;
+          <BButton
+            pill
+            size="sm"
+            class="button-2"
+            :disabled="editedText === '' || !editedScheduledDatetime || dateError"
+            @click="updateTweet"
+            >更新</BButton
+          >&nbsp;
           <BButton pill size="sm" class="button-2" @click="isEditMode = false">キャンセル</BButton>
         </div>
       </div>
+      <p v-if="dateError" class="error-message">{{ dateError }}</p>
     </div>
     <div v-else>
       <pre class="tweet-text">{{ tweet.text }}</pre>
@@ -193,5 +215,8 @@ onBeforeMount(() => {
   position: relative;
   left: -5px;
   top: 3px;
+}
+.error-message {
+  color: red;
 }
 </style>

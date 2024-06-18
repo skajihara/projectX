@@ -1,9 +1,12 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { messages } from '@/utils/messages.js'
 import ScheduledTweet from './ScheduledTweet.vue'
 
+const router = useRouter()
 const currentUser = useCurrentUserStore()
 const accounts = ref(null)
 const tweets = ref(null)
@@ -28,13 +31,18 @@ async function fetchData() {
   }
 }
 async function deleteTweet(id) {
-  try {
-    await axios.delete('http://localhost:8081/api/schedule/' + id)
-    window.location.reload()
-  } catch (err) {
-    error.value = err.response ? `${err.response.status}: ${err.response.statusText}` : err.message
-  } finally {
-    fetchData()
+  const confirmed = window.confirm(messages.CONFIRM_DELETE_SCHEDULED_TWEET)
+  if (confirmed) {
+    try {
+      await axios.delete('http://localhost:8081/api/schedule/' + id)
+      router.replace({ name: 'schedule', params: { userId: currentUser.userId } }).then(() => {
+        fetchData()
+      })
+    } catch (err) {
+      error.value = err.response
+        ? `${err.response.status}: ${err.response.statusText}`
+        : err.message
+    }
   }
 }
 onBeforeMount(() => {
