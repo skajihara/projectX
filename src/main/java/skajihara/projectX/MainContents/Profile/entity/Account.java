@@ -1,4 +1,4 @@
-package skajihara.projectX.MainContents.Home.entity;
+package skajihara.projectX.MainContents.Profile.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,10 +1,10 @@
-package skajihara.projectX.MainContents.Home.repository;
+package skajihara.projectX.MainContents.Schedule.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
+import skajihara.projectX.MainContents.Schedule.entity.ScheduledTweet;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

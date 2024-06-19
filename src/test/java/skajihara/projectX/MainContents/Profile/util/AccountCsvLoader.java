@@ -1,12 +1,12 @@
-package skajihara.projectX.MainContents.Home.util;
+package skajihara.projectX.MainContents.Profile.util;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import skajihara.projectX.MainContents.Home.entity.Account;
-import skajihara.projectX.MainContents.Home.repository.AccountRepository;
-import skajihara.projectX.MainContents.Home.repository.ScheduledTweetRepository;
+import skajihara.projectX.MainContents.Profile.entity.Account;
+import skajihara.projectX.MainContents.Profile.repository.AccountRepository;
+import skajihara.projectX.MainContents.Schedule.repository.ScheduledTweetRepository;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 
 import java.io.FileReader;

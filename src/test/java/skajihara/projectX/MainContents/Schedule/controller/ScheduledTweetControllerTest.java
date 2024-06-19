@@ -1,4 +1,4 @@
-package skajihara.projectX.MainContents.Home.controller;
+package skajihara.projectX.MainContents.Schedule.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -7,8 +7,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
-import skajihara.projectX.MainContents.Home.util.ScheduledTweetCsvLoader;
+import skajihara.projectX.MainContents.Schedule.entity.ScheduledTweet;
+import skajihara.projectX.MainContents.Schedule.util.ScheduledTweetCsvLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;

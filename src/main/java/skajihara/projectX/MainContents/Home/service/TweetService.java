@@ -3,7 +3,7 @@ package skajihara.projectX.MainContents.Home.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
-import skajihara.projectX.MainContents.Home.exception.TweetException;
+import skajihara.projectX.MainContents.Exception.TweetException;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 
 import java.util.List;

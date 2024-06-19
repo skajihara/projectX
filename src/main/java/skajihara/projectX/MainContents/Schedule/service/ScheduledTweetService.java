@@ -1,10 +1,10 @@
-package skajihara.projectX.MainContents.Home.service;
+package skajihara.projectX.MainContents.Schedule.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
-import skajihara.projectX.MainContents.Home.exception.NotFoundException;
-import skajihara.projectX.MainContents.Home.repository.ScheduledTweetRepository;
+import skajihara.projectX.MainContents.Schedule.entity.ScheduledTweet;
+import skajihara.projectX.MainContents.Exception.NotFoundException;
+import skajihara.projectX.MainContents.Schedule.repository.ScheduledTweetRepository;
 
 import java.util.List;
 import java.util.Optional;

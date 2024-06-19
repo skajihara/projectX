@@ -8,7 +8,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.jdbc.Sql;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
-import skajihara.projectX.MainContents.Home.exception.TweetException;
+import skajihara.projectX.MainContents.Exception.TweetException;
 import skajihara.projectX.MainContents.Home.util.TweetCsvLoader;
 
 import java.text.ParseException;
