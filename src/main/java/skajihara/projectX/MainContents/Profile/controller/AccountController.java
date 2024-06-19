@@ -1,10 +1,10 @@
-package skajihara.projectX.MainContents.Home.controller;
+package skajihara.projectX.MainContents.Profile.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import skajihara.projectX.MainContents.Home.entity.Account;
-import skajihara.projectX.MainContents.Home.exception.NotFoundException;
-import skajihara.projectX.MainContents.Home.service.AccountService;
+import skajihara.projectX.MainContents.Exception.NotFoundException;
+import skajihara.projectX.MainContents.Profile.entity.Account;
+import skajihara.projectX.MainContents.Profile.service.AccountService;
 
 import java.util.List;
 

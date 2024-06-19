@@ -1,10 +1,10 @@
-package skajihara.projectX.MainContents.Home.repository;
+package skajihara.projectX.MainContents.Schedule.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
+import skajihara.projectX.MainContents.Schedule.entity.ScheduledTweet;
 
 import java.util.List;
 

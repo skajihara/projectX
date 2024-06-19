@@ -1,11 +1,11 @@
-package skajihara.projectX.MainContents.Home.util;
+package skajihara.projectX.MainContents.Schedule.util;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
-import skajihara.projectX.MainContents.Home.repository.ScheduledTweetRepository;
+import skajihara.projectX.MainContents.Schedule.entity.ScheduledTweet;
+import skajihara.projectX.MainContents.Schedule.repository.ScheduledTweetRepository;
 
 import java.io.FileReader;
 import java.io.IOException;

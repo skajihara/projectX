@@ -1,12 +1,12 @@
-package skajihara.projectX.MainContents.Home.repository;
+package skajihara.projectX.MainContents.Profile.repository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import skajihara.projectX.MainContents.Home.entity.Account;
-import skajihara.projectX.MainContents.Home.util.AccountCsvLoader;
+import skajihara.projectX.MainContents.Profile.entity.Account;
+import skajihara.projectX.MainContents.Profile.util.AccountCsvLoader;
 
 import java.time.LocalDate;
 import java.util.List;

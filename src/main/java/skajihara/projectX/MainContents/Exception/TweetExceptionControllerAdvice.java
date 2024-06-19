@@ -1,4 +1,4 @@
-package skajihara.projectX.MainContents.Home.exception;
+package skajihara.projectX.MainContents.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

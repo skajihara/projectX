@@ -1,4 +1,4 @@
-package skajihara.projectX.MainContents.Home.exception;
+package skajihara.projectX.MainContents.Exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

@@ -1,14 +1,15 @@
-package skajihara.projectX.MainContents.Home.service;
+package skajihara.projectX.MainContents.Profile.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import skajihara.projectX.MainContents.Home.entity.Account;
-import skajihara.projectX.MainContents.Home.exception.NotFoundException;
-import skajihara.projectX.MainContents.Home.repository.AccountRepository;
-import skajihara.projectX.MainContents.Home.util.AccountCsvLoader;
+import skajihara.projectX.MainContents.Exception.NotFoundException;
+import skajihara.projectX.MainContents.Profile.entity.Account;
+
+import skajihara.projectX.MainContents.Profile.repository.AccountRepository;
+import skajihara.projectX.MainContents.Profile.util.AccountCsvLoader;
 
 import java.time.LocalDate;
 import java.util.List;

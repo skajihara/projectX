@@ -1,12 +1,13 @@
-package skajihara.projectX.MainContents.Home.service;
+package skajihara.projectX.MainContents.Schedule.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
-import skajihara.projectX.MainContents.Home.exception.NotFoundException;
-import skajihara.projectX.MainContents.Home.util.ScheduledTweetCsvLoader;
+import skajihara.projectX.MainContents.Exception.NotFoundException;
+import skajihara.projectX.MainContents.Schedule.entity.ScheduledTweet;
+
+import skajihara.projectX.MainContents.Schedule.util.ScheduledTweetCsvLoader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

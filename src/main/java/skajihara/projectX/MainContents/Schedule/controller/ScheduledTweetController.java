@@ -1,9 +1,9 @@
-package skajihara.projectX.MainContents.Home.controller;
+package skajihara.projectX.MainContents.Schedule.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
-import skajihara.projectX.MainContents.Home.service.ScheduledTweetService;
+import skajihara.projectX.MainContents.Schedule.entity.ScheduledTweet;
+import skajihara.projectX.MainContents.Schedule.service.ScheduledTweetService;
 
 import java.util.List;
 

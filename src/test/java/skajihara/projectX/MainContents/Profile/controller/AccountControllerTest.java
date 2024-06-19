@@ -1,4 +1,4 @@
-package skajihara.projectX.MainContents.Home.controller;
+package skajihara.projectX.MainContents.Profile.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -7,9 +7,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
-import skajihara.projectX.MainContents.Home.entity.Account;
-import skajihara.projectX.MainContents.Home.service.AccountService;
-import skajihara.projectX.MainContents.Home.util.AccountCsvLoader;
+import skajihara.projectX.MainContents.Profile.entity.Account;
+import skajihara.projectX.MainContents.Profile.service.AccountService;
+import skajihara.projectX.MainContents.Profile.util.AccountCsvLoader;
 
 import java.time.LocalDate;
 import java.util.Arrays;
