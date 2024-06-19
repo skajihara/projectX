@@ -2,6 +2,11 @@ package skajihara.projectX.MainContents.Home.batch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import skajihara.projectX.MainContents.Home.entity.BatchHistory;
 import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
@@ -34,6 +39,9 @@ public class ScheduledTweetTasklet implements Tasklet {
     @Autowired
     private BatchHistoryRepository batchHistoryRepository;
 
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
@@ -52,6 +60,10 @@ public class ScheduledTweetTasklet implements Tasklet {
 
         while (attempts < MAX_ATTEMPTS && !success) {
             attempts++;
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+            TransactionStatus status = transactionManager.getTransaction(def);
+
             try {
                 logger.info("Batch job attempt {} started at {}", attempts, now);
                 List<ScheduledTweet> scheduledTweets = scheduledTweetRepository
@@ -74,9 +86,11 @@ public class ScheduledTweetTasklet implements Tasklet {
 
                 newHistory.setLastProcessedTweetId(lastProcessedTweetId);
                 newHistory.setSucceeded(true);
+                transactionManager.commit(status);
                 success = true;
                 logger.info("Batch job attempt {} completed successfully", attempts);
             } catch (Exception e) {
+                transactionManager.rollback(status);
                 logger.error("Batch job attempt {} failed", attempts, e);
                 if (attempts >= MAX_ATTEMPTS) {
                     newHistory.setLastProcessedTweetId(lastHistory.getLastProcessedTweetId());
