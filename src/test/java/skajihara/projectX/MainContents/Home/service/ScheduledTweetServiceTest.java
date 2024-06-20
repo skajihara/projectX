@@ -30,8 +30,6 @@ class ScheduledTweetServiceTest {
     @Test
     public void selectScheduledTweets_IntegrationTest() throws ParseException {
 
-//        scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date scheduled_date1 = dateFormat.parse("2024-06-13 01:00:00");
         Date scheduled_date2 = dateFormat.parse("2024-06-13 01:00:00");
@@ -63,8 +61,6 @@ class ScheduledTweetServiceTest {
     @Test
     void selectScheduledTweet_IntegrationTest() throws ParseException {
 
-//        scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date scheduled_datetime = dateFormat.parse("2024-06-13 03:00:00");
         Date created_datetime = dateFormat.parse("2024-06-07 12:12:12");
@@ -83,17 +79,11 @@ class ScheduledTweetServiceTest {
 
     @Test
     void selectScheduledTweet_MissingData_IntegrationTest() {
-
-        // cleanup database
-//        scheduledTweetCsvLoader.loadScheduledTweets("");
         assertThrows(NotFoundException.class, () -> scheduledTweetService.selectScheduledTweet(999));
     }
 
     @Test
     void createScheduledTweet_IntegrationTest() throws ParseException {
-
-        // cleanup database
-//        scheduledTweetCsvLoader.loadScheduledTweets("");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date scheduled_datetime = dateFormat.parse("2024-06-13 12:00:00");
@@ -122,18 +112,12 @@ class ScheduledTweetServiceTest {
 
     @Test
     void createScheduledTweet_InvalidData_IntegrationTest() {
-
-        // cleanup database
-//        scheduledTweetCsvLoader.loadScheduledTweets("");
-
         ScheduledTweet invalidTweet = new ScheduledTweet();
         assertThrows(Exception.class, () -> scheduledTweetService.createScheduledTweet(invalidTweet));
     }
 
     @Test
     void updateTweet_IntegrationTest() {
-
-//        scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
 
         ScheduledTweet beforeTweet = scheduledTweetService.selectScheduledTweet(3);
         beforeTweet.setText("updated!");
@@ -152,8 +136,6 @@ class ScheduledTweetServiceTest {
     @Test
     void updateScheduledTweet_ThrowsException_IntegrationTest() {
 
-//        scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
-
         ScheduledTweet scheduledTweet = scheduledTweetService.selectScheduledTweet(1);
         assertThat(scheduledTweet).isNotNull();
         scheduledTweet.setText("updated!");
@@ -164,8 +146,6 @@ class ScheduledTweetServiceTest {
     @Test
     public void deleteScheduledTweet_IntegrationTest() {
 
-//        scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
-
         ScheduledTweet deleteTweet = scheduledTweetService.selectScheduledTweet(1);
         scheduledTweetService.deleteScheduledTweet(deleteTweet.getId());
 
@@ -174,7 +154,6 @@ class ScheduledTweetServiceTest {
 
     @Test
     void deleteScheduledTweet_ThrowsException_IntegrationTest() {
-//        scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/service/ScheduledTweet/Test01.csv");
         assertThrows(NotFoundException.class, () -> scheduledTweetService.deleteScheduledTweet(99999));
     }
 }
