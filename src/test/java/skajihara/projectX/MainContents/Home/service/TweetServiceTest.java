@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 import skajihara.projectX.MainContents.Home.entity.Tweet;
 import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 import skajihara.projectX.MainContents.Home.exception.TweetException;
@@ -21,6 +22,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 class TweetServiceTest {
 
     @Autowired
@@ -216,9 +218,9 @@ class TweetServiceTest {
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date datetime = dateFormat.parse("2024-03-01 15:30:00");
 
-        Tweet tweet = tweetService.selectTweet(11);
+        Tweet tweet = tweetService.selectTweet(115);
         assertThat(tweet).isNotNull();
-        assertThat(tweet.getId()).isEqualTo(11);
+        assertThat(tweet.getId()).isEqualTo(115);
         assertThat(tweet.getAccountId()).isEqualTo("user_A");
         assertThat(tweet.getText()).isEqualTo("富山のホタルイカ、最高🍻");
         assertThat(tweet.getImage()).isEqualTo("/src/assets/images/img02.jpg");
@@ -344,4 +346,3 @@ class TweetServiceTest {
         assertTrue((endTime - startTime) < 1000, "Response is too slow");
     }
 }
-

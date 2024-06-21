@@ -71,7 +71,7 @@ class TweetRepositoryTest {
     void selectAll_IntegrationTest() {
 
         List<Tweet> tweets = tweetRepository.selectAll();
-        assertThat(tweets).hasSize(3);
+        assertThat(tweets).hasSize(5);
     }
 
     @Test
@@ -98,10 +98,8 @@ class TweetRepositoryTest {
 
     @Test
     void selectTweet_IntegrationTest() {
-
-        Tweet tweet = tweetRepository.selectTweet(11);
+        Tweet tweet = tweetRepository.selectTweet(26);
         assertThat(tweet).isNotNull();
         assertThat(tweet.getText()).isEqualTo("First test tweet");
     }
 }
-

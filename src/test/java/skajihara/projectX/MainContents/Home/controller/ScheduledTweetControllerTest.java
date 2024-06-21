@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
 import skajihara.projectX.MainContents.Home.util.ScheduledTweetCsvLoader;
 
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class ScheduledTweetControllerTest {
 
     @Autowired
@@ -169,7 +171,7 @@ public class ScheduledTweetControllerTest {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/controller/ScheduledTweet/Test01.csv");
 
-        String beforeUpdate =mockMvc.perform(get("/api/schedule/7"))
+        String beforeUpdate =mockMvc.perform(get("/api/schedule/13"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andReturn()
@@ -179,12 +181,12 @@ public class ScheduledTweetControllerTest {
         ScheduledTweet beforeTweet = objectMapper.readValue(beforeUpdate, ScheduledTweet.class);
         beforeTweet.setText("updated!");
 
-        mockMvc.perform(put("/api/schedule/7")
+        mockMvc.perform(put("/api/schedule/13")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(beforeTweet)))
                 .andExpect(status().isOk());
 
-        String afterUpdate = mockMvc.perform(get("/api/schedule/7"))
+        String afterUpdate = mockMvc.perform(get("/api/schedule/13"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andExpect(jsonPath("$.text").value("updated!"))
@@ -230,14 +232,14 @@ public class ScheduledTweetControllerTest {
 
         scheduledTweetCsvLoader.loadScheduledTweets("src/test/resources/csv/controller/ScheduledTweet/Test01.csv");
 
-        mockMvc.perform(get("/api/schedule/7"))
+        mockMvc.perform(get("/api/schedule/25"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"));
 
-        mockMvc.perform(delete("/api/schedule/7"))
+        mockMvc.perform(delete("/api/schedule/25"))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/api/schedule/7"))
+        mockMvc.perform(get("/api/schedule/25"))
                 .andExpect(status().isNotFound());
     }
 
