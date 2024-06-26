@@ -11,15 +11,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Configuration
 @EnableScheduling
 @RequiredArgsConstructor
-public class SimpleScheduledBatchConfig {
+public class ScheduledTask {
 
     private final JobLauncher jobLauncher;
-    private final Job myjob;
+    private final Job scheduledTweetsJob;
 
-//    @Scheduled(fixedRate = 10000)
+    @Scheduled(cron = "*/10 * * * * *")
     public void performJob() throws Exception {
-        System.out.println("Scheduled task running");
-        jobLauncher.run(myjob, new JobParametersBuilder()
+        System.out.println("Scheduled tweets task running!");
+        jobLauncher.run(scheduledTweetsJob, new JobParametersBuilder()
                 .addLong("startAt", System.currentTimeMillis())
                 .toJobParameters());
     }
