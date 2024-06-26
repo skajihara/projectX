@@ -17,6 +17,9 @@ public class BatchHistory {
     @Column(name = "last_processed_tweet_id", nullable = false)
     private int lastProcessedTweetId;
 
+    @Column(name = "processed_num", nullable = false)
+    private int processedNum;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "execution_start", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date executionStart = new Date();

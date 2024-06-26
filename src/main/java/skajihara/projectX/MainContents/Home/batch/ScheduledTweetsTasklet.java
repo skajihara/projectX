@@ -46,9 +46,11 @@ public class ScheduledTweetsTasklet implements Tasklet {
         Date now = new Date();
         BatchHistory lastHistory = batchHistoryRepository.findLatest();
         int lastProcessedTweetId = (lastHistory != null) ? lastHistory.getLastProcessedTweetId() : 0;
+        int processedCount = 0;
 
         BatchHistory newHistory = new BatchHistory();
         newHistory.setLastProcessedTweetId(lastProcessedTweetId);
+        newHistory.setProcessedNum(processedCount);
         newHistory.setExecutionStart(now);
         newHistory.setSucceeded(false);
         batchHistoryRepository.save(newHistory);
@@ -72,14 +74,17 @@ public class ScheduledTweetsTasklet implements Tasklet {
                 scheduledTweetRepository.save(scheduledTweet);
 
                 lastProcessedTweetId = scheduledTweet.getId();
+                processedCount++;
             }
 
             newHistory.setLastProcessedTweetId(lastProcessedTweetId);
+            newHistory.setProcessedNum(processedCount);
             newHistory.setSucceeded(true);
             logger.info("Scheduled tweets task completed successfully");
 
         } catch (Exception e) {
             newHistory.setLastProcessedTweetId(Optional.ofNullable(lastHistory).map(BatchHistory::getLastProcessedTweetId).orElse(0));
+            newHistory.setProcessedNum(0);
             newHistory.setSucceeded(false);
             logger.error("Scheduled tweets task failed", e);
             throw e;
