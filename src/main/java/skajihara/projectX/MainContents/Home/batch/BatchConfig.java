@@ -14,6 +14,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 @RequiredArgsConstructor
 public class BatchConfig {
 
+    private final ScheduledTweetsTasklet scheduledTweetsTasklet;
+
     @Bean
     public Job scheduledTweetsJob(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
         System.out.println("scheduledTweetsJob メソッドを実行");
@@ -26,7 +28,7 @@ public class BatchConfig {
     public Step stepForAllProcesses(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
         System.out.println("stepForAllProcesses メソッドを実行");
         return new StepBuilder("stepForAllProcesses", jobRepository)
-                .tasklet(new ScheduledTweetsTasklet("change here!"), platformTransactionManager)
+                .tasklet(scheduledTweetsTasklet, platformTransactionManager)
                 .build();
     }
 }
