@@ -8,6 +8,7 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
@@ -21,6 +22,7 @@ import skajihara.projectX.MainContents.Home.repository.TweetRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -39,7 +41,7 @@ public class ScheduledTweetsTasklet implements Tasklet {
 
     @Override
     @Retryable(retryFor= Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
-    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
+    public RepeatStatus execute(@NonNull StepContribution contribution, @NonNull ChunkContext chunkContext) {
 
         Date now = new Date();
         BatchHistory lastHistory = batchHistoryRepository.findLatest();
@@ -77,7 +79,7 @@ public class ScheduledTweetsTasklet implements Tasklet {
             logger.info("Scheduled tweets task completed successfully");
 
         } catch (Exception e) {
-            newHistory.setLastProcessedTweetId(lastHistory.getLastProcessedTweetId());
+            newHistory.setLastProcessedTweetId(Optional.ofNullable(lastHistory).map(BatchHistory::getLastProcessedTweetId).orElse(0));
             newHistory.setSucceeded(false);
             logger.error("Scheduled tweets task failed", e);
             throw e;
