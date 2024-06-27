@@ -163,3 +163,25 @@ INSERT INTO SCHEDULED_TWEETS (account_id, text, image, location, scheduled_datet
 ('user_A', 'ツイート内容18', '/src/assets/images/img18.png', '岐阜県', FORMATDATETIME(DATEADD(SECOND, 180, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
 ('user_B', 'ツイート内容19', '/src/assets/images/img19.png', '三重県', FORMATDATETIME(DATEADD(SECOND, 190, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
 ('user_C', 'ツイート内容20', '/src/assets/images/img20.jpg', '新潟県', FORMATDATETIME(DATEADD(SECOND, 200, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false);
+
+INSERT INTO SCHEDULED_TWEETS (account_id, text, image, location, scheduled_datetime, created_datetime, delete_flag) VALUES
+('q30387', 'ツイート内容1', '/src/assets/images/img01.GIF', '東京都', FORMATDATETIME(DATEADD(SECOND, 10, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_A', 'ツイート内容2', '/src/assets/images/img02.jpg', '大阪府', FORMATDATETIME(DATEADD(SECOND, 20, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_B', 'ツイート内容3', '/src/assets/images/img03.jpg', '北海道', FORMATDATETIME(DATEADD(SECOND, 30, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_C', 'ツイート内容4', '/src/assets/images/img04.jpg', '福岡県', FORMATDATETIME(DATEADD(SECOND, 40, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('q30387', 'ツイート内容5', '/src/assets/images/img05.jpg', '愛知県', FORMATDATETIME(DATEADD(SECOND, 50, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_A', 'ツイート内容6', '/src/assets/images/img06.jpg', '神奈川県', FORMATDATETIME(DATEADD(SECOND, 60, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_B', 'ツイート内容7', '/src/assets/images/img07.jpg', '千葉県', FORMATDATETIME(DATEADD(SECOND, 70, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_C', 'ツイート内容8', '/src/assets/images/img08.jpg', '京都府', FORMATDATETIME(DATEADD(SECOND, 80, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('q30387', 'ツイート内容9', '/src/assets/images/img09.jpg', '兵庫県', FORMATDATETIME(DATEADD(SECOND, 90, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_A', 'ツイート内容10', '/src/assets/images/img10.jpg', '広島県', FORMATDATETIME(DATEADD(SECOND, 100, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_B', 'ツイート内容11', '/src/assets/images/img11.jpg', '宮城県', FORMATDATETIME(DATEADD(SECOND, 110, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_C', 'ツイート内容12', '/src/assets/images/img12.jpg', '長野県', FORMATDATETIME(DATEADD(SECOND, 120, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('q30387', 'ツイート内容13', '/src/assets/images/img13.jpg', '沖縄県', FORMATDATETIME(DATEADD(SECOND, 130, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_A', 'ツイート内容14', '/src/assets/images/img14.jpg', '静岡県', FORMATDATETIME(DATEADD(SECOND, 140, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_B', 'ツイート内容15', '/src/assets/images/img15.jpg', '茨城県', FORMATDATETIME(DATEADD(SECOND, 150, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_C', 'ツイート内容16', '/src/assets/images/img16.jpg', '栃木県', FORMATDATETIME(DATEADD(SECOND, 160, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('q30387', 'ツイート内容17', '/src/assets/images/img17.jpg', '群馬県', FORMATDATETIME(DATEADD(SECOND, 170, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_A', 'ツイート内容18', '/src/assets/images/img18.png', '岐阜県', FORMATDATETIME(DATEADD(SECOND, 180, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_B', 'ツイート内容19', '/src/assets/images/img19.png', '三重県', FORMATDATETIME(DATEADD(SECOND, 190, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false),
+('user_C', 'ツイート内容20', '/src/assets/images/img20.jpg', '新潟県', FORMATDATETIME(DATEADD(SECOND, 200, CURRENT_TIMESTAMP), 'yyyy-MM-dd HH:mm:ss'), FORMATDATETIME(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH:mm:ss'), false);
