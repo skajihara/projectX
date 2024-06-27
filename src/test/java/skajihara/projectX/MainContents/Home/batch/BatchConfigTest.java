@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
@@ -25,21 +23,14 @@ public class BatchConfigTest {
     private PlatformTransactionManager platformTransactionManager;
 
     @Test
-    public void testScheduledTweetsJobBean() {
+    public void scheduledTweetsJobTest() {
         Job job = batchConfig.scheduledTweetsJob(jobRepository, platformTransactionManager);
         assertNotNull(job, "The scheduledTweetsJob bean should not be null");
     }
 
     @Test
-    public void testStepForAllProcessesBean() {
+    public void stepForAllProcessesTest() {
         Step step = batchConfig.stepForAllProcesses(jobRepository, platformTransactionManager);
         assertNotNull(step, "The stepForAllProcesses bean should not be null");
-    }
-
-    @Test
-    public void testJobNames() {
-        List<String> jobNames = jobRepository.getJobNames();
-        System.out.println("Registered job names: " + jobNames);
-        // 期待するジョブが登録されているかを確認
     }
 }
