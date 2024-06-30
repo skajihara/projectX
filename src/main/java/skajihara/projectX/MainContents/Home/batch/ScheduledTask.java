@@ -22,7 +22,7 @@ public class ScheduledTask {
     private final JobLauncher jobLauncher;
     private final Job scheduledTweetsJob;
 
-    @Scheduled(cron = "*/10 * * * * *")
+//    @Scheduled(cron = "*/10 * * * * *")
     public void performScheduledTweetsJob() throws Exception {
         System.out.println("Scheduled Task running!");
         try {
