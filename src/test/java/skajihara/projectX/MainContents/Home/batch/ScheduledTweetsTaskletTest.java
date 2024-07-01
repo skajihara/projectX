@@ -94,7 +94,7 @@ public class ScheduledTweetsTaskletTest {
         ScheduledTweet afterProcessed = scheduledTweetRepository.selectScheduledTweet(scheduledTweet.getId());
         assertNull(afterProcessed);
 
-        tweets = tweetRepository.findAll();
+        tweets = tweetRepository.selectAll();
         assertEquals(1, tweets.size());
         Tweet tweet = tweets.get(0);
         assertEquals(tweet.getAccountId(), scheduledTweet.getAccountId());
