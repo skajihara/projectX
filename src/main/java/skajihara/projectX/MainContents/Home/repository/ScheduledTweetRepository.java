@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import skajihara.projectX.MainContents.Home.entity.ScheduledTweet;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -16,4 +17,7 @@ public interface ScheduledTweetRepository extends JpaRepository<ScheduledTweet, 
 
     @Query("SELECT st FROM ScheduledTweet st WHERE st.id = :schedule_id AND st.deleteFlag = false")
     ScheduledTweet selectScheduledTweet(@Param("schedule_id") int schedule_id);
+
+    @Query("SELECT st FROM ScheduledTweet st WHERE st.id > :last_processed_tweet_id AND st.scheduledDatetime < :now AND st.deleteFlag = false ORDER BY st.scheduledDatetime ASC, st.createdDatetime DESC")
+    List<ScheduledTweet> selectForScheduledTweetBatch(@Param("last_processed_tweet_id") int lastProcessedTweetId, @Param("now") Date now);
 }
